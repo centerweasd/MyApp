@@ -1,0 +1,445 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/rz_step.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">结算卡认证</h1>
+		</header>
+		<div class="rz_step" style="display: none;">
+			<ul>
+				<li class="active">
+					<span class="iconfont icon-yuandianzhong"></span>
+					<p>身份认证</p>
+					<i class="line_r" style="background: #FF8F48;"></i>
+				</li>
+				<li class="active">
+					<i class="line_l" style="background: #FF8F48;"></i>
+					<span class="iconfont icon-yuandianzhong"></span>
+					<p>照片认证</p>
+					<i class="line_r" style="background: #FF8F48;"></i>
+				</li>
+				<li class="active">
+					<i class="line_l" style="background: #FF8F48;"></i>
+					<span class="iconfont icon-yuandianzhong"></span>
+					<p>结算卡认证</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="mui-content bankCard_rz">
+			<!--未验证-->
+			<div class="no_rz" style="padding-top: 120px;">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<label>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+						<span class="user_name">姓名</span>
+					</li>
+				</ul>
+				<ul class="mui-table-view" style="margin-top: 15px;">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>卡&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+							<input type="text" id="card_no" class="mui-input-clear" placeholder="请输入储蓄卡卡号">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<div class="mui-input-row">
+								<label>银&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+								<input type="text" id="bank_name" title="" readonly="readonly" placeholder="请选择银行">
+							</div>
+						</a>
+
+					</li>
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<div class="mui-input-row">
+								<label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+								<input type="text" class="" id="site" readonly="readonly" placeholder="请选择开户行所在城市" style="width: 80%;">
+							</div>
+						</a>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>支&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+							<input type="text" class="mui-input-clear" id="branch" placeholder="请输入开户行">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>预留手机：</label>
+							<input type="text" class="mui-input-clear phone" id="phone" placeholder="请输入预留手机号">
+
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>验证码：</label>
+							<input type="text" class="smscode" id="smscode" placeholder="请输入手机验证码">
+							<span class="ask-smscode" id="getSms">获取验证码</span>
+						</div>
+					</li>
+				</ul>
+				<p class="tips" style="margin-top: 10px;">*请绑定主流银行结算卡，如：招商、建设、农业、工商等</p>
+				<p class="tips">*请填写真实信息，否则结算款项将不会到账！</p>
+				<button type="button" class="mui-btn mui-btn-blue complete">完成</button>
+			</div>
+			<!--已验证-->
+			<div class="yes_rz">
+				<ul class="mui-table-view">
+					<li class="mui-table-view-cell">
+						<label>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+						<span class="user_name">姓名</span>
+					</li>
+				</ul>
+				<ul class="mui-table-view" style="margin-top: 15px;">
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>卡&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+							<input type="text" class="kahao" readonly="readonly">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>银&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+							<input type="text" class="yinhang" readonly="readonly">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+							<input type="text" class="dizhi" readonly="readonly">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>支&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+							<input type="text" class="zhihang" readonly="readonly">
+						</div>
+					</li>
+					<li class="mui-table-view-cell">
+						<div class="mui-input-row">
+							<label>预留手机：</label>
+							<input type="text" class="mui-input-clear phone" placeholder="请输入预留手机号">
+						</div>
+					</li>
+				</ul>
+				<button type="button" class="mui-btn mui-btn-blue change">变更结算卡信息</button>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var wait = 60;
+			function get_code_time() {
+				//mui.alert('手机号格式错误','提示','','','div');
+				if(wait == 0) {
+					$("#getSms").removeAttr("disabled"); //移除获取验证码按钮的disabled属性
+					$("#getSms").css('background-color', '#2DAAFC');
+					$("#getSms").html("获取验证码");
+					wait = 60;
+				} else {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true); //设置获取验证码按钮为不可触发
+					$("#getSms").html(wait + "s");
+					wait--;
+					setTimeout("get_code_time()", 1000);
+				}
+			}
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'data_authentiction');
+						//返回 true,继续页面关闭逻辑
+						return true;
+					}
+				});
+
+				window.addEventListener('bankCard_rz', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				var tokens = getToken();
+				getToken();
+				// 身份证号
+				var idcard = '';
+				// 发送验证码返回的id
+				var userId = '';
+				// 流水订单号
+				var applyTradeNo = '';
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+
+				var self = plus.webview.currentWebview();
+				console.log(self.datatype);
+				if(self.datatype == 0) {
+					$(".rz_step,.no_rz").show();
+					$(".yes_rz").hide();
+					$(".mui-title").html("结算卡认证");
+				} else {
+					$(".mui-content").css("padding-top", "60px");
+					$(".rz_step,.no_rz").hide();
+					$(".yes_rz").show();
+					$(".mui-title").html("结算卡信息");
+
+					/*获取储蓄卡详情*/
+					var card_id;
+					$.ajax({
+						url: site_app + "/api/my/card_info",
+						type: "post",
+						data: {
+							token: tokens,
+							type: "2"
+						},
+						dataType: "json",
+						async: false,
+						success: function(e) {
+							if(e.error == 0) {
+								card_id = e.data.card_id;
+								$(".kahao").val(e.data.card_no);
+								$(".yinhang").val(e.data.list_name);
+								$(".dizhi").val(e.data.card_province + "-" + e.data.card_city + "-" + e.data.card_district);
+								$(".zhihang").val(e.data.card_branch);
+							}
+						}
+					})
+				}
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								$(".user_name").html(e.data.user_name);
+								$(".phone").val(e.data.user_phone);
+								idcard = e.data.user_idcard;
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				/*获取银行列表*/
+				var bank_picker = new mui.PopPicker();
+				var bank_json = [];
+				var data;
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/bank_list",
+					data: {
+						token: tokens
+					},
+					async: false,
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							data = e.data;
+						}
+					}
+				});
+
+				/*选择银行列表*/
+				for(var i = 0; i < data.length; i++) {
+					var json_ = {
+						value: data[i].list_id,
+						text: data[i].list_name
+					};
+					bank_json.push(json_);
+				}
+				bank_picker.setData(bank_json);
+				$("#bank_name").on("tap", function() {
+					setTimeout(function() {
+						bank_picker.show(function(items) {
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							}
+							console.log((items[0] || {}).text);
+							$("#bank_name").val((items[0] || {}).text);
+							$("#bank_name").attr("title", (items[0] || {}).value);
+						});
+					}, 200)
+				});
+
+				/*选择城市列表*/
+				var city_picker = new mui.PopPicker({
+					layer: 3
+				});
+				city_picker.setData(cityData3);
+				$("#site").on("tap", function() {
+					setTimeout(function() {
+						city_picker.show(function(items) {
+							console.log(items);
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							} else if((items[1] || {}).text == undefined) {
+								(items[1] || {}).text = "";
+							} else if((items[2] || {}).text == undefined) {
+								(items[2] || {}).text = "";
+							}
+							//该ID为接收城市ID字段 
+							$("#site").val((items[0] || {}).text + "-" + (items[1] || {}).text + "-" + (items[2] || {}).text);
+						});
+					}, 200);
+				});
+				/*获取验证码请求*/
+				$(".ask-smscode").click(function() {
+					if($("#getSms").html()==="获取验证码"){
+						var card_no = $("#card_no").val();
+						var bank_name = $("#bank_name").val();
+						var site = $("#site").val();
+						var branch = $("#branch").val();
+
+						if(card_no && bank_name && site && branch) {
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/KbPay/register",
+								data: {
+									token: tokens,
+									customerName: $(".user_name").html(),
+									idNo: idcard,
+									bank_id: $("#bank_name").attr("title"),
+									type: "2",
+									region: $("#site").val(),
+									branch: branch,
+									bankCardNo: card_no,
+									mobile: $("#phone").val()
+									// 测试
+									//bankCardNo: "6228481091496106012",
+									//mobile: 17673458886
+								},
+								dataType: "json",
+								success: function(e) {
+									if(e.error == 0) {
+										mui.toast("发送成功");
+										userId = e.data.userId;
+										applyTradeNo = e.data.applyTradeNo;
+										get_code_time();
+									} else {
+										mui.alert(e.msg, '提示', '', '', 'div');
+									}
+								}
+							});
+						} else {
+							mui.alert('请填写完整信息', '提示', '', '', 'div');
+						}
+					}
+
+				});
+
+				/*提交银行卡信息*/
+				$(".complete").click(function() {
+					var card_no = $("#card_no").val();
+					var bank_name = $("#bank_name").val();
+					var site = $("#site").val();
+					var branch = $("#branch").val();
+					var smscode = $("#smscode").val();
+
+					if(card_no && bank_name && site && branch && smscode) {
+						$.ajax({
+							type: "post",
+							url: site_app + "/api/my/card",
+							data: {
+								token: tokens,
+								customerName: $(".user_name").html(),
+								idNo: idcard,
+								bank_id: $("#bank_name").attr("title"),
+								type: "2",
+								userId: userId,
+								verCode: smscode,
+								applyTradeNo: applyTradeNo,
+								bankCardNo: card_no,
+								mobile: $("#phone").val(),
+								region: site,
+								branch: branch
+								// 测试
+								//bankCardNo: "6228481091496106012",
+								//mobile: 17673458886,
+								//region: "湖南省-长沙市-岳麓区",
+								//branch: "中国农业银行股份有限公司长沙工大支行",
+
+							},
+							dataType: "json",
+							success: function(e) {
+								if(e.error == 0) {
+									mui.alert("添加成功", '提示', '', function() {
+										setTimeout(function() {
+											plus.webview.currentWebview("../index/bankCard_rz.html").close();
+										}, 300);
+										var list = plus.webview.currentWebview().opener();
+										//触发父页面的自定义事件(refresh),从而进行刷新
+										mui.fire(list, 'data_authentiction');
+									}, 'div');
+								} else {
+									mui.alert(e.msg, '提示', '', '', 'div');
+								}
+							}
+						});
+					} else {
+						mui.alert('请填写完整信息', '提示', '', '', 'div');
+					}
+				});
+
+				/*变更结算卡信息*/
+				$(".change").click(function() {
+					mui.openWindow({
+						url: "change_bankCard.html",
+						id: "change_bankCard",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							card_id: card_id
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

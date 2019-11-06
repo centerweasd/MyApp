@@ -1,0 +1,71 @@
+html,body,.mui-content{
+	height: 100%;
+	background: #fff;
+}
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.inputs{
+	padding: 20px 0 20px 25px;
+	background: #F2F2F2 !important;
+}
+.inputs label{
+	width: 25% !important;
+	font-size: 17px;
+}
+.inputs input{
+	float: left !important;
+	border-bottom: 1px solid #ccc !important;	
+	font-size: 16px;
+}
+.inputs label,.inputs input{
+	height: 40px;
+	line-height: 40px;
+	padding: 0 !important;
+}
+
+.cz_type{
+	padding: 30px 10px;
+}
+.cz_type .title{
+	height: 40px;
+	line-height: 40px;
+	font-size: 17px;
+	border-bottom: 1px solid #e5e5e5;
+	padding-left: 15px;
+}
+.type_list li{
+	height: 70px;
+	line-height: 70px;
+	font-size: 17px;
+}
+.type_list li label{
+	padding-left: 65px !important;
+}
+.type_list li label img{
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+.type_list li input{
+	top: 20px !important;
+}
+.mui-btn{
+	width: 96%;
+	left: 50%;
+	margin-left: -48%;
+	padding: 10px 15px;
+	font-size: 16px;
+	margin-top: 30px;
+}

@@ -1,0 +1,225 @@
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+
+/*header a {*/
+	/*color: #fff;*/
+/*}*/
+
+.mui-title {
+	color: #fff!important;
+}
+
+.tx_detailed {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 14px;
+	color: #fff;
+}
+
+.input_money {
+	background: #fff;
+	padding: 15px 15px 0;
+}
+
+.input_money .title {
+	height: 30px;
+	line-height: 30px;
+	font-size: 15px;
+	color: #666;
+}
+
+.fill_in {
+	border-bottom: 1px solid #eee;
+}
+
+.fill_in .tp {
+	font-size: 24px;
+	vertical-align: middle;
+}
+
+.fill_in input {
+	width: 70%;
+	border: 0;
+	font-size: 22px;
+	padding: 0;
+}
+
+::-webkit-input-placeholder {
+	/* WebKit, Blink, Edge */
+	color: #A6A5AC;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+:-moz-placeholder {
+	/* Mozilla Firefox 4 to 18 */
+	color: #A6A5AC;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+::-moz-placeholder {
+	/* Mozilla Firefox 19+ */
+	color: #A6A5AC;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+:-ms-input-placeholder {
+	/* Internet Explorer 10-11 */
+	color: #A6A5AC;
+	font-weight: bold;
+	font-size: 14px;
+}
+
+.can_Tx {
+	height: 40px;
+	line-height: 40px;
+}
+
+.can_Tx .can_money {
+	font-size: 13px;
+	color: #999999;
+}
+
+.can_Tx .all_tx {
+	font-size: 13px;
+	color: #FF8F48;
+}
+
+.reach_mode {
+	margin-top: 10px;
+	background: #fff;
+	padding: 0 15px;
+}
+
+.reach_mode .mode_list {
+	border-bottom: 1px solid #eee;
+}
+
+.reach_mode .mode_list p {
+	height: 28px;
+	line-height: 28px;
+	font-size: 13px;
+	margin: 0;
+	color: #999999;
+}
+
+.mui-radio input[type=radio]:checked:before {
+	content: '\e442' !important;
+	color: #1EBD80 !important;
+}
+
+.mui-radio input[type=radio]:before {
+	font-size: 24px !important;
+}
+
+.mui-radio input[type=radio] {
+	position: static !important;
+	width: 24px !important;
+	height: 24px !important;
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+
+.T_mode .mui-radio {
+	height: 40px;
+	line-height: 40px;
+	font-size: 15px;
+	border-bottom: 1px solid #eee;
+}
+
+.T_mode .mui-radio:last-child {
+	border-bottom: 0;
+}
+
+.tx_sub {
+	left: 50%;
+	width: 90%;
+	margin-left: -45%;
+	padding: 10px 15px;
+	background: #FA625F;
+	margin-top: 20px;
+	border: 1px solid #FA625F;
+}
+
+.service {
+	text-align: center;
+	font-size: 14px;
+	margin-top: 20px;
+	color: #999999;
+}
+
+.reminder {
+	margin-top: 20px;
+	padding: 0 15px;
+}
+
+.reminder .title {
+	font-size: 14px;
+	height: 30px;
+	line-height: 30px;
+}
+
+.reminder p {
+	font-size: 14px;
+	margin: 0;
+}
+
+
+/*提现记录*/
+
+.no_info {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	width: 50%;
+	margin-left: -25%;
+	text-align: center;
+}
+
+.no_info img {
+	width: 100%;
+}
+
+.trade_list li{
+	width: 100%;
+	height: 60px;
+	background: #fff;
+	border-bottom: 1px solid #eee;
+	padding: 0 15px;
+	
+}
+.trade_list li .info{
+	margin-top: 10px;
+}
+.trade_list li .info p{
+	margin-bottom: 0;
+	font-size: 13px;
+}
+.trade_list li .info .trade_name{
+	font-size: 15px;
+}
+.trade_list li .money{
+	line-height: 60px;
+	font-size: 18px;
+}
+.success{
+	color: #2BA245 ;
+}
+.fail{
+	color: #D84C29;
+}
+.radio-icon{
+	display: inline-block;
+	width: 25px;
+	vertical-align: middle;
+}
+.titleh4{
+	font-size: 16px;
+	padding: 10px 0;
+}

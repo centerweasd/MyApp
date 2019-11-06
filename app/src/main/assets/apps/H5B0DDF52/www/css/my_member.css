@@ -1,0 +1,274 @@
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.mui-slider-indicator.mui-segmented-control{
+	position: fixed;
+	top: 44px;
+	left: 0;
+	width: 100%;
+	background: #FF8F48;
+	color: #fff;
+	padding: 5px 15px;
+	z-index: 99;
+}
+.item_list{
+	border: 1px solid #fff;
+	border-radius: 5px;
+}
+.mui-control-item{
+	line-height: 28px !important;
+	font-size: 15px;
+	border-right: 1px solid #fff !important;
+}
+.mui-control-item:last-child{
+	border: 0 !important;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color: #333 !important;
+	background: #fff;
+}
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+	border: 0;
+}
+.mui-table-view:after{
+	height: 0 !important;
+}
+.mui-slider-group{
+	margin-top: 40px;
+}
+.text-black{
+	color: #444444!important;
+}
+.grade{
+	position: relative;
+	width: 100%;
+	background: #FA625F;
+	text-align: center;
+}
+.grade img{
+	width: 35% !important;
+}
+.grade .current_level{
+	position: absolute;
+	top:10px;
+	right: 15px;
+	font-size: 15px;
+	color: #BEA96A;
+}
+.mui-view{
+	background: #fff;
+	padding-left: 15px;
+}
+.mui-slider-item .sign{ 
+	height: 30px;
+	line-height: 30px;
+	font-size: 14px;
+	background: #fff;
+	margin: 0;
+	color: #333;
+	border-bottom: 1px solid #eee;
+}
+.mui-view ul li{
+	height: 50px;
+	padding-right: 15px;
+}
+.mui-view ul li .icon_img{
+	width: 9%;
+	text-align: center;
+	line-height: 48px;
+	margin-right: 8px;
+}
+.mui-view ul li .icon_img img{
+	vertical-align: middle;
+}
+.mui-view ul li .fr_c{
+	line-height: 50px;
+	font-size: 13px;
+	color: #999999;
+}
+.mui-view ul li .fr_m{
+	line-height: 50px;
+	font-size: 13px;
+	color: #BEA96A;
+}
+.mui-view ul li .free{
+	height: 24px;
+	line-height: 24px;
+	border: 1px solid #2FAAFA;
+	border-radius: 20px;
+	padding: 0 10px;
+	font-size: 13px;
+	color: #2FAAFA;
+	margin-top: 13px;
+}
+.mui-view ul li .pay_m{
+	height: 24px;
+	line-height: 25px;
+	border-radius: 20px;
+	padding: 0 10px;
+	font-size: 13px;
+	margin-top: 13px;
+	background: #2FAAFA;
+	color: #fff;
+}
+.long_hight{
+	display: none;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	margin-top: 30px;
+}
+.hidden{
+	display: none;
+}
+.member-content{
+	width: 100%;
+	height: auto;
+	box-sizing: border-box;
+	position: relative;
+	text-align: center;
+	margin: 0;
+	padding-top: 40px;
+}
+
+.member-table{
+	display: inline-block;
+	color: #444444;
+	border-color: #FFFFFF;
+	box-shadow: 5px 5px 5px #777777;
+	max-width: 100%;
+}
+.member-table tr td{
+	line-height: 40px;
+}
+.minwid{
+	min-width: 70px;
+}
+.pd4{
+	padding: 0 4px;
+}
+.table-th{
+	background-color: #ffc000;
+	font-size: 14px;
+}
+.table-td{
+	font-size: 12px;
+}
+.grade-n{
+	font-size: 14px;
+	font-weight: 600;
+}
+.up-btn{
+	display: block;
+	box-sizing: border-box;
+	margin: 10px;
+	border-radius: 10px;
+	border: none;
+	line-height: 40px;
+	background-color: #FF720D;
+	color: #FFFFFF;
+	box-shadow: 2px 2px 3px #555555;
+}
+.my-member-img{
+	width: 70%;
+	margin: 0;
+	padding: 40px 0 50px 0;
+}
+.my-member-btn{
+	display: block;
+	width: 150px;
+	height: 32px;
+	border-radius: 10px;
+	border: 0;
+	background: #ff9999;
+	color: #FFFFFF;
+	position: absolute;
+	bottom: 20px;
+	left: 112px;
+	/*margin: 0 auto;*/
+}
+.member-gift{
+	width: 90%;
+	height: auto;
+	padding: 20px;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	margin: 10px auto;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.gift-img-p{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 0 20px;
+}
+.gift-img{
+	width: 100%;
+	padding-bottom: 20px;
+}
+.gift-btn{
+	display: block;
+	border: 0;
+	width: 100%;
+	height: 45px;
+	background-color: #4C4F51;
+	color: #FFFFFF;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+}
+.hidden{
+	display: none;
+}
+.gift-text{
+	color: #D84C29;
+	font-size: 16px;
+}
+.gift-text-big{
+	color: #444444;
+	font-size: 18px;
+	line-height: 30px;
+}
+.pt20{
+	padding-top: 20px;
+}
+.gift-al{
+	color: #444444;
+	padding-top: 10px;
+}
+.to-sc{
+	font-size: 16px;
+	text-decoration: underline;
+}
+.member-ex{
+	width: 100%;
+	box-sizing: border-box;
+	padding: 15px 20px 0 20px;
+}
+
+.member-ex h4{
+	padding-bottom: 10px;
+	color: #444444;
+}
+.member-ex p{
+	line-height: 24px;
+	color: #555555;
+}
+.aui-tabBar.aui-tabBar-fixed {
+	position: relative!important;
+}
+.aui-tabBar{
+	background-color: transparent;
+}

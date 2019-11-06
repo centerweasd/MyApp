@@ -1,0 +1,93 @@
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.introduce{
+	width: 92%;
+	margin: 0 auto;
+	padding: 10px 15px;
+	font-size: 13px;
+	color: #333;
+	border-radius: 0 0 5px 5px;
+	background: #fff;
+}
+
+.apply_form{
+	display: none;
+	width: 92%;
+	margin: 0 auto;
+	background: #fff;
+	border-radius: 0 0 5px 5px;
+	padding: 10px 15px;
+}
+.apply_form input{
+	padding: 0;
+	border: 0;
+	background: #F2F2F2;
+	font-size: 15px;
+	padding-left: 8px;
+	border-radius: 5px;
+}
+.apply_form .phone{
+	width: 60%;
+}
+.apply_form .send_code{
+	display: inline-block;
+	width: 38%;
+	height: 40px;
+	line-height: 40px;
+	color: #999999;
+	text-align: center;
+	background: #f2f2f2;
+	border-radius: 5px;
+	font-size: 14px;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: #999999;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: #999999;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: #999999;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+	color: #999999;
+}
+.tips{
+	color: #FD4F4E;
+	font-size: 13px;
+	text-align: center;
+	margin: 10px 0;
+}
+
+
+.mui-btn{
+	width: 92%;
+	left: 50%;
+	margin-left: -46%;
+	background: #FA625F;
+	border: 1px solid #FA625F;
+	padding: 10px !important;
+}
+.apply_btn{
+	display: none;
+}
+.telephone{
+	font-size: 15px;
+	text-align: center;
+	margin-top: 20px;
+	color:#666;
+}

@@ -1,0 +1,118 @@
+html,body,.mui-content,.mui-slider-group,.mui-slider{
+	height: 100%;
+}
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.no_info{
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	width: 50%;
+	margin-left: -25%;
+	text-align: center;
+}
+.no_info img{
+	width: 100%;
+}
+
+
+.mui-slider-indicator.mui-segmented-control{
+	background: #fff;
+}
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+	color: #FF8F48;	
+}
+.mui-segmented-control.mui-segmented-control-inverted~.mui-slider-progress-bar{
+	background-color: #FF8F48;
+}
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item{
+	border-top: 0;
+}
+.mui-table-view{
+	background-color:#EFEFF4;
+}
+.mui-table-view-cell{
+	position: relative;
+	width: 96%;
+	margin: 10px auto 0;
+	background: #fff;
+	padding: 0;
+}
+.mui-table-view-cell .head{
+	height: 45px;
+	line-height: 45px;
+	padding: 0 15px;
+	border-bottom: 1px dashed #ccc;
+}
+.mui-table-view-cell .head .left{
+	font-weight: bold;
+	color: #989898;
+	font-size: 15px;
+}
+.mui-table-view-cell .head .money{
+	font-size: 22px;
+}
+.mui-table-view-cell .head .right{
+	font-size: 16px;
+	color: #A3A3A3;
+}
+.mui-table-view-cell .circular{
+	position: absolute;
+	top: 39px;
+	display: block;
+	width: 10px;
+	height: 10px;
+	background: #EFEFF4;
+	border-radius: 50%;
+}
+.mui-table-view-cell .c_1{
+	left: -5px;
+}
+.mui-table-view-cell .c_2{
+	right: -5px;
+}
+
+.mui-table-view-cell .info{
+	height: 68px;
+	background: #fff;
+	padding: 20px 15px 10px;
+}
+.mui-table-view-cell .info p{
+	color: #A3A3A3;
+	font-size: 13px;
+	margin: 0;
+}
+.mui-table-view-cell .info .right span{
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	font-size: 14px;
+	padding: 0 10px; 
+	margin-top: 11px;
+	border: 1px solid #999;
+	border-radius: 20px;
+	color: #A3A3A3;
+}
+.mui-table-view-cell .info .right .lj{
+	color: #2EABFB;
+	border: 1px solid #2EABFB;
+}
+.ysy_img{
+	position: absolute;
+	top: 10px;
+	left: 50%;
+	width: 16% !important;
+	margin-left: -8%;
+}

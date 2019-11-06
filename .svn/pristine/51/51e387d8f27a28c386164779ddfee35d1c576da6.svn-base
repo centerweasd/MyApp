@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style type="text/css">
+			header {
+				width: 100%;
+				background-color: #FA625F !important;
+				box-shadow: none !important;
+			}
+			
+			header a {
+				color: #fff;
+			}
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.mui-content>.mui-table-view {
+				margin: 0 !important;
+			}
+			
+			.mui-table-view:before,
+			.mui-table-view:after {
+				height: 0;
+			}
+			
+			.mui-table-view-cell {
+				padding: 0 15px;
+				height: 60px;
+			}
+			
+			.mui-navigate-right {
+				margin: 6px -15px !important;
+			}
+			
+			.mui-navigate-right .left {
+				width: 12%;
+				line-height: 48px;
+				text-align: center;
+				margin-right: 10px;
+			}
+			
+			.mui-navigate-right .left img {
+				width: 100%;
+				vertical-align: middle;
+			}
+			
+			.view-cell {
+				margin-top: 6px;
+			}
+			
+			.view-cell p {
+				margin: 0;
+			}
+			
+			.view-cell p:first-child {
+				font-size: 14px;
+				color: #000;
+			}
+			
+			.view-cell p:last-child {
+				font-size: 12px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">邀请好友</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell share_code">
+					<a class="mui-navigate-right">
+						<div class="left">
+							<img src="../../img/ysf_evaluation_satisfied.png" />
+						</div>
+						<div class="view-cell">
+							<p>当面邀请</p>
+							<p>扫码注册即可成为好友</p>
+						</div>
+						<div class="clear"></div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell link">
+					<a class="mui-navigate-right">
+						<div class="left">
+							<img src="../../img/ysf_evaluation_satisfied.png" />
+						</div>
+						<div class="view-cell">
+							<p>链接邀请</p>
+							<p>发送链接给好友</p>
+						</div>
+						<div class="clear"></div>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'user');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				getToken();
+				$(".share_code").click(function() {
+					mui.openWindow({
+						url: "./share_code.html",
+						id: "share_code",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				$(".link").click(function() {
+					mui.openWindow({
+						url: "./link.html",
+						id: "link",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							type: 1
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+			})
+		</script>
+	</body>
+
+</html>

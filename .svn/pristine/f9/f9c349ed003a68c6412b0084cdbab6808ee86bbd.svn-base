@@ -1,0 +1,229 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_discount.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的优惠券</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1">未使用(<span class="wsy_num">0</span>)</a>
+					<a class="mui-control-item" href="#item2">已使用(<span class="ysy_num">0</span>)</a>
+					<a class="mui-control-item" href="#item3">已过期(<span class="gq_num">0</span>)</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<div id="item1" class="mui-slider-item mui-control-content mui-active">
+						<ul class="mui-table-view wsy_list">
+							<div class="no_info wsy_no" style="display: none;">
+								<img src="../../img/no_creditbill_icon.png" />
+								<p>没有相关数据</p>
+							</div>
+						</ul>
+					</div>
+					<div id="item2" class="mui-slider-item mui-control-content">
+						<ul class="mui-table-view ysy_list">
+							<div class="no_info ysy_no" style="display: none;">
+								<img src="../../img/no_creditbill_icon.png" />
+								<p>没有相关数据</p>
+							</div>
+						</ul>
+					</div>
+					<div id="item3" class="mui-slider-item mui-control-content">
+						<ul class="mui-table-view gq_list">
+							<div class="no_info gq_no" style="display: none;">
+								<img src="../../img/no_creditbill_icon.png" />
+								<p>没有相关数据</p>
+							</div>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/coupon/index",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							$(".wsy_num").text(e.count.wsy);
+							$(".ysy_num").text(e.count.log);
+							$(".gq_num").text(e.count.out);
+							/*未使用*/
+							if(!e.wsy.length) {
+								$(".wsy_no").show();
+							} else {
+								$(".wsy_no").hide();
+								for(var i = 0; i < e.wsy.length; i++) {
+									var coul_type = e.wsy[i].coul_type;
+									if(coul_type == 1){
+										coul_type = "商城积分券"
+									}else if(coul_type == 2){
+										coul_type = "升级等级券"
+									}else if(coul_type == 3){
+										coul_type = "计划优惠券 "
+									}else if(coul_type == 4){
+										coul_type = "收款优惠券"
+									}
+									var coul_time = e.wsy[i].coul_time;
+									if(coul_time == 0){
+										coul_time = "长期有效"
+									}else{
+										coul_time = e.wsy[i].coul_time;
+									}
+									var html = '<li class="mui-table-view-cell">' +
+										'<span class="circular c_1"></span>' +
+										'<span class="circular c_2"></span>' +
+										'<div class="head">' +
+										'<div class="left">' +
+										'<span class="money">'+e.wsy[i].coul_money+'</span> 元' +
+										'</div>' +
+										'<span class="right">'+coul_type+'</span>' +
+										'<div class="clear"></div>' +
+										'</div>' +
+										'<div class="info">' +
+										'<div class="left">' +
+										'<p>领取时间:'+e.wsy[i].coul_receive_time+'</p>' +
+										'<p>过期时间:'+coul_time+'</p>' +
+										'</div>' +
+										'<div class="right">' +
+										'<span class="lj">立即使用</span>' +
+										'</div>' +
+										'<div class="clear"></div>' +
+										'</div>' +
+										'</li>';
+										$(".wsy_list").append(html);
+								}
+							}
+							/*已使用*/
+							if(!e.log.length) {
+								$(".ysy_no").show();
+							} else {
+								$(".ysy_no").hide();
+								for(var i = 0; i < e.log.length; i++) {
+									var coul_type = e.log[i].coul_type;
+									if(coul_type == 1){
+										coul_type = "商城积分券"
+									}else if(coul_type == 2){
+										coul_type = "升级等级券"
+									}else if(coul_type == 3){
+										coul_type = "计划优惠券 "
+									}else if(coul_type == 4){
+										coul_type = "收款优惠券"
+									}
+									var coul_time = e.log[i].coul_time;
+									if(coul_time == 0){
+										coul_time = "长期有效"
+									}else{
+										coul_time = e.log[i].coul_time;
+									}
+									var html = '<li class="mui-table-view-cell">' +
+										'<span class="circular c_1"></span>' +
+										'<span class="circular c_2"></span>' +
+										'<img src="../../img/icon-used.png" class="ysy_img"/>'+
+										'<div class="head">' +
+										'<div class="left">' +
+										'<span class="money">'+e.log[i].coul_money+'</span> 元' +
+										'</div>' +
+										'<span class="right">'+coul_type+'</span>' +
+										'<div class="clear"></div>' +
+										'</div>' +
+										'<div class="info">' +
+										'<div class="left">' +
+										'<p>领取时间:'+e.log[i].coul_receive_time+'</p>' +
+										'<p>过期时间:'+coul_time+'</p>' +
+										'</div>' +
+										'<div class="right">' +
+										'<span>已使用</span>' +
+										'</div>' +
+										'<div class="clear"></div>' +
+										'</div>' +
+										'</li>';
+										$(".ysy_list").append(html);
+								}
+							}
+							/*已过期*/
+							if(!e.out.length) {
+								$(".gq_no").show();
+							} else {
+								$(".gq_no").hide();
+								for(var i = 0; i < e.out.length; i++) {
+									var coul_type = e.out[i].coul_type;
+									if(coul_type == 1){
+										coul_type = "商城积分券"
+									}else if(coul_type == 2){
+										coul_type = "升级等级券"
+									}else if(coul_type == 3){
+										coul_type = "计划优惠券 "
+									}else if(coul_type == 4){
+										coul_type = "收款优惠券"
+									}
+									var coul_time = e.out[i].coul_time;
+									if(coul_time == 0){
+										coul_time = "长期有效"
+									}else{
+										coul_time = e.out[i].coul_time;
+									}
+									var html = '<li class="mui-table-view-cell">' +
+										'<span class="circular c_1"></span>' +
+										'<span class="circular c_2"></span>' +
+										'<img src="../../img/yiguoqi.png" class="ysy_img"/>'+
+										'<div class="head">' +
+										'<div class="left">' +
+										'<span class="money">'+e.out[i].coul_money+'</span> 元' +
+										'</div>' +
+										'<span class="right">'+coul_type+'</span>' +
+										'<div class="clear"></div>' +
+										'</div>' +
+										'<div class="info">' +
+										'<div class="left">' +
+										'<p>领取时间:'+e.out[i].coul_receive_time+'</p>' +
+										'<p>过期时间:'+coul_time+'</p>' +
+										'</div>' +
+										'<div class="right">' +
+										'<span>已过期</span>' +
+										'</div>' +
+										'<div class="clear"></div>' +
+										'</div>' +
+										'</li>';
+										$(".gq_list").append(html);
+								}
+							}
+						}
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

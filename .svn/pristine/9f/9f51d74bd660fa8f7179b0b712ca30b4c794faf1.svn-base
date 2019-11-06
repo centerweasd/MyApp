@@ -1,0 +1,177 @@
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff !important;
+}
+
+.doubt {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	width: 6%;
+}
+
+.balance {
+	background: #FA625F;
+	padding: 20px 10px 10px;
+}
+
+.balance ul li:nth-child(1) {
+	width: 34%;
+	float: left;
+	border-right: 1px solid #fff;
+}
+
+.balance ul li:nth-child(2) {
+	width: 36%;
+	padding-left: 10px;
+	float: left;
+	border-right: 1px solid #fff;
+}
+
+.balance ul li:nth-child(3) {
+	width: 30%;
+	padding-left: 10px;
+	float: left;
+}
+
+.balance ul li p {
+	margin: 0;
+	line-height: 20px;
+	font-size: 12px;
+	color: #fff;
+}
+
+.balance ul li .money {
+	font-size: 16px;
+	color: #fff;
+}
+
+.notice {
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	padding: 0 15px;
+	text-align: center;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.notice .icon-gonggao {
+	font-size: 14px;
+	vertical-align: middle;
+}
+
+.notice .notice_info {
+	display: inline-block;
+	height: 40px;
+	overflow: hidden;
+	font-size: 12px;
+	vertical-align: middle;
+}
+
+.mui-table-view:before,
+.mui-table-view:after {
+	height: 0 !important;
+}
+
+.go_xy {
+	height: 50px;
+	line-height: 50px;
+	margin: 5px 0;
+}
+
+.go_xy .mui-table-view-cell {
+	padding: 0 15px !important;
+}
+
+.go_xy .mui-navigate-right {
+	margin: 0 -15px !important;
+	font-size: 15px;
+}
+
+.go_xy .mui-navigate-right:after {
+	font-size: 25px;
+}
+
+.wallet_md .list_head {
+	text-align: center;
+	padding: 10px 0;
+}
+
+.wallet_md .list_head p {
+	margin: 0;
+	font-size: 13px;
+}
+
+.wallet_md .list_head .title {
+	font-size: 15px;
+	color: #22222E;
+}
+
+.wallet_md .list_head img {
+	width: 7%;
+	vertical-align: middle;
+}
+
+.wallet_list .mui-table-view {
+	height: 65px;
+	padding: 0 15px;
+	border-bottom: 1px solid #EFEFF4;
+}
+
+.wallet_list .mui-table-view p {
+	line-height: 18px;
+	margin: 0;
+	font-size: 12px;
+}
+
+.wallet_list .mui-table-view .view_title {
+	color: #22222E;
+	font-size: 15px;
+}
+
+.wallet_list .mui-table-view .left {
+	width: 70%;
+	height: 35px;
+	margin-top: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.wallet_list .mui-table-view .view_title span {
+	color: #ff3300;
+}
+
+.wallet_list .mui-table-view .to_finish,.to_finish_s {
+	color: #FF8F48;
+	border: 1px solid #FF8F48;
+	border-radius: 20px;
+	font-size: 14px;
+	padding: 4px 15px;
+	line-height: 65px;
+}
+.to_finish_h{
+	color: #999;
+	border: 1px solid #999;
+	border-radius: 20px;
+	font-size: 14px;
+	padding: 4px 15px;
+	line-height: 65px;
+}
+.condition{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

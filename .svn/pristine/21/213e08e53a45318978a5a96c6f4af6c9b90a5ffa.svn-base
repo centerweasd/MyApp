@@ -1,0 +1,391 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/shop_pay.css"/>
+    <style type="text/css">
+        /*header {*/
+        /*width: 100%;*/
+        /*box-shadow: none !important;*/
+        /*}*/
+
+        /*header a {*/
+        /*color: #fff;*/
+        /*}*/
+
+        .mui-title {
+            color: #fff !important;
+        }
+
+        .title {
+            background: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+
+        .money {
+            font-size: 20px;
+        }
+
+        .sure {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 50px;
+            background: #2DAAFC;
+            border: none;
+            font-size: 15px;
+        }
+
+        .sure span {
+            font-size: 18px;
+        }
+
+        /*测试*/
+        .top {
+            margin-top: 40px;
+        }
+
+        .weixin {
+            width: 200px;
+            height: 50px;
+            margin-left: 50px;
+            background: url(../../img/icon-wx.png);
+        }
+
+        .zhifubao {
+            width: 200px;
+            height: 50px;
+
+            margin-left: 50px;
+            background: url(../../img/icon-zfb.png);
+        }
+
+        #jine {
+            -webkit-user-select: text;
+            text-align: right;
+            padding: 0 1em;
+            border: 0;
+            border-bottom: 1px solid #ECB100;
+            border-radius: 0;
+            font-size: 16px;
+            width: 30%;
+            outline: none;
+        }
+
+        /*测试end*/
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">在线支付</h1>
+</header>
+<div class="mui-content">
+    <img src="../../img/ic_edit_creditcard.png" width="100%" style="display: block;"/>
+    <div class="title">
+        <span class="money">0.00</span>
+        <p id='sn'></p>
+    </div>
+    <div class="chi" style="background: #fff;padding: 0 15px;">
+
+    </div>
+    <!--测试-->
+    <!--<div class="mui-content">-->
+
+    <!--捐赠金额：<input id="jine" type="number" value="0.01" /> 元-->
+
+    <!--<div class="top" id="testLogin" >-->
+    <!--<input type="button" class="weixin" id="weixin1" value="微信支付" />-->
+    <!--<input type="button" class="zhifubao" id="zhifubao" value="支付宝支付" />-->
+
+    <!--</div>-->
+
+    <!--</div>-->
+    <!--&lt;!&ndash;测试end&ndash;&gt;-->
+    <button type="button" class="mui-btn mui-btn-blue sure">
+        确认支付:
+        <span class="money_s">￥0.00</span>
+    </button>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    mui.plusReady(function () {
+        mui.init({
+            hardwareAccelerated: true,
+            beforeback: function () {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'activation');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+        });
+
+        var sn = plus.webview.currentWebview().sn;
+        plus.nativeUI.showWaiting("安全检测中，请等待");
+        var tokens = getToken();
+        getToken();
+
+        /*获取用户信息*/
+        $.ajax({
+            type: 'get',
+            url: site_app + '/api/Order/getsn',
+            data: {
+                'token': tokens,
+                'order_no': sn
+            },
+            cache: false,
+            dataType: 'json',
+            success: function (e) {
+                if (e.error == 0) {
+                    $('.money').html('￥' + e.data.order_amount);
+                    $('#sn').html('订单号' + e.data.order_sn);
+                    $('.money_s').html('￥' + e.data.order_amount);
+
+                } else {
+                    mui.alert(data.msg, '提示', '', '', 'div');
+                }
+            }
+        });
+
+        /*获取渠道*/
+        $.ajax({
+            type: 'post',
+            url: site_app + '/api/Order/getpayment',
+            data: {
+                'token': tokens
+            },
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                if (data.error == 0) {
+                    var tex = '';
+                    tex += '<div class="aui-flex b-line" style="padding:15px 0">';
+                    tex += '<div class="aui-flex-box aui-flex-box-clear">';
+                    tex += '<h4 style="color:#333">余额支付</h4>';
+                    tex += '<p>亿万用户的选择，更快更安全</p>';
+                    tex += '</div>';
+                    tex += '<div class="aui-payment-method">';
+                    tex += '<label class="cell-right">';
+                    tex += '<input type="radio" name="radio" value="0" checked="checked">';
+                    tex += '<i class="cell-radio-icon"></i>';
+                    tex += '</label>';
+                    tex += '</div>';
+                    tex += '</div>';
+                    for (i = 0; i < data.data.length; i++) {
+                        tex += '<div class="aui-flex b-line" style="padding:15px 0">';
+                        tex += '<div class="aui-flex-box aui-flex-box-clear">';
+                        tex += '<h4 style="color:#333">' + data.data[i].payment_name + '</h4>';
+                        tex += '<p>亿万用户的选择，更快更安全</p>';
+                        tex += '</div>';
+                        tex += '<div class="aui-payment-method">';
+                        tex += '<label class="cell-right">';
+                        tex += '<input type="radio" name="radio" value="' + data.data[i].payment_id + '">';
+                        tex += '<i class="cell-radio-icon"></i>';
+                        tex += '</label>';
+                        tex += '</div>';
+                        tex += '</div>';
+                    }
+                    $('.chi').html(tex);
+                } else {
+                    mui.alert(data.msg, '提示', '', '', 'div');
+                }
+            }
+        });
+
+        // 获取支付通道
+        var wxChannel = null; // 微信支付
+        var aliChannel = null; // 支付宝支付
+        var channel = null;   //支付通道
+        mui.init({
+            swipeBack: true //启用右滑关闭功能
+        });
+        plus.payment.getChannels(function (channels) {
+            for (var i in channels) {
+                if (channels[i].id == "wxpay") {
+                    wxChannel = channels[i];
+                } else if (channels[i].id == "alipay"){
+                    aliChannel = channels[i];
+                }
+            }
+        }, function (e) {
+            plus.nativeUI.alert("获取支付通道失败：" + e.message);
+        });
+
+        // 点击支付
+        $(".sure").click(function () {
+            plus.nativeUI.showWaiting();
+            var chennel_id = $('input[type=radio]:checked').val();
+            $.ajax({
+                type: "post",
+                url: site_app + "/api/Order/payorder",
+                data: {
+                    token: tokens,
+                    type: chennel_id,
+                    order_no: sn
+                },
+                dataType: "json",
+                success: function (e) {
+                    plus.nativeUI.closeWaiting();
+                    if (e.error == 0) {
+                        var cPage = plus.webview.currentWebview();
+                        var bPage = cPage.opener();
+                        var aPage = bPage.opener();
+                        if (e.type == "nourl") {
+                            mui.alert(e.msg, '提示', '', function () {
+                                cPage.close();
+                                bPage.close();
+                                aPage.close();
+                            }, 'div');
+                        } else if (e.type == "url") {
+                            // mui.openWindow({
+                            // 	url: "../find/pay_iframe.html",
+                            // 	id: "pay_iframe",
+                            // 	show: {
+                            // 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+                            // 	},
+                            // 	extras: {
+                            // 		urls: e.url
+                            // 	},
+                            // 	createNew: true,
+                            // 	waiting: {
+                            // 		autoShow: false //自动显示等待框，默认为true
+                            // 		//title: '', //等待对话框上显示的提示内容
+                            // 	}
+                            // })
+
+                            var PAYSERVER = e.url;
+                            channel = aliChannel;
+                            var xhr = new XMLHttpRequest();
+                            var amount = $('.money_s').html().slice(1);
+                            xhr.onreadystatechange = function () {
+                                switch (xhr.readyState) {
+                                    case 4:
+                                        if (xhr.status == 200) {
+                                            plus.payment.request(channel, xhr.responseText, function (result) {
+
+                                                $.ajax({
+                                                    type: "post",
+                                                    url: site_app + "/pay/Alipay/notify",
+                                                    data: {
+                                                        result: result
+                                                    },
+                                                    dataType: "json",
+                                                    success: function (data) {
+                                                        if (data.error == 0) {
+                                                            plus.nativeUI.alert("支付成功！", function () {
+                                                                mui.openWindow({
+                                                                    url: "../user/my_trade.html",
+                                                                    id: "my_trade",
+                                                                    show: {
+                                                                        autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                                                    },
+                                                                    waiting: {
+                                                                        autoShow: true, //自动显示等待框，默认为true
+                                                                        title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                                                    }
+                                                                })
+                                                            });
+                                                        } else {
+                                                            plus.nativeUI.alert("刷新失败：" + data.msg);
+                                                        }
+                                                    }
+                                                })
+                                            }, function (error) {
+                                                plus.nativeUI.alert("支付失败：" + error.code);
+                                            });
+                                        } else {
+                                            plus.nativeUI.alert("获取订单信息失败！");
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            };
+                            xhr.open('GET', PAYSERVER + amount);
+                            xhr.send();
+                        }
+                    } else {
+                        mui.alert(e.msg, '提示', '', '', 'div');
+                    }
+                }
+            });
+        });
+
+        $("body").ajaxStop(function () {
+            plus.nativeUI.closeWaiting();
+        });
+
+    });
+
+    //     document.getElementById('weixin1').addEventListener('tap',function() {
+    //         console.log("微信");
+    //         pay('wxpay');
+    //     });
+    //     document.getElementById('zhifubao').addEventListener('tap',function() {
+    //         console.log("zhifubao");
+    //         pay('alipay');
+    //     });
+    //
+    //     // var ALIPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/alipay.php?total=';
+    //     var ALIPAYSERVER='http://ecs.711wan.com/alipay/index.php?total=';
+    //     var WXPAYSERVER='http://demo.dcloud.net.cn/helloh5/payment/wxpay.php?total=';
+
+    // 发起支付请求
+    // function pay(id) {
+    //     // 从服务器请求支付订单
+    //     var PAYSERVER = '';
+    //     if (id == 'alipay') {
+    //         PAYSERVER = ALIPAYSERVER;
+    //         channel = aliChannel;
+    //     } else if (id == 'wxpay') {
+    //         PAYSERVER = WXPAYSERVER;
+    //         channel = wxChannel;
+    //     } else {
+    //         plus.nativeUI.alert("不支持此支付通道！", null, "捐赠");
+    //         return;
+    //     }
+    //     var xhr = new XMLHttpRequest();
+    //     var amount = document.getElementById('jine').value;
+    //
+    //     xhr.onreadystatechange = function () {
+    //         switch (xhr.readyState) {
+    //             case 4:
+    //                 if (xhr.status == 200) {
+    //                     plus.payment.request(channel, xhr.responseText, function (result) {
+    //                         plus.nativeUI.alert("支付成功！", function () {
+    //                             back();
+    //                         });
+    //                     }, function (error) {
+    //                         plus.nativeUI.alert("支付失败：" + error.code);
+    //                     });
+    //                 } else {
+    //                     alert("获取订单信息失败！");
+    //                 }
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     };
+    //     xhr.open('GET', PAYSERVER + amount);
+    //     xhr.send();
+    // }
+
+</script>
+
+</body>
+
+</html>

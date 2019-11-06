@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/address.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">收货地址</h1>
+			<span class="add">新增</span>
+		</header>
+		<div class="mui-content">
+			<ul>
+
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					//					beforeback: function() {
+					//						//获得父页面的webview
+					////						var list = plus.webview.currentWebview().opener();
+					//						//触发父页面的自定义事件(refresh),从而进行刷新
+					////						mui.fire(list, 'shop');
+					//						//返回true,继续页面关闭逻辑
+					//						return true;
+					//					}
+				});
+				window.addEventListener('shop', function(e) { //执行刷新
+					location.reload();
+				});
+				var tokens = getToken();
+				getToken();
+				$.ajax({
+					type: "get",
+					url: site_app + "/api/Addrees/adindex",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							if(e.data != false) {
+								for(var i = 0; i < e.data.length; i++) {
+									var moren = e.data[i].ad_default_adres;
+									var classs;
+									if(moren == 1) {
+										classs = "moren";
+										moren = "默认地址";
+									} else {
+										classs = "";
+										moren = "";
+									}
+									var html = '<li>' +
+										'<div class="address_ct" title="' + e.data[i].ad_id + '">' +
+										'<div class="user_info_address">' +
+										'<span class="user_name">' + e.data[i].ad_uname + '</span>' +
+										'<span class="phone">' + e.data[i].ad_phone + '</span>' +
+										'</div>' +
+										'<span>' +
+										'<span class="' + classs + '">' + moren + '</span>' + e.data[i].ad_de_adres + '</span>' +
+										'</div>' +
+										'<div class="set_mr" title="' + e.data[i].ad_id + '">' +
+										'编辑' +
+										'</div>' +
+										'<div class="clear"></div>' +
+										'</li>';
+									$("ul").append(html);
+								}
+							}
+						}
+					}
+				});
+				$("ul").on("click", ".address_ct", function() {
+					var type = plus.webview.currentWebview().type;
+					var goods_id = plus.webview.currentWebview().goods_id;
+					var view = plus.webview.currentWebview().opener();
+					// 注意HBuilder是上个页面的ID你自己要替换掉
+					mui.fire(view, 'doit', {
+						inputVal: $(this).attr("title")
+					});
+					plus.webview.currentWebview().close();
+				});
+				$("ul").on("click", ".set_mr", function() {
+					var type = plus.webview.currentWebview().type;
+					var goods_id = plus.webview.currentWebview().goods_id;
+					mui.openWindow({
+						url: "../find/edit_address.html",
+						id: "edit_address",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							goods_id: goods_id,
+							type: type,
+							title:$(this).attr("title")
+						},
+						createNew: true,
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$(".add").click(function() {
+					var type = plus.webview.currentWebview().type;
+					var goods_id = plus.webview.currentWebview().goods_id;
+					mui.openWindow({
+						url: "../find/add_address.html",
+						id: "add_address",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							modes: 'shop_order',
+							goods_id: goods_id,
+							type: type
+						},
+						createNew: true,
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+
+				 
+			})
+		</script>
+	</body>
+
+</html>

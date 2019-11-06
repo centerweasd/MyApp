@@ -1,0 +1,1034 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/home.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+
+				</div>
+			</div>
+			<div class="notice">
+				<div class="left icon_gg">
+					<img src="../../img/icon_gg_2.png" />
+					<!--<span class="text-white">乐活</span>-->
+					<span class="stub"></span>
+				</div>
+				<div class="notice_info left">
+					<ul class="notice-txt">
+						<!--<li>恭喜用户:139****6938的好友延期，获得分润23.65元</li>-->
+					</ul>
+				</div>
+				<div class="right">
+					<img class="message" src="../../img/notice.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="mui-grid">
+				<div class="sh_tab">
+					<ul>
+						<li class="hk" title="1">
+							<div class="left">
+								<img src="../../img/icon_h_9.png" />
+							</div>
+							<div class="right">
+								<p>信用卡服务</p>
+								<span>智能安全无忧</span>
+							</div>
+							<div class="clear"></div>
+						</li>
+						<li class="sk" title="2">
+							<div class="left">
+								<img class="kefu_icon" src="../../img/icon_h_13.png" />
+							</div>
+							<div class="right">
+								<p>花呗服务</p>
+								<!--<span>安全又实用</span>-->
+							</div>
+							<div class="clear"></div>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+				<div class="apply_tab">
+					<ul>
+						<li title="1">
+							<div class="left">
+								<img src="../../img/icon_h_8.png" />
+							</div>
+							<div class="right">
+								<p class="brown title">信用卡申请</p>
+								<!--<p>用乐活快速办卡</p>-->
+							</div>
+							<div class="clear"></div>
+						</li>
+						<li title="2">
+							<div class="left">
+								<img src="../../img/user_icon_11.png" />
+							</div>
+							<div class="right">
+								<p class="brown title">进行实名认证</p>
+								<!--<p>乐活兑换大礼</p>-->
+							</div>
+							<div class="clear"></div>
+						</li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+				<div class="grid">
+					<ul class="grid_list">
+						<!--<li title="1">
+							<div class="grid_img">
+								<img src="../../img/icon_h_1.png" />
+							</div>
+							<p>延期详情</p>
+						</li>
+						<li title="2">
+							<div class="grid_img">
+								<img src="../../img/icon_h_2.png" />
+							</div>
+							<p>收款明细</p>
+						</li>-->
+						<li title="3">
+							<div class="grid_img">
+								<!--<img src="../../img/icon_h_3.png" />-->
+								<img src="../../img/icon_h_14.png" />
+							</div>
+							<!--<p>明细查询</p>-->
+							<p>花呗服务</p>
+						</li>
+						<li title="4">
+							<div class="grid_img">
+								<img src="../../img/icon_h_4.png" />
+							</div>
+							<p>我的会员</p>
+						</li>
+						<li title="5">
+							<div class="grid_img">
+								<img src="../../img/icon_h_5.png" />
+							</div>
+							<p>便民服务</p>
+						</li>
+						<!--<li title="7">
+							<div class="grid_img">
+								<img src="../../img/icon_h_11.png" />
+							</div>
+							<p>翌块链</p>
+						</li>
+						<li title="7">
+							<div class="grid_img">
+								<img src="../../img/icon_h_12.png" />
+							</div>
+							<p>翌涨跌</p>
+						</li>-->
+						<li title="6">
+							<div class="grid_img">
+								<img src="../../img/icon_h_6.png" />
+							</div>
+							<p>在线客服</p>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+
+			</div>
+
+			<!--<div class="insurance">-->
+				<!--<span class="iconfont icon-anquan"></span> 众安银行卡盗刷险保障账户资金安全-->
+			<!--</div>-->
+			<div class="daily" id="daily">
+				<div class="title">
+					<div class="left">
+						<!--<img src="../../img/icon_gg_3.png" />-->
+						<span class="daily_h">乐活指南</span>
+					</div>
+					<div class="right">
+						<span class="iconfont icon-mjiantou"></span>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="daily_content">
+					<h1 class="daily_name">--</h1>
+					<!--<div class="content">-->
+						<!--&#45;&#45;-->
+					<!--</div>-->
+				</div>
+			</div>
+
+			<!--<div class="daily">-->
+				<!--<div class="title">-->
+					<!--<div class="left">-->
+						<!--&lt;!&ndash;<img src="../../img/icon_gg_3.png" />&ndash;&gt;-->
+						<!--<span class="daily_h">乐活精选</span>-->
+					<!--</div>-->
+					<!--<div class="right">-->
+						<!--&lt;!&ndash;<span class="iconfont icon-mjiantou"></span>&ndash;&gt;-->
+					<!--</div>-->
+					<!--<div class="clear"></div>-->
+				<!--</div>-->
+				<!--<div class="jingxuan">-->
+					<!--<img class="jingxuan-img" src="../../img/jingxuan.jpg" alt="乐活精选">-->
+					<!--<img class="jingxuan-img" src="../../img/guo1.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/guo2.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/guo3.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/guo4.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/shouye.png" alt="">-->
+				<!--</div>-->
+			<!--</div>-->
+		</div>
+		<div class="mengban"></div>
+		<div class="update-view">
+			<div class="updateProDiv">升级中，请勿退出或执行其他操作:
+				<progress value="" max="" id="proDownFile"></progress>
+				<span class="persent"></span>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/test.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			// localStorage.setExpire('banner','fgsergreghtrht',3600*1000);
+			// if(localStorage.getExpire('banner')){
+            //     console.log(localStorage.getExpire('banner'))
+			// }else {
+            //     console.log('fvgdgafgerthr')
+			// }
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+
+			    plus.nativeUI.closeWaiting();
+				// plus.nativeUI.showWaiting("安全检测中，请等待");
+
+                var tokens = getToken();
+                getToken();
+                var user_real = '';
+				// window.addEventListener('index', function(e) { //执行刷新
+				// 	location.reload();
+				// });
+				// window.addEventListener('user', function(e) { //执行刷新
+				// 	location.reload();
+				// });
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('message', function(e) { //执行刷新
+					/*判断是否有未读消息*/
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/Message/getnumber",
+						data: {
+							token: tokens
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								$(".message").attr("src", "../../img/notice.png")
+							} else if(e.error == 1) {
+								$(".message").attr("src", "../../img/notice_f.png")
+							}
+						}
+					});
+				});
+				mui('.mui-bar').on('tap', '#more', function() {
+					mui('#topPopover').popover('show', document.getElementById("more"));
+				});
+				mui(".mui-slider").slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+
+				/*banner*/
+				if(localStorage.getExpire('banner')){
+					var data = localStorage.getExpire('banner');
+                    bannerFn(JSON.parse(data));
+				} else {
+                    $.ajax({
+                        type: "get",
+                        url: site_app + "/api/Img/index",
+                        data: {
+                            type: "2"
+                        },
+                        cache: false,
+                        dataType: "json",
+                        success: function(e) {
+                            if(e.error == 0) {
+                                bannerFn(e.data);
+                                localStorage.setExpire('banner',JSON.stringify(e.data),3600*1000);
+                            }
+                        }
+                    });
+				}
+
+				// 轮播图
+				function bannerFn(data){
+                    var img = '';
+                    var ImgList = data;
+                    img += '<div class="mui-slider-item mui-slider-item-duplicate" title="0">' +
+                        '<img src="' + ImgList[0].img_img + '" style="display:block">' +
+                        '</div>';
+                    for(var i = 0; i < ImgList.length; i++) {
+                        img += '<div class="mui-slider-item" title="' + i + '">' +
+                            '<img src="' + ImgList[i].img_img + '" style="display:block">' +
+                            '</div>';
+                    }
+                    img += '<div class="mui-slider-item mui-slider-item-duplicate" title="0">' +
+                        '<img src="' + ImgList[0].img_img + '" style="display:block">' +
+                        '</div>';
+                    $(".mui-slider-group").html(img);
+                    var gallery = mui('.mui-slider');
+                    gallery.slider();
+                    mui(".mui-slider").slider({
+                        interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+                    });
+				}
+
+				/*判断是否有未读消息*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/Message/getnumber",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+					    console.log(JSON.stringify(e));
+						if(e.error == 0) {
+							$(".message").attr("src", "../../img/notice.png")
+						} else if(e.error == 1) {
+							$(".message").attr("src", "../../img/notice_f.png")
+						}
+					}
+				});
+
+				// 点击banner图
+				$(".mui-slider-group").on("click", ".mui-slider-item", function(e) {
+                    var title = Number($(this).attr("title"));
+				    switch(title){
+						case 0:
+                            getHuabei();
+							// mui.openWindow({
+							// 	url: "../user/my_member_gift.html",
+							// 	id: "my_member_gift",
+							// 	show: {
+							// 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+							// 	},
+							// 	waiting: {
+							// 		autoShow: true, //自动显示等待框，默认为true
+							// 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							// 	}
+							// });
+							break;
+						default :
+						    console.log('没有选项');
+					}
+				});
+				/*公告文字上下轮播*/
+				// var pages = 1;
+				// $.ajax({
+				// 	url: site_app + "/api/My/article",
+				// 	type: "post",
+				// 	data: {
+				// 		token: tokens,
+				// 		type: "1",
+				// 		page: pages
+				// 	},
+				// 	dataType: "json",
+				// 	success: function(e) {
+				// 		if(e.error == 0) {
+				// 			/*顶部滚动信息*/
+				// 			var datas = e.data.data;
+				// 			for(var a = 0; a < datas.length; a++) {
+				// 				var li = "<li title='" + datas[a].article_id + "'>" + datas[a].article_title + "</li>";
+				// 				$(".notice-txt").append(li);
+				// 			}
+				// 		}
+				// 	}
+				// });
+
+				// $(".notice-txt").on("click", "li", function() {
+					// var title = $(this).attr("title");
+                    // mui.openWindow({
+                    // 	url: "../user/help_detailed.html",
+                    // 	id: "help_detailed",
+                    // 	show: {
+                    // 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+                    // 	},
+                    // 	extras: {
+                    // 		ids: title
+                    // 	},
+                    // 	waiting: {
+                    // 		autoShow: true, //自动显示等待框，默认为true
+                    // 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                    // 	}
+                    // });
+				// });
+                var numbers = ['139****6938','177****3456','156****1357','150****6506','151****6275','159****6688',
+                    '156****1919','187****7850','158****0300','138****3326','130****1205','182****4888',
+                    '185****5195','131****3606','182****0108','150****3473','187****1787','152****3779',
+                    '151****9167','186****9659','157****1110','159****5488','187****2215','182****6299',
+                    '131****9263','139****0745','177****5755','187****1027','186****5641','150****3090',
+                    '188****1501','183****9753','187****7162','184****1665','177****1225','186****1883',
+                    '159****9602','136****7879','156****8365','182****6692','151****0623','137****8891',
+                    '188****1527','187****3922','136****9896','155****0777','139****2424','137****5589',
+                    '185****4756','156****1101','130****6331','186****0284','152****1326','159****7654',
+                    '138****5025','183****2652','187****5805','182****3587','185****3210','151****9692',
+                    '133****7881','158****2584','155****2227','187****2539','137****3285','187****1581',
+                    '187****9988','183****9229','138****2626','186****6548','139****2130','181****1056',
+                    '187****9039','182****6662','147****5573','159****5337','138****7120','187****1696',
+                    '183****4127','188****5771','153****7273','158****6012','156****9413','152****7631',
+                    '159****4022','138****8081','135****5106','183****0121','139****6015','139****5442',
+                    '182****5570','182****1325','187****7335','159****7174','151****1340','183****7379',
+                    '135****0073','183****9115','152****6223','186****9519','158****7567','135****0933'];
+                var rantext = ['的好友卡账延期成功，获得分润','的卡账成功延期到下月','的好友升级为vip，获得分润109.8元'];
+                function randomText(){
+                    var nl = numbers.length;
+                    var tl = rantext.length;
+                    for(let i=0;i<10;i++){
+                        let n = Math.floor(Math.random()*nl);
+                        let t = Math.floor(Math.random()*tl);
+                        let li ='<li>恭喜用户:'+numbers[n]+rantext[t]+'</li>';
+                        $(".notice-txt").append(li);
+                    }
+                    notice($('.notice-txt'));
+                }
+                randomText();
+				$(".message").click(function() {
+					mui.openWindow({
+						url: "message.html",
+						id: "message",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				function notice(ul) {
+					var num = 0;
+					setInterval(function() {
+						num++;
+						if(num == ul.find('li').length) {
+							num = 0;
+							ul.css({
+								marginTop: 0
+							});
+						}
+						$('.notice-txt').animate({
+							marginTop: -50 * num
+						}, 400);
+					}, 4000);
+				}
+
+
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+                                user_real = e.data.user_real;
+								if(e.data.user_real==0){
+                                    gotoDataAuth();
+								} else {
+								    return true;
+								}
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				function gotoDataAuth(){
+                    mui.confirm('您还没有实名认证，请先认证','提示',['取消','确认'],function(e){
+                        if(e.index==1){
+                            mui.openWindow({
+                                url: "../user/data_authentication.html",
+                                id: "data_authentication",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                        }
+                    },'div');
+				}
+				$(".sh_tab li").click(function() {
+					var title = $(this).attr("title");
+					if(!tokens) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						if(title == 1) {
+							mui.openWindow({
+								url: "card_list.html",
+								id: "card_list",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								extras: {
+									title: "1"
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 2) {
+                            getHuabei();
+
+						}
+					}
+
+				});
+
+				$(".apply_tab li").click(function() {
+					var title = $(this).attr("title");
+					if(!tokens) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						if(title == 1) {
+							mui.openWindow({
+								url: "../apply/apply_card.html",
+								id: "apply_card",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 2) {
+                            mui.openWindow({
+                                url: "../user/data_authentication.html",
+                                id: "data_authentication",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+						}
+					}
+
+				});
+
+				function getHuabei(){
+				    if(user_real==0){
+                        gotoDataAuth();
+					} else {
+                        $.ajax({
+                            url: site_app + "/api/my/hb",
+                            type: "post",
+                            data: {
+                                token: tokens
+                            },
+                            dataType: "json",
+                            success: function(data){
+                                console.log(JSON.stringify(data));
+                                var channel = data.data.pass_id; // 1是通联，2是汇潮
+                                $.ajax({
+                                    url: site_app + "/api/Baofu/hbInfo",
+                                    type: "post",
+                                    data: {
+                                        token: tokens,
+                                        pass_id: channel
+                                    },
+                                    dataType: "json",
+                                    success: function(e) {
+                                        console.log(JSON.stringify(e));
+                                        if(e.error == 0) {
+                                            if(e.code==1){ // 已注册，直接跳转到提现页面
+                                                mui.openWindow({
+                                                    url: "../huabei/withdraw_huabei.html",
+                                                    id: "withdraw_huabei",
+                                                    show: {
+                                                        autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                                    },
+                                                    extras:{
+                                                        channel:channel,
+                                                        balance: e.data.blance
+                                                    },
+                                                    waiting: {
+                                                        autoShow: true, //自动显示等待框，默认为true
+                                                        title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                                    }
+                                                })
+                                            } else if(e.code==5){
+                                                mui.alert(e.msg, '提示', '', '', 'div');
+                                            } else {
+                                                mui.alert(e.msg, '提示', '', function() {
+                                                    if(channel==1){
+                                                        mui.openWindow({
+                                                            url: "../huabei/info_form.html",
+                                                            id: "info_form",
+                                                            show: {
+                                                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                                            },
+                                                            waiting: {
+                                                                autoShow: true, //自动显示等待框，默认为true
+                                                                title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                                            }
+                                                        })
+                                                    } else {
+                                                        mui.openWindow({
+                                                            url: "../huabei/huichao_form.html",
+                                                            id: "huichao_form",
+                                                            show: {
+                                                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                                            },
+                                                            waiting: {
+                                                                autoShow: true, //自动显示等待框，默认为true
+                                                                title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                                            }
+                                                        })
+                                                    }
+
+                                                }, 'div');
+                                            }
+                                        } else {
+                                            mui.alert(e.msg, '提示', '', '', 'div');
+                                        }
+                                    },
+                                    error: function(xhr,err,errtext){
+                                        console.log(xhr.status);
+                                        console.log(err);
+                                        console.log(errtext);
+                                    }
+                                })
+                            },
+                            error: function(xhr,err,errtext){
+                                console.log(xhr.status);
+                                console.log(err);
+                                console.log(errtext);
+                            }
+                        });
+					}
+
+				}
+
+				$(".grid_list li").click(function() {
+					var title = $(this).attr("title");
+					plus.nativeUI.showWaiting();
+					if(!tokens) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						if(title == 1) {
+							mui.openWindow({
+								url: "../user/my_bankCard.html",
+								id: "my_bankCard",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 2) {
+							mui.openWindow({
+								url: "../user/my_bankCard.html",
+								id: "my_bankCard",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 3) {
+							// mui.openWindow({
+							// 	url: "../user/my_bankCard.html",
+							// 	id: "my_bankCard",
+							// 	show: {
+							// 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+							// 	},
+							// 	waiting: {
+							// 		autoShow: true, //自动显示等待框，默认为true
+							// 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							// 	}
+							// })
+                            getHuabei();
+
+						} else if(title == 4) {
+							// mui.alert('系统升级中，敬请期待！', '提示', '', '', 'div');
+                            mui.openWindow({
+                                url: "../user/my_member.html",
+                                id: "my_member",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+						} else if(title == 5) {
+                            // mui.alert('敬请期待！', '提示', '确定', '', 'div');
+                            // mui.openWindow({
+                            //     url: "../user/wechat_group.html",
+                            //     id: "wechat_group",
+                            //     show: {
+                            //         autoShow: true //页面loaded事件发生后自动显示，默认为true
+                            //     },
+                            //     waiting: {
+                            //         autoShow: true, //自动显示等待框，默认为true
+                            //         title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                            //     }
+                            // })
+                            mui.openWindow({
+                                url: "bianmin.html",
+                                id: "bianmin",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                            // $.ajax({
+                            //     type:"post",
+                            //     url:site_app+"/api/Jifu/cardTx",
+                            //     success:function(e){
+                            //         console.log(JSON.stringify(e));
+                            //         mui.openWindow({
+                            //             url: "../tx/tx.html",
+                            //             id: "tx",
+                            //             show: {
+                            //                 autoShow: true //页面loaded事件发生后自动显示，默认为true
+                            //             },
+                            //             extras: {
+                            //                 content: e
+							// 			},
+                            //             waiting: {
+                            //                 autoShow: true, //自动显示等待框，默认为true
+                            //                 title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                            //             }
+                            //         })
+                            //     }
+                            // });
+						} else if(title == 6) {
+							mui.openWindow({
+								url: "kefu.html",
+								id: "kefu",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 7) {
+							mui.alert("系统升级中，敬请期待!", '提示', '', '', 'div');
+						}
+					}
+				});
+				
+				/*日报*/
+				var article_type;
+				$.ajax({
+					type:"post",
+					url:site_app+"/api/Common/publicstore",
+					async: false,
+					success:function(e){
+						if(e.error == 0){
+							$(".daily_name").html(e.data.article_title);
+							// $(".daily_content .content").html(e.data.article_body);
+							article_type = e.data.article_type;
+						}
+					}
+				});
+				$("#daily").click(function(){
+					mui.openWindow({
+						url: "../user/help_list.html",
+						id: "help_list",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							typeid: article_type
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+                // 热更新
+                var downloadWgtUrl = null; // 升级包目录
+                var downloadApkUrl = null; // 升级包目录
+                var iosURL = null; // 苹果地址
+                var oldVer = null; // 当前应用版本号
+                var newVer = null; // 新版本号
+                var isios = null; // ios是否需要升级 0 不升级 2 appStore升级 1 差量升级
+                var isandroid = null; // android是否需要升级 0 不升级 2 apk升级 1 差量升级
+                // plusReady 加载完毕执行
+                function plusReady() {
+                    // 获取本地应用资源版本号
+                    plus.runtime.getProperty(plus.runtime.appid, function (inf) {
+                        oldVer = inf.version;
+                        checkUpdate();
+                    });
+                }
+
+                // 检测更新
+                function checkUpdate() {
+                    $.ajax({
+                        type: "post",
+                        url: site_app + "/api/my/app_upgrade",
+                        data: {
+                            oldVer: oldVer
+                        },
+                        dataType: "json",
+                        success: function(e) {
+                            console.log(JSON.stringify(e));
+                            if(e.error == 0) {
+                                var d = e.data;
+                                newVer = d.app_verber; // 版本号
+                                isios = d.ios_type; // ios是否需要升级 0 不升级 2 appStore升级 1 差量升级
+                                iosURL = d.app_down_applelink;
+                                downloadWgtUrl = d.wgtURL;
+                                downloadApkUrl = d.app_down_androlink;
+                                isandroid = d.andr_type; // android是否需要升级 0 不升级 2 apk升级 1 差量升级
+
+                                // 监听应用启动界面关闭事件
+                                if (plus.navigator.hasSplashscreen()) { // 启动页未关闭
+                                    document.addEventListener("splashclosed", checkOs, false);
+                                } else { //启动界面已关闭
+                                    checkOs();
+                                }
+                            } else if (e.error == 1) {
+                                console.log('已是最新版本');
+                            } else {
+                                mui.alert(e.msg,'','','','div');
+                            }
+                        },
+                        error: function(xhr,err,errThrown){
+                            console.log(err);
+                            console.log(errThrown);
+                        }
+                    });
+                }
+
+                /**
+                 　　* 判断手机系统检测升级
+                 　　*/
+                function checkOs() {
+                    var isupdate = compareVersion(oldVer, newVer); // 是否差量升级
+
+                    if (!isupdate) {
+                        return false;
+                    }
+
+                    if (plus.os.name == 'Android') {    // Android 用户
+                        if (isandroid == 0) {
+                            return false;
+                        } else if (isandroid == 2) {
+                            plus.nativeUI.alert("已有最新版本！", function () {
+                                createDownload();
+                            }, "请升级", "确定");
+                        } else {
+                            downWgt();
+                        }
+                    } else { // 苹果用户
+                        if (isios == 0) {
+                            return false;
+                        } else if (isios == 2) {
+                            plus.nativeUI.alert("已有最新版本！", function () {
+                                plus.runtime.openURL(iosURL);
+                            }, "请升级", "确定");
+                        } else {
+                            downWgt();
+                        }
+                    }
+                }
+
+                /**
+                 * 比较版本大小，如果新版本nv大于旧版本ov则返回true，否则返回false
+                 * @param {String} ov
+                 * @param {String} nv
+                 * @return {Boolean}
+                 */
+                function compareVersion(ov, nv) {
+                    if (!ov || !nv || ov == "" || nv == "") {
+                        return false;
+                    }
+                    var b = false,
+                        ova = ov.split(".", 4),
+                        nva = nv.split(".", 4);
+                    for (var i = 0; i < ova.length && i < nva.length; i++) {
+                        var so = ova[i], no = parseInt(so), sn = nva[i], nn = parseInt(sn);
+                        if (nn > no || sn.length > so.length) {
+                            return true;
+                        } else if (nn < no) {
+                            return false;
+                        }
+                    }
+                    if (nva.length > ova.length && 0 == nv.indexOf(ov)) {
+                        return true;
+                    }
+                }
+
+                // 下载wgt文件
+                function downWgt() {
+                    $(".update-view,.mengban").show();
+                    var dtask = plus.downloader.createDownload(downloadWgtUrl, {}, function(d, status) {
+                        if(status == 200) {
+                            var pass = d.filename;
+                            plus.runtime.install(pass);
+                            clearInterval(i);
+                            $(".update-view,.mengban").hide();
+                            console.log('热更新完成');
+							if (plus.os.name != 'Android') {
+								plus.plugintest.appshut(["Html5", "Plus", "AsyncFunction", "ArrayArgument!"],
+										function (result) {
+											alert(result);
+										}, function (result) {
+											alert(result);
+										});
+							}
+                        } else {
+                            plus.nativeUI.alert("下载更新资源失败！");
+                        }
+
+                    });
+                    dtask.addEventListener("statechanged", function(d, status) {
+                        var total = parseInt(d.totalSize);
+                        var cur = parseInt(d.downloadedSize);
+                    }, false);
+                    dtask.start();
+                    var i = setInterval(function() {
+                        var totalSize = dtask.totalSize;
+                        var downloadedSize = dtask.downloadedSize;
+                        $('#proDownFile').attr('value', downloadedSize);
+                        $('#proDownFile').attr('max', totalSize);
+                    }, 100);
+                }
+
+                /**
+                 * 创建下载任务 安卓
+                 */
+                function createDownload() {
+                    var dtask = plus.downloader.createDownload(downloadApkUrl, {}, function (d, status) {
+                        // 下载完成
+                        if (status == 200) {
+                            plus.runtime.install(d.filename, {}, function () {
+                            }, function (DOMException) {
+                                console.log(JSON.stringify(DOMException));
+                            });
+                        } else {
+                            mui.alert("下载安装包失败: " + status,'','','','div');
+                        }
+                    });
+                    dtask.start();
+                }
+
+                plusReady();
+
+
+			});
+
+			//禁用安卓返回键
+			var first;
+			mui.back = function() {
+				//首次按键，提示‘再按一次退出应用’
+				if(!first) {
+					first = new Date().getTime();
+					mui.toast('再按一次退出应用');
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if(new Date().getTime() - first < 1000) {
+						plus.runtime.quit();
+						localStorage.removeItem("sj");
+					}
+				}
+			};
+
+
+
+
+
+
+
+		</script>
+	</body>
+
+</html>

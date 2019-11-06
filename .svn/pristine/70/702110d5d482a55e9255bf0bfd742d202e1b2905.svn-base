@@ -1,0 +1,280 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/binding_card.css" />
+		<style type="text/css">
+			.sf_i {
+				padding-left: 10px;
+				padding-top: 10px;
+				font-size: 15px;
+			}
+			
+			.mui-table-view label {
+				width: 25%;
+				text-align: right;
+			}
+			
+			.mui-table-view input {
+				width: 100% !important;
+				text-align: left !important;
+				padding-left: 10px !important;
+			}
+			
+			#upload_btn {
+				width: 60% !important;
+				margin-left: -30% !important;
+				border-radius: 20px !important;
+				font-size: 15px;
+			}
+			
+			.send_code {
+				width: 25%;
+				padding: 5px !important;
+				background: #DDDDDD;
+				border: none;
+				font-size: 12px;
+				bottom: 2px;
+			}
+			.send_code{
+				position: absolute;
+				opacity: 1;
+				right: 15px;
+				top: 8px;
+				height: 24px;
+			}
+			.send_code:disabled {
+				opacity: 1;
+			}
+			
+			.wx_tips {
+				padding: 15px;
+			}
+			
+			.wx_tips .title {
+				margin-bottom: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<div class="statusbarHeight">&nbsp;</div>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">申请信用卡</h1>
+		</header>
+		<div class="mui-content">
+			<p class="sf_i">身份证信息</p>
+			<ul class="mui-table-view">
+				<li>
+					<label class="left">姓名:</label>
+					<div class="left" style="width: 70%;">
+						<input type="text" id="user_name" placeholder="不少于两个汉字" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label class="left">身份证号:</label>
+					<div class="left" style="width: 70%;">
+						<input type="text" id="user_id" maxlength="18" placeholder="18位证件号" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label class="left">手机号码:</label>
+					<div class="left" style="width: 70%;">
+						<input type="text" id="phone" maxlength="11" placeholder="11位手机号码" oninput="func(this.value)" onblur="func(this.value)" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li style="position: relative;">
+					<label class="left">短信验证码:</label>
+					<div class="left" style="width: 75%;">
+						<input type="text" id="code" placeholder="请输入短信验证码" oninput="sms_input(this.value)" style="width: 70%;" />
+						<button type="button" class="mui-btn mui-btn-blue send_code" id="getSms" disabled="disabled">免费获取</button>
+					</div>
+					<div class="clear"></div>
+				</li>
+			</ul>
+			<button type="button" class="mui-btn" id="upload_btn" disabled="disabled" style="background: #CDCDCD;">下一步</button>
+			<div class="wx_tips">
+				<div class="title">
+					温馨提示
+				</div>
+				<div class="tips_content">
+					<p>
+						1、申请主卡年龄要求18-60周岁;附属卡年龄要求16-65周岁。
+					</p>
+					<p>
+						2、具有稳定的职业和收入，有良好的信用和还款能力（在校学生请勿申请）。
+					</p>
+					<p>
+						3、目前只支持二代中国居民身份证进行网络申请。
+					</p>
+					<p>
+						4、信用卡申请过程不收取任何费用，请警惕不法分子向您承诺可办理高额度卡片或百分百成功办卡。
+					</p>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			function func(value) {
+				value = value.replace(/[^\d]/g, '');
+				if(value.length > 11) {
+					$("#phone").val(value.slice(0, 11))
+				} else if(value.length == 11) {
+					$("#getSms").removeAttr('disabled');
+					$("#getSms").css('background-color', '#30ABFB');
+				} else if(value.length < 11) {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true);
+				}
+			}
+
+			function sms_input(value) {
+				if(value == "") {
+					$("#upload_btn").attr("disabled", true);
+					$("#upload_btn").css("background", "#CDCDCD");
+				} else {
+					$("#upload_btn").removeAttr("disabled");
+					$("#upload_btn").css("background", "#30ABFB");
+				}
+			}
+			var wait = 60;
+
+			function get_code_time() {
+				//mui.alert('手机号格式错误','提示','','','div');
+				if(wait == 0) {
+					$("#getSms").removeAttr("disabled"); //移除获取验证码按钮的disabled属性
+					$("#getSms").css('background-color', '#30ABFB');
+					$("#getSms").html("获取验证码");
+					wait = 60;
+				} else {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true); //设置获取验证码按钮为不可触发
+					$("#getSms").html(wait + "s");
+					wait--;
+					setTimeout("get_code_time()", 1000);
+				}
+			}
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				var StatusbarHeight = plus.navigator.getStatusbarHeight();
+				var headerH = StatusbarHeight + 44;
+				$(".statusbarHeight").css("height", StatusbarHeight);
+				$("header").css("height", headerH);
+				$(".mui-content").css("padding-top", headerH);
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				var tokens = getToken();
+				getToken();
+				var self = plus.webview.currentWebview();
+				console.log(self.urls);
+				/*获取验证码*/
+				$("#getSms").click(function() {
+
+					//mui.alert('手机号格式错误','提示','','','div');
+					var phone = $('#phone').val();
+
+					if(!isphone(phone)) {
+						mui.alert('手机号格式错误', '提示', '', '', 'div');
+						return false;
+					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: 'get',
+						url: site_app + '/api/Bank_Apply/getsms',
+						data: {
+							'phone': phone,
+							type: 0
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							if(data.error == 0) {
+								mui.alert(data.msg, '提示', '', '', 'div');
+								get_code_time();
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				});
+				$("#upload_btn").click(function() {
+					plus.nativeUI.showWaiting();
+					var name = $("#user_name").val();
+					var idCard = $("#user_id").val();
+					var mobile = $("#phone").val();
+					var code = $("#code").val();
+					if(name == '') {
+						mui.alert('请输入姓名', '提示', '', '', 'div');
+						return false;
+					}
+					if(idCard == '') {
+						mui.alert('请输入身份证号', '提示', '', '', 'div');
+						return false;
+					}
+					if(phone == '') {
+						mui.alert('请输入手机号', '提示', '', '', 'div');
+						return false;
+					}
+					if(code == '') {
+						mui.alert('请输入短信验证码', '提示', '', '', 'div');
+						return false;
+					}
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/Bank_Apply/bankdo",
+						data: {
+							token: tokens,
+							name: name,
+							idCard: idCard,
+							mobile: mobile,
+							code: code,
+							channelId: self.urls,
+							bank: self.name
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							console.log(e);
+							if(e.error == 0) {
+								mui.openWindow({
+									url: "../apply/binding_iframe.html",
+									id: "binding_iframe",
+									styles: {},
+									extras: {
+										urls: e.data
+									},
+									show: {
+										autoShow: true //页面loaded事件发生后自动显示，默认为true
+									},
+									waiting: {
+										autoShow: false //自动显示等待框，默认为true
+										//title: '', //等待对话框上显示的提示内容
+									}
+								})
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				})
+				 
+			})
+		</script>
+	</body>
+
+</html>

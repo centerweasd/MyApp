@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/binding_card.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_pq5c4cjadsn.css" />
+		<style type="text/css">
+			[data-type="date"] .mui-dtpicker-title h5,
+			[data-type="date"] .mui-picker {
+				width: 100% !important;
+			}
+			
+			[data-type="date"] [data-id="picker-i"],
+			[data-type="date"] [data-id="title-i"],
+			[data-type="date"] [data-id="picker-y"],
+			[data-type="date"] [data-id="title-y"],
+			[data-type="date"] [data-id="picker-m"],
+			[data-type="date"] [data-id="title-m"] {
+				display: none;
+			}
+			
+			.mui-table-view li .left {
+				position: relative;
+				width: 100%;
+			}
+			
+			.mui-table-view li input {
+				width: 100%;
+				text-align: left;
+				color: #333;
+				vertical-align: top;
+			}
+			
+			.mui-table-view li label {
+				line-height: 30px;
+			}
+			
+			.youjiantou {
+				position: absolute;
+				top: 0;
+				right: 0;
+				color: #333;
+			}
+			
+			.mui-table-view li textarea {
+				padding: 0;
+				margin: 0;
+				font-size: 14px;
+				border: 0;
+				color: #333;
+			}
+			
+			.sub {
+				position: absolute;
+				top: 12px;
+				right: 15px;
+				color: #fff;
+				font-size: 14px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">新增收货地址</h1>
+			<span class="sub">保存</span>
+		</header>
+		<div class="mui-content">
+			<form>
+
+			</form>
+			<ul class="mui-table-view">
+				<li>
+					<div class="left">
+						<input type="text" name="uname" id="uname" placeholder="收货人" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>   
+					<div class="left">
+						<input type="text" id="phone" name="phone" placeholder="手机号码" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<div class="left">
+						<input type="text" class="mui-input-clear" id="site" readonly="readonly" placeholder="所在地区">
+						<span class="youjiantou iconfont icon-mjiantou"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<!--隐藏的省市县-->
+				<input id='province' type="hidden" name="province" value="0" />
+				<input id='city' type="hidden" name="city" value="0" />
+				<input id='county' type="hidden" name="county" value="0" />
+				<li>
+					<textarea name="ad_de_adres" id="ad_de_adres" rows="" cols="" placeholder="详细地址：如道路、门牌号、小区、楼栋号、单元室等"></textarea>
+				</li>
+			</ul>
+			<!--<ul class="mui-table-view">
+				<li>
+					<label>设为默认地址</label>
+					<div class="right">
+						<div class="mui-switch mui-switch-mini" id="mySwitch">
+						  <div class="mui-switch-handle"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</li>
+			</ul>-->
+		</div>
+
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview("shop_order.html").opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'shop');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				var tokens = getToken();
+				getToken();
+				var modes = plus.webview.currentWebview().modes;
+				var cData;
+				var city_picker = new mui.PopPicker({
+					layer: 3
+				});
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/Addrees/obtainaddr',
+					async: false,
+					data: {
+						token: tokens,
+					},
+					dataType: 'json',
+					success: function(e) {
+						if(e.error == 0) {
+							cData = e.data;
+						}
+					}
+				})
+				/*选择银行列表*/
+				$("#site").on("tap", function() {
+					city_picker.setData(cData);
+					setTimeout(function() {
+						city_picker.show(function(items) {
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							} else if((items[1] || {}).text == undefined) {
+								(items[1] || {}).text = "";
+							} else if((items[2] || {}).text == undefined) {
+								(items[2] || {}).text = "";
+							}
+							$('#province').val(items[0].value);
+							$('#city').val(items[1].value);
+							$('#county').val(items[2].value);
+							//该ID为接收城市ID字段 
+							$("#site").val((items[0] || {}).text + "-" + (items[1] || {}).text + "-" + (items[2] || {}).text);
+						});
+					}, 200);
+				});
+
+				$(".sub").click(function() {
+					var uname = $('#uname').val();
+					var phone = $('#phone').val();
+					var province = $('#province').val();
+					var city = $('#city').val();
+					var county = $('#county').val();
+					var ad_de_adres = $('#ad_de_adres').val();
+					if(uname == '') {
+						mui.alert('请输入收货人', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(phone == '') {
+						mui.alert('请输入手机号', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(county == '0') {
+						mui.alert('请选择城市', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(ad_de_adres == '0') {
+						mui.alert('请输入详细街道', '提示', '', '', 'div');
+						return false;
+					}
+
+					$.ajax({
+						type: 'post',
+						url: site_app + '/api/Addrees/addadres',
+						data: {
+							'token': tokens,
+							'uname': uname,
+							'phone': phone,
+							'province': province,
+							'city': city,
+							'county': county,
+							'de_adres': ad_de_adres
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(e) {
+							mui.alert(e.msg, '提示', '', '', 'div');
+							if(e.error == 0) {
+								if(modes = 'shop_order') {
+									var type = plus.webview.currentWebview().type;
+									var goods_id = plus.webview.currentWebview().goods_id;
+									mui.back();
+									plus.webview.currentWebview().close();
+								}
+							}
+						}
+					});
+
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style type="text/css">
+			/*header {*/
+				/*width: 100%;*/
+				/*box-shadow: none !important;*/
+			/*}*/
+			
+			/*header a {*/
+				/*color: #fff;*/
+			/*}*/
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.no_info {
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				width: 50%;
+				margin-left: -25%;
+				text-align: center;
+			}
+			
+			.no_info img {
+				width: 100%;
+			}
+			
+			.trade_list li {
+				width: 100%;
+				height: 60px;
+				background: #fff;
+				border-bottom: 1px solid #eee;
+				padding: 0 15px;
+			}
+			
+			.trade_list li .info {
+				margin-top: 10px;
+			}
+			
+			.trade_list li .info p {
+				margin-bottom: 0;
+				font-size: 13px;
+			}
+			
+			.trade_list li .info .trade_name {
+				font-size: 15px;
+			}
+			
+			.trade_list li .money {
+				line-height: 60px;
+				font-size: 18px;
+			}
+			
+			.success {
+				color: #2BA245;
+			}
+			
+			.fail {
+				color: #D84C29;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">积分明细</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="trade_list">
+			</ul>
+			<div class="no_info" style="display: none;">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				var tokens = getToken();
+				getToken();
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/integral_list",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.data.length == 0) {
+								$(".trade_list").hide();
+								$(".no_info").show();
+							} else {
+								$(".no_info").hide();
+								$(".trade_list").show();
+							}
+							var data = e.data.data;
+							for(var i = 0; i < data.length; i++) {
+								var integral_type = data[i].integral_type;
+								var texts, clas, point;
+								if(integral_type == 1) {
+									texts = "增加";
+									clas = "success";
+									point = "+" + data[i].integral_point
+								} else {
+									texts = "减少";
+									clas = "fail";
+									point = "-" + data[i].integral_point
+								}
+								var li = "<li>" +
+									"<div class='left info'>" +
+									"<p class='trade_name " + clas + "'>" + texts + "</p>" +
+									"<p class='trade_time'>" + data[i].integral_time + "</p>" +
+									"</div>" +
+									"<div class='right money " + clas + "'>" + point + "</div>" +
+									"<div class='clear'></div>" +
+									"</li>";
+								$(".trade_list").append(li);
+							}
+						}
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

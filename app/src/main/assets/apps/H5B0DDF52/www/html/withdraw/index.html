@@ -1,0 +1,217 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/repayment.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/withdraw.css" />
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+    <style>
+        .btn{padding: 10px 0;margin-top: -20px;}
+        .btn button{width: 100%;}
+        .mui-content{width: 90%;margin: 0 auto;margin-top: -30px;}
+        .title{display: flex;}
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">提现</h1>
+</header>
+<img src="../../img/ic_edit_creditcard.png" width="100%" style="display: block;margin-top: 40px" />
+<div class="card_info">
+    <img src="../../img/bank_red_bg.png" />
+    <div class="card_t">
+        <div class="left" id="banklist">加载中</div>
+        <div class="right payment_history" style="text-align: right;">
+            提现记录
+            <img src="../../img/arrow_right_white.png" width="8%" style="vertical-align: middle;margin-bottom: 3px;" />
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div class="card_logo">
+        <img src="../../img/bank_white_icon_loading.png" id="bankurl" />
+    </div>
+    <div class="card_b">
+        <ul>
+            <li>
+                单笔最高
+                <span>10000</span>
+            </li>
+            <li>
+                单笔最低
+                <span>1000</span>
+            </li>
+            <div class="clear"></div>
+        </ul>
+    </div>
+</div>
+
+<div class="mui-content">
+
+    <div class="input_money">
+        <div class="title">
+            提现金额
+        </div>
+        <div class="fill_in">
+            <span class="tp">￥</span>
+            <input type="number" id="money" placeholder="请输入提现金额(1000-10000元)" value=""/>
+        </div>
+        <div class="can_Tx">
+        </div>
+        <div class="btn mui-text-center">
+            <button class="determine mui-btn-blue">确定提现</button>
+        </div>
+    </div>
+    <div class="dd">
+
+    </div>
+    <div class="reminder">
+        <span class="title">温馨提示</span>
+        <p>1.提现金额单笔下限￥1000.00，提现金额单笔上限10000.00</p>
+    </div>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+<script type="text/javascript">
+    mui.plusReady(function() {
+        var test = window.location.href;
+        console.log(test)
+        mui.init({
+            hardwareAccelerated: true,
+            beforeback: function() {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'index');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+        });
+        window.addEventListener('repayment', function(e) { //执行刷新
+            location.reload();
+        });
+        //这个地方需要获取上个页面传值过来的银行卡的ID
+        var self = plus.webview.currentWebview();
+        $('#bankid').val(self.bankid);
+        console.log(self.bankid)
+        $('#channelType').val(self.paymentid);
+        console.log(self.paymentid)
+        //处理银行卡信息
+        var banks = self.bank;
+        console.log(banks.card_no)
+        console.log(self.uid)
+        console.log(self.list)
+        console.log("当前页面URL："+plus.webview.currentWebview().getURL());
+        var bankLists = self.bankList;
+        console.log(bankLists)
+
+        //获取当前界面用户点了那个通道口
+        var txOrder = '/api/Jifu/txOrder';
+        var txAdd = '/api/Juxing/txAdd';
+        var api='';
+        if(self.list==5){
+            api = txOrder;
+        } else {
+            api = txAdd;
+        }
+        var bn = banks.card_no.substring(banks.card_no.length - 4, banks.card_no.length);
+        $('#banklist').html(bankLists.list_name + '(' + bn + ')');
+        $('#bankurl').attr('src', bankLists.list_logo);
+
+        var tokens = getToken();
+        getToken();
+        // plus.nativeUI.showWaiting("安全检测中，请等待");
+        // //获取头部
+        var bankid = $('#bankid').val();
+        // var city_picker = new mui.PopPicker({
+        //     layer: 2
+        // });
+        var cData;
+        var uid = self.uid
+
+        // $(".determine").on('tap',function () {
+        //     console.log(1)
+        // })
+        // $(".determine").click( function () {
+        //     console.log(2)
+        // })
+
+        $('.determine').click(function(){
+                $.ajax({
+                    type: 'post',
+                    url: site_app +api,
+                    data: {
+                        // "url":test,
+                        'uid': uid,
+                        'tx_pcard':banks.card_no,
+                        'tx_num': $("#money").val()
+                    },
+                    dataType: 'json',
+                    cache: false,
+                    success: function (data) {
+                        console.log(JSON.stringify(data));
+                        // console.log(currentWebView.id)
+                        // mui.alert(data.msg, '提示','', '','div')
+                        console.log(api)
+                        console.log(uid)
+                        console.log(banks.card_no)
+                        if (data.code == 0 ){
+                           if(self.list==1){
+                               mui.alert(data.msg, '提示', '', function(){
+                                   mui.openWindow({
+                                       url: "../index/home.html",
+                                       id: "home",
+                                       createNew: true,
+                                       show: {
+                                           autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                       },
+                                       waiting: {
+                                           autoShow: true, //自动显示等待框，默认为true
+                                           title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                       }
+                                   })
+                               },'div');
+                           }else{
+                               mui.alert(data.msg, '提示', '',  function(){
+                                   mui.openWindow({
+                                           url: data.html,
+                                           id: "url",
+                                           createNew: true,
+                                           show: {
+                                               autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                           },
+                                           waiting: {
+                                               autoShow: true, //自动显示等待框，默认为true
+                                               title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                           }
+                                   })
+                               },'div');
+                           }
+                        } else {
+                            mui.alert(data.msg, '提示', '', '', 'div');
+                        }
+                    },
+                    error: function(xhr,error,errorThrown){
+                        plus.nativeUI.closeWaiting();
+                        mui.alert('提现失败,请重试或联系客服', '提示', '', '', 'div')
+                        console.log(errorThrown);
+                    }
+                })
+        })
+    })
+
+
+
+
+</script>
+</body>
+
+</html>

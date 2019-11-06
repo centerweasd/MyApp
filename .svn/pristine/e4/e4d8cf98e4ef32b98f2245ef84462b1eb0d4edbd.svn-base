@@ -1,0 +1,114 @@
+html,
+body,
+.mui-content {
+	height: 100%;
+	background: #fff;
+}
+
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.share {
+	position: absolute;
+	top: 38px;
+	right: 15px;
+	width: 6%;
+}
+
+/*.mui-bar-nav~.mui-content .mui-slider.mui-fullscreen {
+	top: 60px !important;
+}*/
+
+.mui-segmented-control.mui-scroll-wrapper .mui-scroll {
+	background: #fff;
+}
+
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+	border-top: 1px solid #eee;
+	overflow: auto;
+}
+
+.mui-table-view-cell {
+	padding-top: 20px;
+}
+.mui-table-view-cell:active,.mui-table-view-cell:focus,.mui-table-view-cell.mui-active{
+	background: #fff;
+}
+
+.mui-table-view-cell .title{
+	height: 30px;
+	line-height: 30px;
+	margin-bottom: 15px;
+}
+.mui-table-view-cell .title .left {
+	width: 80%;
+	font-size: 15px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.mui-table-view-cell .right {
+	width: 20%;
+}
+
+.mui-table-view-cell .right span{
+	display: inline-block;	
+	width: 90%;
+	height: 30px;
+	line-height: 30px;
+	margin-left: 5%;
+	color: #fff;
+	font-size: 15px;
+	background: #FF6533;
+	border-radius: 6px;
+	text-align: center;
+	vertical-align: middle;
+}
+.bank_info .bank_img{
+	width: 40%;
+}
+.bank_info .bank_img img{
+	width: 100%;
+}
+.bank_info .bank_img p{
+	text-align: center;
+	font-size: 12px;
+}
+.bank_info .info{
+	width: 60%;
+	padding-left: 15px;
+}
+.bank_info .info p{
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-bottom: 4px;
+	font-size: 12px;
+}
+.no_info{
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 50%;
+	margin-left: -25%;
+	text-align: center;
+}
+.no_info img{
+	width: 100%;
+}
+.more{
+	height: 30px;
+	line-height: 30px;
+	text-align: center;
+}

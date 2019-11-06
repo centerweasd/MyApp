@@ -1,0 +1,245 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/withdraw.css" />
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">花呗提现</h1>
+    <!--<span class="tx_detailed">提现记录</span>-->
+</header>
+<div class="mui-content">
+    <div class="input_money">
+        <div class="title">
+            提现金额
+        </div>
+        <div class="fill_in">
+            <span class="tp">￥</span>
+            <input type="number" id="money" placeholder="请输入提现金额（单笔300-5000元）" value=""/>
+        </div>
+        <div class="can_Tx">
+            <div class="can_money left">
+                当前可提现金额：
+            </div>
+            <div class="all_tx right">请在 “支付宝-花呗” 中查看可用金额</div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div class="reach_mode">
+        <div class="mode_list">
+            <p class="mode_m">
+                单笔结算费用：￥<span class="fasmoney">0.00</span>
+            </p>
+            <p class="mode_m">
+                实际到账金额：￥<span class="truemoney">0.00</span>
+            </p>
+        </div>
+        <!--<h4 class="titleh4">请选择提现方式：</h4>-->
+        <!--<ul class="mui-table-view mui-table-view-radio T_mode">-->
+            <!--<li class="mui-table-view-cell mui-selected">-->
+                <!--<a class="mui-navigate-right">-->
+                    <!--<img class="radio-icon" src="../../img/shop_alipay_icon.png" alt="">-->
+                    <!--<span>支付宝</span>-->
+                <!--</a>-->
+            <!--</li>-->
+        <!--</ul>-->
+
+        <!--<div class="ali-account">-->
+            <!--<p>支付宝账号：</p>-->
+            <!--<input id="aliAccount" type="text" placeholder="请输入支付宝账号">-->
+            <!--<p>支付宝姓名：</p>-->
+            <!--<input id="aliName" type="text" placeholder="请输入账号的真实姓名">-->
+        <!--</div>-->
+
+    </div>
+    <button type="button" class="mui-btn mui-btn-blue tx_sub">确认提现</button>
+    <div class="service">
+        在线客服
+    </div>
+    <div class="reminder">
+        <span class="title">温馨提示：</span>
+        <p>1.提现金额<span style="color: #D85672;">单笔下限￥300.00，单笔上限￥5000.00</span></p>
+        <p>2.提现可操作时间<span style="color: #D85672;">09:00:00~18:00:00</span></p>
+    </div>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+<script type="text/javascript">
+    mui.plusReady(function() {
+        mui.init({
+            hardwareAccelerated: true,
+            beforeback: function() {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'user');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+        });
+        window.addEventListener('txdetail', function(e) { //执行刷新
+            location.reload();
+        });
+        var self = plus.webview.currentWebview();
+        var token = getToken();
+        var uid = '';
+        var usertype = '';
+        $.ajax({
+            type: 'post',
+            url: site_app + '/api/my/info',
+            data: {
+                'token': token
+            },
+            cache: true,
+            dataType: 'json',
+            success: function(e){
+                console.log(JSON.stringify(e));
+                if(e.error == 0){
+                    uid = e.data.user_id;
+                    usertype = e.data.user_type_id;
+                }
+            }
+        });
+
+        $("#money").keyup(function(){
+            var money = $("#money").val();
+            if(money>5000){
+                $("#money").val(5000);
+            }
+            if(money<0){
+                $("#money").val(0);
+            }
+            // if(usertype>4){
+            //     $(".fasmoney").html(Math.round(money*9)/100);
+            // } else {
+            //     $(".fasmoney").html(Math.round(money*11)/100);
+            // }
+            $(".fasmoney").html(Math.round(money*7+100)/100);
+            var amoney = Math.round((money-$(".fasmoney").html())*100)/100;
+            if(parseFloat(amoney)<=0){
+                amoney = '0.00';
+            }
+            $(".truemoney").html(amoney);
+        });
+
+        $(".tx_detailed").click(function(){
+            mui.openWindow({
+                url: "huabei_txdetail.html",
+                id: "huabei_txdetail",
+                show: {
+                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                },
+                waiting: {
+                    autoShow: true, //自动显示等待框，默认为true
+                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                }
+            })
+        });
+        $(".tx_sub").click(function(){
+            var h = new Date().getHours();
+            if(h<9 || h>17){
+                mui.alert('提现时间为09:00:00~18:00:00之间', '温馨提示', '', '', 'div');
+                return false;
+            }
+            var money = $("#money").val();
+            if(money<0||money=='' || money=='0' || $(".truemoney").html()<=0){
+                mui.alert('金额错误，请重新输入', '提示', '', '', 'div');
+                return false;
+            }
+            plus.nativeUI.closeWaiting();
+            var api;
+            if(self.channel==1){
+                api = '/api/Huabei/addOrder';
+                mui.openWindow({
+                    url: "signature.html",
+                    id: "signature",
+                    show: {
+                        autoShow: true //页面loaded事件发生后自动显示，默认为true
+                    },
+                    extras: {
+                        'money': money,
+                        'uid': uid,
+                        'api': api
+                    },
+                    waiting: {
+                        autoShow: true, //自动显示等待框，默认为true
+                        title: '' //等待对话框上显示的提示内容
+                    }
+                })
+            } else if(self.channel==2){
+                api = '/api/Huichao/addOrder';
+                $.ajax({
+                    type: 'post',
+                    url: site_app + api,
+                    data: {
+                        'token': token,
+                        'money':money,
+                        'uid':uid
+                    },
+                    cache: false,
+                    dataType: 'json',
+                    success: function(e) {
+                        console.log(JSON.stringify(e));
+                        if(e.error == 0) {
+                            mui.alert(e.msg, '提示', '', function(){
+                                mui.openWindow({
+                                    url: "qrcode.html",
+                                    id: "qrcode",
+                                    show: {
+                                        autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                    },
+                                    extras:{
+                                        urls:e.data.url
+                                    },
+                                    waiting: {
+                                        autoShow: true, //自动显示等待框，默认为true
+                                        title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                    }
+                                })
+                            }, 'div');
+                        } else {
+                            mui.alert(e.msg, '提示', '', '', 'div');
+                        }
+                    },
+                    error: function(xhr,err,errThrown){
+                        plus.nativeUI.closeWaiting();
+                        console.log(err);
+                        console.log(xhr.status);
+                        console.log(errThrown);
+                    }
+                })
+            }
+
+        });
+        $(".service").click(function(){
+            mui.openWindow({
+                url: "../index/kefu.html",
+                id: "kefu",
+                show: {
+                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                },
+                waiting: {
+                    autoShow: true, //自动显示等待框，默认为true
+                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                }
+            })
+        });
+
+        $("body").ajaxStop(function() {
+            plus.nativeUI.closeWaiting();
+        });
+    })
+</script>
+</body>
+
+</html>

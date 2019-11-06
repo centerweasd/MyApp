@@ -1,0 +1,254 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/apply_card.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_pq5c4cjadsn.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">全部银行信用卡</h1>
+		</header>
+		<div class="mui-content">
+			<iframe id="iframe" src="" width="100%" height="100%" frameborder="0"></iframe>
+		</div>
+		<!--<div class="mui-content">-->
+			<!--<div class="mui-slider mui-fullscreen">-->
+				<!--<div class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">-->
+					<!--<div class="mui-scroll">-->
+					<!--</div>-->
+				<!--</div>-->
+				<!--<div class="mui-slider-group">-->
+					<!---->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<!--<script src="../../js/webviewGroup.js" type="text/javascript" charset="utf-8"></script>-->
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			var page = 1;
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+                plus.nativeUI.showWaiting("安全检测中，请等待");
+                $("#iframe").attr("src","https://www.cfunr.com/card?merchantNo=8150750277&channel=B&comeFrom=app");
+                $("#iframe").load(function() { //  等iframe加载完毕
+                	plus.nativeUI.closeWaiting();
+                });
+				// window.addEventListener('apply_card', function(e) { //执行刷新
+				// 	location.reload();
+				// });
+				// var tokens = localStorage.getItem("token");
+				//				//plus.nativeUI.showWaiting("加载中");
+				//获取头部
+				// $.ajax({
+				// 	type: 'get',
+				// 	url: site_app + '/api/Bank_Apply/getBank',
+				// 	cache: false,
+				// 	data: '',
+				// 	success: function(e) {
+				// 		console.log(e)
+				// 		if(e.error == 0) {
+				// 			var html = '';
+				// 			for(var i = 0; i < e.data.length; i++) {
+				// 				var num = i + 1;
+				// 				if(i == 0) {
+				// 					html += '<a class="mui-control-item mui-active" href="#item' + num + '" title="' + e.data[i].id + '" >' + e.data[i].name + '</a>';
+				// 				} else {
+				// 					html += '<a class="mui-control-item" href="#item' + num + '" title="' + e.data[i].id + '" >' + e.data[i].name + '</a>';
+				// 				}
+				// 				var list = '<div id="item' + num + '" class="mui-slider-item mui-control-content">' +
+				// 					'<ul class="mui-table-view">' +
+				// 					'</ul>' +
+				// 					'<p class="more more' + e.data[i].id + '" onclick="clicks(\'' + e.data[i].id + '\',\'item' + num + '\',\'more' + e.data[i].id + '\')">加载更多</p>' +
+				// 					'</div>';
+				// 				$(".mui-slider-group").append(list);
+				// 			}
+				// 			$(".mui-scroll").html(html);
+				// 			var gallery = mui('.mui-slider');
+				// 			gallery.slider();
+				// 			banklist($(".mui-scroll a:first-child").attr("title"), page, $(".mui-control-item.mui-active").attr("href"));
+				// 		}
+				// 	}
+				// });
+
+				// document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+				// 	var c = document.querySelector(".mui-control-item.mui-active");
+				// 	if(c) {
+				// 		c.classList.remove("mui-active");
+				// 	}
+				// 	var target = document.querySelector(".mui-scroll .mui-control-item:nth-child(" + (parseInt(event.detail.slideNumber) + 1) + ")");
+				// 	target.classList.add("mui-active");
+				// 	if(target.scrollIntoView) {
+				// 		target.scrollIntoView();
+				// 	}
+				// 	for(var i = 0; i < $(".mui-scroll .mui-control-item").length; i++) {
+				// 		if(event.detail.slideNumber == i) {
+				// 			var clas = $(".mui-control-item.mui-active").attr("href");
+				// 			var ids = $(".mui-control-item.mui-active").attr("title");
+				// 			if($("" + clas + "").attr("title") != 'yes') {
+				// 				banklist(ids, page, clas);
+				// 			}
+				// 		}
+				// 	}
+				// })
+				// $('.mui-slider').on("tap", ".mui-control-item", function(event) {
+				// 	for(var i = 0; i < $(".mui-scroll .mui-control-item").length; i++) {
+				// 		if($(this).index() == i) {
+				// 			var clas = $(".mui-control-item.mui-active").attr("href");
+				// 			var ids = $(".mui-control-item.mui-active").attr("title");
+				// 			if($("" + clas + "").attr("title") != 'yes') {
+				// 				banklist(ids, page, clas);
+				// 			}
+				// 		}
+				// 	}
+				// });
+
+				// $(".mui-slider-group").on("click", ".go_apply", function() {
+				// 	var ids = $(this).attr("title");
+				// 	mui.openWindow({
+				// 		url: "../apply/bankinfo.html",
+				// 		id: "bankinfo",
+				// 		styles: {},
+				// 		extras: {
+				// 			urls: ids
+				// 		},
+				// 		show: {
+				// 			autoShow: true //页面loaded事件发生后自动显示，默认为true
+				// 		},
+				// 		waiting: {
+				// 			autoShow: false //自动显示等待框，默认为true
+				// 			//							//title: '', //等待对话框上显示的提示内容
+				// 		}
+				// 	})
+				// });
+				// $("body").ajaxStop(function() {
+				// 	plus.nativeUI.closeWaiting();
+				// });
+				 
+			});
+
+			// function banklist(ids, page, clas) {
+			// 	plus.nativeUI.showWaiting();
+			// 	$.ajax({
+			// 		type: 'get',
+			// 		url: site_app + '/api/Bank_Apply/banklist',
+			// 		cache: false,
+			// 		data: {
+			// 			id: ids,
+			// 			page: page
+			// 		},
+			// 		success: function(e) {
+			// 			plus.nativeUI.closeWaiting();
+			// 			$("" + clas + "").attr('title', 'yes');
+			// 			if(e.error == 0) {
+			// 				if(e.data == false) {} else {
+			// 					for(var i = 0; i < e.data.length; i++) {
+			// 						var info = '';
+			// 						if(e.data[i].tag.length >= 3) {
+			// 							info = '<p>' + e.data[i].tag[0] + '</p>' +
+			// 								'<p>' + e.data[i].tag[1] + '</p>' +
+			// 								'<p>' + e.data[i].tag[2] + '</p>';
+			// 						}
+			// 						var html = '<li class="mui-table-view-cell">' +
+			// 							'<div class="title">' +
+			// 							'<div class="left">' +
+			// 							e.data[i].name +
+			// 							'</div>' +
+			// 							'<div class="right">' +
+			// 							'<span class="go_apply" title="' + e.data[i].id + '">办卡</span>' +
+			// 							'</div>' +
+			// 							'<div class="clear"></div>' +
+			// 							'</div>' +
+			// 							'<div class="bank_info">' +
+			// 							'<div class="left bank_img">' +
+			// 							'<img src="' + e.data[i].imgurl + '"/>' +
+			// 							'</div>' +
+			// 							'<div class="left info">' +
+			// 							info +
+			// 							'</div>' +
+			// 							'<div class="clear"></div>' +
+			// 							'</div>' +
+			// 							'</li>';
+			// 						$("" + clas + " ul").append(html);
+			// 					}
+			// 				}
+			//
+			// 			}
+			// 		}
+			// 	});
+			//
+			// }
+			//
+			// function more(ids, page, clas, thiss) {
+			// 	plus.nativeUI.showWaiting();
+			// 	page++;
+			// 	$.ajax({
+			// 		type: 'get',
+			// 		url: site_app + '/api/Bank_Apply/banklist',
+			// 		cache: false,
+			// 		data: {
+			// 			id: ids,
+			// 			page: page
+			// 		},
+			// 		success: function(e) {
+			// 			plus.nativeUI.closeWaiting();
+			// 			$("#" + clas + "").attr('title', 'yes');
+			// 			if(e.error == 0) {
+			// 				if(e.data == false) {
+			// 					$("." + thiss + "").html("没有更多数据了~");
+			// 				} else {
+			// 					$("." + thiss + "").html("加载更多");
+			// 					for(var i = 0; i < e.data.length; i++) {
+			// 						var info = '';
+			// 						if(e.data[i].tag.length >= 3) {
+			// 							info = '<p>' + e.data[i].tag[0] + '</p>' +
+			// 								'<p>' + e.data[i].tag[1] + '</p>' +
+			// 								'<p>' + e.data[i].tag[2] + '</p>';
+			// 						}
+			// 						var html = '<li class="mui-table-view-cell">' +
+			// 							'<div class="title">' +
+			// 							'<div class="left">' +
+			// 							e.data[i].name +
+			// 							'</div>' +
+			// 							'<div class="right">' +
+			// 							'<span>办卡</span>' +
+			// 							'</div>' +
+			// 							'<div class="clear"></div>' +
+			// 							'</div>' +
+			// 							'<div class="bank_info">' +
+			// 							'<div class="left bank_img">' +
+			// 							'<img src="' + e.data[i].imgurl + '"/>' +
+			// 							'</div>' +
+			// 							'<div class="left info">' +
+			// 							info +
+			// 							'</div>' +
+			// 							'<div class="clear"></div>' +
+			// 							'</div>' +
+			// 							'</li>';
+			// 						$("#" + clas + " ul").append(html);
+			// 					}
+			// 				}
+			//
+			// 			}
+			// 		}
+			// 	});
+			// }
+			//
+			// function clicks(ids, clas, thiss) {
+			// 	more(ids, page, clas, thiss);
+			// }
+		</script>
+	</body>
+
+</html>

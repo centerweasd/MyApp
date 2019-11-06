@@ -1,0 +1,318 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/repayment_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_trade.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">延期列表</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1"><span>进行</span></a>
+					<a class="mui-control-item" href="#item2"><span>成功</span></a>
+					<a class="mui-control-item" href="#item3"><span>失败</span></a>
+					<a class="mui-control-item" href="#item4"><span>终止</span></a>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1" class="mui-slider-item mui-control-content mui-active">
+						<ul class="info_list balance_list">
+
+						</ul>
+						<p class="balance_more more" style="display: none;">点击加载更多</p>
+						<div class="no_info" style="display: none;">
+							<img src="../../img/no_creditbill_icon.png" />
+							<p>没有相关数据</p>
+						</div>
+					</div>
+					<div id="item2" class="mui-slider-item mui-control-content">
+						<ul class="info_list profit_list">
+
+						</ul>
+						<p class="profit_more more" style="display: none;">点击加载更多</p>
+						<div class="no_info" style="display: none;">
+							<img src="../../img/no_creditbill_icon.png" />
+							<p>没有相关数据</p>
+						</div>
+					</div>
+					<div id="item3" class="mui-slider-item mui-control-content">
+						<ul class="info_list upgrade_list">
+
+						</ul>
+						<p class="upgrade_more more" style="display: none;">点击加载更多</p>
+						<div class="no_info" style="display: none;">
+							<img src="../../img/no_creditbill_icon.png" />
+							<p>没有相关数据</p>
+						</div>
+					</div>
+					<div id="item4" class="mui-slider-item mui-control-content">
+						<ul class="info_list put_list">
+
+						</ul>
+						<p class="put_more more" style="display: none;">点击加载更多</p>
+						<div class="no_info" style="display: none;">
+							<img src="../../img/no_creditbill_icon.png" />
+							<p>没有相关数据</p>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var tokens = getToken();
+			var page = 1;
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				window.addEventListener('repayment', function(e) { //执行刷新
+					location.reload();
+				});
+				//plus.nativeUI.showWaiting("安全检测中，请等待");
+				getToken();
+				var self = plus.webview.currentWebview();
+
+				balance(page, "1", "balance_list", "balance_more");
+				document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+					if(event.detail.slideNumber === 0) {
+						if($(".balance_list").html() != ''){
+							$(".no_info").hide();
+						}
+						if($(".balance_list").attr("title") != "yes") {
+							//plus.nativeUI.showWaiting("安全检测中，请等待");
+							$(".balance_list").html('');
+							balance(page, "1", "balance_list", "balance_more");
+						}
+					} else if(event.detail.slideNumber === 1) {
+						if($(".profit_list").html() != ''){
+							$(".no_info").hide();
+						}
+						if($(".profit_list").attr("title") != "yes") {
+							//plus.nativeUI.showWaiting("安全检测中，请等待");
+							$(".profit_list").html('');
+							balance(page, "2", "profit_list", "profit_more");
+						}
+					} else if(event.detail.slideNumber === 2) {
+						if($(".upgrade_list").html() != ''){
+							$(".no_info").hide();
+						}
+						if($(".upgrade_list").attr("title") != "yes") {
+							//plus.nativeUI.showWaiting("安全检测中，请等待");
+							$(".upgrade_list").html('');
+							balance(page, "3", "upgrade_list", "upgrade_more");
+						}
+					} else if(event.detail.slideNumber === 3) {
+						if($(".put_list").html() != ''){
+							$(".no_info").hide();
+						}
+						if($(".put_list").attr("title") != "yes") {
+							//plus.nativeUI.showWaiting("安全检测中，请等待");
+							$(".put_list").html('');
+							balance(page, "4", "put_list", "put_more");
+						}
+					}
+				});
+				$(".balance_more").click(function() {
+					more(page, "1", "balance_list", "balance_more");
+				});
+				$(".profit_more").click(function() {
+					more(page, "2", "profit_list", "profit_more");
+				});
+				$(".upgrade_more").click(function() {
+					more(page, "3", "upgrade_list", "upgrade_more");
+				});
+				$(".put_more").click(function() {
+					more(page, "4", "put_list", "put_more");
+				});
+				$(".info_list").on("click", ".mui-table-view", function() {
+					var title = $(this).attr("title");
+					mui.openWindow({
+						url: "repayment_list.html",
+						id: "repayment_list",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							mid: title
+						},
+						createNew: true,
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+				function balance(page, state, class1, class2) {
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/repayment/index?page=" + page,
+						data: {
+							token: tokens,
+							cid: self.title,
+							state: state
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								var result = e.data.data;
+								if(result == false) {
+									$("." + class1 + ",." + class2 + "").hide();
+									$(".no_info").show();
+								} else {
+									$(".no_info").hide();
+									$("." + class1 + ",." + class2 + "").show();
+									$("." + class1 + "").attr("title", "yes");
+									for(var i = 0; i < result.length; i++) {
+										var mission_state = result[i].mission_state;
+										var img;
+										if(mission_state == 1) {
+											img = "../../img/ic_repayment_loading.png"
+										} else if(mission_state == 2) {
+											img = "../../img/ic_repayment_success.png"
+										} else if(mission_state == 3) {
+											img = "../../img/ic_repayment_fail.png"
+										} else if(mission_state == 4) {
+											img = "../../img/ic_repayment_zz.png"
+										}
+										var div = "<div class='mui-table-view' title='" + result[i].mission_id + "'>" +
+											"<div class='view_ul'>" +
+											"<ul>" +
+											"<li style='text-align: left;'>" +
+											"<p>延期金额</p>" +
+											"<span class='cut'>" + result[i].mission_money + "</span>" +
+											"</li>" +
+											"<li>" +
+											"<p>延期笔数</p>" +
+											"<span class='cut'>" + result[i].mission_repayment + "</span>" +
+											"</li>" +
+											"<li style='text-align: right;'>" +
+											"<p>手续费</p>" +
+											"<span class='cut'>" + result[i].mission_fee + "</span>" +
+											"</li>" +
+											"<div class='clear'></div>" +
+											"</ul>" +
+											"</div>" +
+											"<div class='hk_time'>" +
+											"<div class='left' style='width: 70%;'>" +
+											"<div class='b_m'>" +
+											"<p>开始时间</p>" +
+											"<span>" + result[i].mission_start_time + "</span>" +
+											"</div>" +
+											"<div class='b_m'>" +
+											"<p>结束时间</p>" +
+											"<span>" + result[i].mission_end_time + "</span>" +
+											"</div>" +
+											"</div>" +
+											"<div class='right' style='width:12%'>" +
+											"<img src='" + img + "'>" +
+											"</div>" +
+											"<div class='clear'></div>" +
+											"</div>" +
+											"</div>";
+										$("." + class1 + "").append(div);
+									}
+								}
+							}
+						}
+					});
+				}
+				function more(page, state, class1, class2) {
+					page++;
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/repayment/index?page=" + page,
+						data: {
+							token: tokens,
+							cid: self.title,
+							state: state
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								var result = e.data.data;
+								if(result == false) {
+									$(".no_info").show();
+									$("." + class2 + "").html("没有更多数据了~");
+								} else {
+									$(".no_info").hide();
+									$("." + class1 + "").attr("title", "yes");
+									for(var i = 0; i < result.length; i++) {
+										var mission_state = result[i].mission_state;
+										var img;
+										if(mission_state == 1) {
+											img = "../../img/ic_repayment_loading.png"
+										} else if(mission_state == 2) {
+											img = "../../img/ic_repayment_success.png"
+										} else if(mission_state == 3) {
+											img = "../../img/ic_repayment_fail.png"
+										} else if(mission_state == 4) {
+											img = "../../img/ic_repayment_zz.png"
+										}
+										var div = "<div class='mui-table-view' title='" + result[i].mission_id + "'>" +
+											"<div class='view_ul'>" +
+											"<ul>" +
+											"<li style='text-align: left;'>" +
+											"<p>延期金额</p>" +
+											"<span class='cut'>" + result[i].mission_money + "</span>" +
+											"</li>" +
+											"<li>" +
+											"<p>延期笔数</p>" +
+											"<span class='cut'>" + result[i].mission_repayment + "</span>" +
+											"</li>" +
+											"<li style='text-align: right;'>" +
+											"<p>手续费</p>" +
+											"<span class='cut'>" + result[i].mission_fee + "</span>" +
+											"</li>" +
+											"<div class='clear'></div>" +
+											"</ul>" +
+											"</div>" +
+											"<div class='hk_time'>" +
+											"<div class='left' style='width: 70%;'>" +
+											"<div class='b_m'>" +
+											"<p>开始时间</p>" +
+											"<span>" + result[i].mission_start_time + "</span>" +
+											"</div>" +
+											"<div class='b_m'>" +
+											"<p>结束时间</p>" +
+											"<span>" + result[i].mission_end_time + "</span>" +
+											"</div>" +
+											"</div>" +
+											"<div class='right' style='width:12%'>" +
+											"<img src='" + img + "'>" +
+											"</div>" +
+											"<div class='clear'></div>" +
+											"</div>" +
+											"</div>";
+										$("." + class1 + "").append(div);
+									}
+								}
+							}
+						}
+					});
+				}
+				 
+			})
+		</script>
+	</body>
+
+</html>

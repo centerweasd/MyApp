@@ -1,0 +1,270 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/setting.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">设置</h1>
+		</header>
+		<div class="mui-content">
+			<div class="version_info">
+				<img src="../../img/logo.png" />
+				<p class="app_name">信用卡管家</p>
+				<p class="version">当前版本：</p>
+			</div>
+
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell modify">
+					<a class="mui-navigate-right">
+						<div class="left img">
+							<img src="../../img/setting_password.png" />
+						</div>
+						<span>修改密码</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell feedback">
+					<a class="mui-navigate-right">
+						<div class="left img">
+							<img src="../../img/setting_feedback.png" />
+						</div>
+						<span>意见反馈</span>
+					</a>
+				</li>
+				<!--<li class="mui-table-view-cell clear_cache">
+					<a class="mui-navigate-right">
+						<div class="left img">
+							<img src="../../img/setting_clear.png" />
+						</div>
+						<span>清除缓存</span>
+					</a>
+				</li>-->
+				<li class="mui-table-view-cell upgrade">
+					<a class="mui-navigate-right">
+						<div class="left img">
+							<img src="../../img/setting_upgrade.png" />
+						</div>
+						<span>检测更新</span>
+					</a>
+				</li>
+			</ul>
+			<div class="sign_out">
+				退出
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<div class="update-view">
+			<div class="updateProDiv">升级中，请勿退出或执行其他操作:
+				<progress value="" max="" id="proDownFile"></progress>
+				<span class="persent"></span>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					//					beforeback: function() {
+					//						//获得父页面的webview
+					//						var list = plus.webview.currentWebview().opener();
+					//						//触发父页面的自定义事件(refresh),从而进行刷新
+					//						mui.fire(list, 'login');
+					//						//返回true,继续页面关闭逻辑
+					//						return true;
+					//					}
+				});
+				window.addEventListener('login', function(e) { //执行刷新
+					var list = plus.webview.currentWebview().opener();
+					//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'login');
+					mui.back();
+				});
+				//plus.nativeUI.showWaiting("安全检测中，请等待");
+				var version = localStorage.getItem("version");
+				plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
+					$('.version').html('当前版本' + wgtinfo.version);
+				})
+
+				var tokens = getToken();
+				getToken();
+
+				/*检查更新*/
+				$(".upgrade").click(function() {
+					plus.nativeUI.showWaiting();
+					var system;
+					if(mui.os.ios) {
+						system = "ios"
+					} else if(mui.os.android) {
+						system = "android"
+					}
+					plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
+						version = wgtinfo.version;
+						mui.ajax(site_app + '/api/Common/version', {
+							async: false,
+							data: {
+								os: system,
+								version: version
+							},
+							type: 'POST', //HTTP请求类型
+							success: function(data) {
+								plus.nativeUI.closeWaiting();
+								if(data.error == 0) {
+									if(data.data.code == 0) {
+										mui.confirm('已有最新版本，是否更新版本！', '温馨提示', ['取消', '升级'], function(e) {
+											if(e.index == 1) {
+												//									if(mui.os.ios) {
+												//										plus.runtime.openURL("https://fir.im/cnvp");
+												//									} else {
+												downWgt(true, data.data.url);
+												//									}
+											}
+										}, 'div');
+									} else {
+										mui.toast(data.msg)
+									}
+								} else {
+									mui.toast(data.msg)
+								}
+							},
+							error: function(xhr, error, errorThrown) {
+								console.log(error);
+							}
+						});
+					});
+
+					function downWgt(key, paths) {
+						$(".update-view,.mengban").show();
+						var dtask = plus.downloader.createDownload(paths, {}, function(d, status) {
+							if(status == 200) {
+								var pass = d.filename;
+								plus.runtime.install(pass);
+								clearInterval(i);
+								$(".update-view,.mengban").hide();
+							} else {
+								plus.nativeUI.alert("下载更新资源失败！");
+							}
+
+						});
+						dtask.addEventListener("statechanged", function(d, status) {
+							var total = parseInt(d.totalSize);
+							var cur = parseInt(d.downloadedSize);
+						}, false);
+						dtask.start();
+						var i = setInterval(function() {
+							var totalSize = dtask.totalSize;
+							var downloadedSize = dtask.downloadedSize;
+							$('#proDownFile').attr('value', downloadedSize);
+							$('#proDownFile').attr('max', totalSize);
+						}, 100);
+					}
+				})
+
+				$(".feedback").click(function() {
+					mui.openWindow({
+						url: "feedback.html",
+						id: "feedback",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				$(".modify").click(function() {
+					mui.openWindow({
+						url: "modify_pw.html",
+						id: "modify_pw",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".sign_out").click(function() {
+					var actionbuttons = [{
+						title: "退出登录"
+					}];
+					var actionstyle = {
+						title: '提示',
+						cancel: "取消",
+						buttons: actionbuttons
+					};
+					plus.nativeUI.actionSheet(actionstyle, function(e) {
+						if(e.index == 1) {
+							plus.nativeUI.showWaiting("正在退出..");
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/Main/out",
+								data: {
+									token: tokens
+								},
+								dataType: "json",
+								success: function(e) {
+
+									if(e.error == 0) {
+
+										localStorage.removeItem("token");
+										localStorage.removeItem("sj");
+										//										var logins = plus.webview.getWebviewById('login');
+										//										mui.fire(logins, 'logins');
+										mui.openWindow({
+											url: "../login/login.html",
+											id: "login",
+											show: {
+												autoShow: true, //页面loaded事件发生后自动显示，默认为true
+											},
+											createNew: true,
+											extras: {
+												type: '1'
+											},
+											waiting: {
+												//autoShow: true, //自动显示等待框，默认为true
+												//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+											}
+										});
+
+									} else {
+										mui.alert(e.msg, '提示', '', '', 'div');
+									}
+									plus.nativeUI.closeWaiting();
+								}
+							});
+						}
+					});
+
+				});
+				/*清除缓存*/
+				$(".clear_cache").click(function() {
+					plus.cache.calculate(function(size) {
+						sizeCache = size;
+						mui.confirm("您目前的系统缓存为" + parseFloat(sizeCache / (1024 * 1024)).toFixed(2) + "M？", "清除缓存", ["确认", "取消"], function(e) {
+							if(e.index == 1) {} else {
+								plus.cache.clear(function() {
+									mui.toast("缓存清除完毕");
+								});
+							}
+						}, "div");
+					});
+				});
+				plus.nativeUI.closeWaiting();
+				 
+			})
+		</script>
+	</body>
+
+</html>

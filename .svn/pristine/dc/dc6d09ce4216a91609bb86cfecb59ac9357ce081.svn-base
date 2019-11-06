@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/photo_tg.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">身份证照片</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="img_list">
+				<li>
+					<div class="left img">
+						<img src="../../img/action_default.png" id="first" data-preview-src="" data-preview-group="1" />
+					</div>
+					<div class="left main">
+						<div class="title">
+							<span>1</span>/2身份证正面照
+						</div>
+						<p class="tips">文字必须清晰可见</p>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<div class="left img">
+						<img src="../../img/action_default.png" id="second" data-preview-src="" data-preview-group="1" />
+					</div>
+					<div class="left main">
+						<div class="title">
+							<span>2</span>/2身份证正面照
+						</div>
+						<p class="tips">文字必须清晰可见</p>
+					</div>
+					<div class="clear"></div>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.zoom.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.previewimage.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.previewImage()
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+
+window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+
+				var tokens = getToken();
+				getToken();
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								$("#first").attr("src", e.data.user_idcard_z);
+								$("#second").attr("src", e.data.user_idcard_f);
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true, //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

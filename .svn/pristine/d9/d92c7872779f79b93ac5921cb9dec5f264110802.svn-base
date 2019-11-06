@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_bankCard.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的银行卡</h1>
+			<span class="add_card">添加</span>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'user');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				var tokens = getToken();
+				getToken();
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				/*获取银行卡列表*/
+				$.ajax({
+					url: site_app + '/api/my/card_list',
+					type: 'post',
+					data: {
+						token: tokens
+					},
+					dataType: 'json',
+					success: function(result) {
+						console.log(result);
+						if(result.error == 0) {
+							for(var i = 0; i < result.data.length; i++) {
+								var html = "<li title='" + result.data[i].card_id + "'>" +
+									"<div class='left bank_logo'>" +
+									"<img src='"+result.data[i].list_logo+"' />" +
+									"</div>" +
+									"<div class='left bank_info'>" +
+									"<div class='bank_type'>" +  
+									"<span class='bank_name'>" + result.data[i].list_name + "</span>" +
+									"<span class='type'>" + result.data[i].card_type + "</span>" +
+									"</div>" +
+									"<div class='bank_num'>" + result.data[i].card_no + "</div>" +
+									"</div>" +
+									"<div class='clear'></div>" +
+									"<div class='rz_state'>" + result.data[i].card_real + "</div>" +
+									"<div class='delete'>" +
+									"<img src='../../img/delete_card_icon.png' />" +
+									"</div>" +
+									"</li>";
+								$(".mui-table-view").append(html);
+							}
+						} else {
+							$(".mui-content").html(" <div class='no_info'>" +
+								"<img src='../../img/no_creditbill_icon.png'/>" +
+								"<p>没有相关数据</p>" +
+								"</div>");
+						}
+					}
+				});
+				$(".mui-table-view").on("click", ".delete", function() {
+					var id = $(this).parent("li").attr("title");
+					$.ajax({
+						url: site_app + "/api/my/card_del",
+						type: "post",
+						data: {
+							token: tokens,
+							cid: id
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								mui.alert("解绑成功", '提示', '', function() {
+									window.location.reload();
+								}, 'div');
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+
+					})
+				})
+				$(".mui-table-view").on("click", ".left", function() {
+					var titles = $(this).parent("li").attr("title");
+					mui.openWindow({
+						url: "../index/card_info.html",
+						id: "binding_card",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title:titles
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+
+				$(".add_card").click(function() {
+					mui.openWindow({
+						url: "../index/binding_card.html",
+						id: "binding_card",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_rate.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的费率</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1">还款</a>
+					<!--<a class="mui-control-item" href="#item2">收款</a>-->
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="item1" class="mui-slider-item mui-control-content">
+
+					</div>
+					<div id="item2" class="mui-slider-item mui-control-content mui-active">
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var token = getToken();
+				getToken();
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/my/UserRate',
+					data: {
+						'token': token
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(data) {
+						if(data.error == 0) {
+							//收款
+							var content = '<ul class="mui-table-view">';
+							var content1 = '<ul class="mui-table-view">';
+							for(i = 0; i < data.data.length; i++) {
+								var num = (data.data[i].rate_rate) * 100;
+								num = Number(num).toFixed(2);
+								if(data.data[i].rate_type == 2) {
+									content += '<li>';
+									content += '<div class="left img">';
+									content += '<img src="../../img/shop_unionpay_icon.png"/>';
+									content += '</div>';
+									content += '<div class="left type_info">';
+									content += '<p class="type_name">';
+									content += '商户收款';
+									content += '</p>';
+									content += '<p class="quota">';
+									//content += '单笔可用额度20000元 ';
+									content += '</p>';
+									content += '</div>';
+									content += '<div class="right rate">';
+									content +=  num + '%+' + data.data[i].rate_close_rate+ '/元';
+									content += '</div>';
+									content += '<div class="clear"></div>';
+									content += '</li>';
+								} else {
+									//还款
+									content1 += '<li>';
+									content1 += '<div class="left img">';
+									content1 += '<img src="../../img/shop_unionpay_icon.png"/>';
+									content1 += '</div>';
+									content1 += '<div class="left type_info">';
+									content1 += '<p class="type_name">';
+									content1 += '落地还款';
+									content1 += '</p>';
+									content1 += '<p class="quota">';
+									//content1 += '单笔可用额度20000元 ';
+									content1 += '</p>';
+									content1 += '</div>';
+									content1 += '<div class="right rate">';
+									content1 += num + '%+' + data.data[i].rate_close_rate+ '/元';
+									content1 += '</div>';
+									content1 += '<div class="clear"></div>';
+									content1 += '</li>';
+								}
+
+							}
+							content += '</ul>';
+							content1 += '</ul>';
+							$("#item1").html(content);
+							$("#item2").html(content1);
+
+						} else {
+							mui.alert(data.msg, '提示', '', '', 'div');
+						}
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,979 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/receivables.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">收款</h1>
+			<span class="iconfont icon-wenhao"></span>
+		</header>
+		<div class="mui-content">
+			<img src="../../img/ic_edit_creditcard.png" width="100%" style="display: block;" />
+			<div class="card_info">
+				<img src="../../img/bank_green_bg.png" />
+				<div class="card_t">
+					<div class="left bank_name">--</div>
+					<div class="right receivables" style="text-align: right;">
+						收款记录
+						<img src="../../img/arrow_right_white.png" width="8%" style="vertical-align: middle;margin-bottom: 3px;" />
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="card_logo">
+					<img src="" />
+				</div>
+				<div class="limit">
+					<p class="limit_money">0.00</p>
+					<p>今日收款金额</p>
+				</div>
+				<div class="replace">更换</div>
+				<div class="card_b">
+					<ul>
+						<li>
+							单笔最高
+							<span class="max">￥0.00</span>
+						</li>
+						<li>
+							单笔最低
+							<span class="min">￥0.00</span>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+			</div>
+			<div class="input_money">
+				<div class="title">收款金额</div>
+				<div class="mui-input-row">
+					<span class="sign">￥</span>
+					<input type="text" class="mui-input-clear money" id="money" style="font-size: 22px;">
+				</div>
+				<li class="site" style="display: none;">
+					<label>地区：</label>
+					<div class="right">
+						<input type="text" class="mui-input-clear" id="site" readonly="readonly" placeholder="请选择地区">
+						<span class="iconfont icon-mjiantou"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li class="industry" style="display: none;">
+					<label>行业：</label>
+					<div class="right">
+						<input type="text" class="mui-input-clear" id="industry" readonly="readonly">
+						<span class="iconfont icon-mjiantou"></span>
+					</div>
+
+					<div class="clear"></div>
+				</li>
+				<div class="custom">
+					<div class="left">
+						到账卡：
+						<span class="bk_name">--</span>
+					</div>
+					<div class="right">
+						到账金额：
+						<span class="get_money">￥0.00</span>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<button type="button" class="mui-btn mui-btn-blue generate_plan">立即收款</button>
+			<div class="more_mode">
+				更多收款方式
+				<span class="iconfont icon-mjiantou"></span>
+			</div>
+		</div>
+
+		<!--银行卡列表弹窗-->
+		<div class="bank_popup">
+			<div class="title">
+				<span class="iconfont icon-zuojiantou close"></span> 选择银行卡
+			</div>
+			<ul>
+				<!--				
+				<li>
+					<img src="../../img/bank_ny_white_icon.png" />
+					<span>农业银行(2140)</span>
+				</li>-->
+			</ul>
+			<div class="add_bank">
+				<img src="../../img/add_card_round.png" />
+			</div>
+		</div>
+
+		<!--付款方式弹窗-->
+		<div class="mode_popup popup">
+			<div class="title">
+				<span class="close">取消</span> 选择收款通道
+				<span class="sure mode_sure">确定</span>
+			</div>
+			<ul class="mui-table-view mode_list">
+			</ul>
+		</div>
+		<!--行业弹窗-->
+		<div class="industry_popup popup">
+			<div class="title">
+				<span class="close">取消</span> 选择行业
+				<span class="sure industry_sure">确定</span>
+			</div>
+			<ul class="mui-table-view industry_list">
+			</ul>
+		</div>
+		<input type="hidden" id="payment_id" />
+		<input type="hidden" id="pay_cid" />
+		<input type="hidden" id="mcc" />
+		<div class="mengban"></div>
+
+		<!--验证码-->
+		<div class="code_popup">
+			<div class="title">
+				请输入短信验证码
+			</div>
+			<div class="code">
+				<input type="text" id="code" placeholder="请输入验证码" />
+				<span class="send_code" onclick="get_code()">重新获取</span>
+				<div class="clear"></div>
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue code_sub">提交</button>
+		</div>
+		<!--绑卡-->
+		<div class="binding_popup">
+			<div class="title">
+				请输入绑卡验证码
+			</div>
+			<div class="code">
+				<input type="text" id="smscode" placeholder="请输入验证码" />
+				<span class="send_code" onclick="get_code()">重新获取</span>
+				<div class="clear"></div>
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue binding_sub">提交</button>
+		</div>
+		<!--支付验证码-->
+		<div class="pay_popup">
+			<div class="title">
+				请输入支付验证码
+			</div>
+			<div class="code">
+				<input type="text" id="pay_code" placeholder="请输入验证码" />
+				<span class="pay_get_code send_code">重新获取</span>
+				<div class="clear"></div>
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue pay_sub">提交</button>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var tokens = getToken();
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'index');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				//plus.nativeUI.showWaiting("加载中");
+				getToken();
+				var self = plus.webview.currentWebview();
+				var cData, region;
+
+				$("#pay_cid").val(self.title);
+
+				/*获取银行卡信息*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/payrecords/bankinfo",
+					data: {
+						token: tokens,
+						cid: $("#pay_cid").val()
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							$(".bank_name").html(e.data.list_name + "(" + e.data.card_no + ")");
+							$(".card_logo img").attr("src", e.data.list_logo);
+							$(".limit_money").text("￥" + e.dayMoney);
+						}
+					}
+				});
+				$.ajax({
+					url: site_app + "/api/my/card_info",
+					type: "post",
+					data: {
+						token: tokens,
+						type: "2"
+					},
+					dataType: "json",
+					async: false,
+					success: function(e) {
+						if(e.error == 0) {
+							var card = e.data.card_no;
+							$(".bk_name").html(e.data.list_name + "(" + card.substring(card.length - 4) + ")");
+							//							$(".bank_name").attr("title", e.data.card_id);
+						}
+					}
+				});
+				/*获取最高最低*/
+				getpayment($("#pay_cid").val());
+
+				$("#money").keyup(function() {
+					var max = $(".max").attr("title");
+					var money = $("#money").val();
+					if(parseFloat(money) > parseFloat(max)) {
+						$("#money").val(max);
+					}
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/getpayment",
+						data: {
+							token: tokens,
+							type: '2',
+							cid: $("#pay_cid").val()
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								var get_money = $("#money").val();
+								var rates = e.rate.rate_rate / 100;
+								var money_ = (get_money * rates) + Number(e.rate.rate_close_rate);
+								var mon = get_money - money_;
+								$(".get_money").text("￥" + Number(mon).toFixed(2));
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div')
+							}
+						}
+					});
+				});
+				/*行业*/
+				$(".industry").click(function() {
+					//					$(".industry_list").html("");
+					$(".industry_popup").animate({
+						bottom: "0"
+					});
+					$(".mengban").show();
+
+				});
+				/*获取更多通道*/
+				$(".more_mode").click(function() {
+					$(".mode_list").html("");
+					$(".mode_popup").animate({
+						bottom: "0"
+					});
+					$(".mengban").show();
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/getpayment",
+						data: {
+							token: tokens,
+							type: "2",
+							cid: $("#pay_cid").val()
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								for(var i = 0; i < e.data.length; i++) {
+									var time = e.data[i].paymentst_entime;
+									if(time == 0) {
+										time = "不限制"
+									} else {
+										time = e.data[i].paymentst_entime;
+									}
+									var num = e.rate.rate_rate;
+									num = Number(num).toFixed(2);
+									var li = "<li>" +
+										"<div class='left'>" +
+										"<div class='mui-input-row mui-radio '>" +
+										"<input name='radio' type='radio' data-i='" + i + "' title='" + e.data[i].mcc[0] + "' value='" + e.data[i].payment_id + "' max='" + e.data[i].payment_max_money + "' min='" + e.data[i].payment_min_money + "'>" +
+										"</div>" +
+										"</div>" +
+										"<div class='right'>" +
+										"<div class='mode_name'>" + e.data[i].payment_name + "</div>" +
+										"<div class='mode_info payment_id'>" +
+										"<div class='mode_fl m_l left'>费率:" + num + "%+" + e.rate.rate_close_rate + "元</div>" +
+										"<div class='mode_time m_r left'>交易时间:" + time + "</div>" +
+										"<div class='clear'></div>" +
+										"</div>" +
+										"<div class='mode_info'>" +
+										"<div class='mode_db m_l left'>单笔:" + e.data[i].payment_min_money + "~" + e.data[i].payment_max_money + "</div>" +
+										"<div class='mode_js m_r left'>最大笔数:" + e.data[i].payment_day_num + "</div>" +
+										"<div class='clear'></div>" +
+										"</div>" +
+										"</div>" +
+										"<div class='clear'></div>" +
+										"</li>";
+									$(".mode_list").append(li);
+								}
+
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div')
+							}
+						}
+					});
+				});
+				$(".mode_sure").click(function() {
+					if($("input[name='radio']").is(":checked")) {
+						$("#payment_id").val($("input[name='radio']:checked").val());
+						$(".max").text("￥" + $("input[name='radio']:checked").attr("max"));
+						$(".max").attr("title", $(".mode_list input[name='radio']:checked").attr("max"));
+						$(".min").text("￥" + $("input[name='radio']:checked").attr("min"));
+						var length = $("input[name='radio']:checked").attr("data-i");
+						$(".industry_list").html("");
+						$("#industry").val("");
+						plus.nativeUI.showWaiting();
+						$.ajax({
+							type: "post",
+							url: site_app + "/api/payrecords/getpayment",
+							data: {
+								token: tokens,
+								cid: $("#pay_cid").val()
+							},
+							dataType: "json",
+							success: function(e) {
+
+								if(e.error == 0) {
+									$(".mode_popup").animate({
+										bottom: "-330px"
+									});
+									$(".mengban").hide();
+									if(e.data[length].payment_region == 0) {
+										$(".site").hide();
+									} else {
+										$(".site").show();
+										$.ajax({
+											type: 'post',
+											url: site_app + '/api/payrecords/city_all',
+											async: false,
+											data: {
+												token: tokens,
+												id: "0",
+												pay_id: e.data[length].payment_id
+											},
+											dataType: 'json',
+											success: function(e) {
+												plus.nativeUI.closeWaiting();
+												if(e.error == 0) {
+													cData = e.data;
+												} else {
+													mui.alert(e.msg, '提示', '', '', 'div')
+												}
+											}
+										})
+									}
+								} else {
+									mui.alert(e.msg, '提示', '', '', 'div')
+								}
+							}
+						});
+					} else {
+						mui.alert('请选择通道', '提示', '', '', 'div')
+					}
+				});
+				$(".industry_sure").click(function() {
+					$("#mcc").val($(".industry_radio input[name='radio']:checked").val());
+					$("#industry").val($("input[name='radio']:checked").attr("title"));
+					$(".industry_popup").animate({
+						bottom: "-330px"
+					});
+					$(".mengban").hide();
+				});
+
+				$(".replace").click(function() {
+					$(".bank_popup ul").html("");
+					$(".bank_popup").animate({
+						bottom: "0"
+					});
+					$(".mengban").show();
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/card",
+						data: {
+							token: tokens
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								var pay_card = e.data.pay_card;
+								for(var i = 0; i < pay_card.length; i++) {
+									var li = "<li title='" + pay_card[i].card_id + "'>" +
+										"<img src='" + pay_card[i].list_logo + "' />" +
+										"<span>" + pay_card[i].list_name + "(" + pay_card[i].card_no + ")</span>" +
+										"</li>";
+									$(".bank_popup ul").append(li);
+								}
+							}
+						}
+					});
+				});
+				$(".bank_popup ul").on("click", "li", function() {
+					$("#pay_cid").val($(this).attr("title"));
+					var title = $(this).attr("title");
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/bankinfo",
+						data: {
+							token: tokens,
+							cid: title
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+
+								$(".bank_name").html(e.data.list_name + "(" + e.data.card_no + ")");
+								$(".card_logo img").attr("src", e.data.list_logo);
+								$(".limit_money").text("￥" + e.dayMoney);
+								$(".bank_popup,.mode_popup").animate({
+									bottom: "-400px"
+								});
+								$(".mengban").hide();
+								getpayment(title);
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div')
+							}
+						}
+					});
+				});
+
+				/*验证码提交*/
+				$(".code_sub").click(function() {
+					var pay_cid = $("#pay_cid").val();
+					var money = $("#money").val();
+					var pay_id = $("#payment_id").val();
+					var site = $("#site").val();
+					var code = $("#code").val();
+					var id = $(".code_popup").attr("title");
+					if(code == "") {
+						mui.alert("请输入验证码", '提示', '', '', 'div');
+						return false;
+					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/bind_api",
+						data: {
+							token: tokens,
+							pay_cid: pay_cid,
+							money: money,
+							pay_id: pay_id,
+							type: 2,
+							mcc: $("#mcc").val(),
+							region: site,
+							id: id,
+							code: code
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								mui.alert(e.msg, "提示", '', function() {
+									setTimeout(function() {
+										plus.webview.currentWebview("../index/receivables.html").close();
+									}, 300);
+									var list = plus.webview.currentWebview().opener();
+									//触发父页面的自定义事件(refresh),从而进行刷新
+									mui.fire(list, 'index');
+									//返回true,继续页面关闭逻辑
+									return true;
+								}, 'div')
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				});
+
+				/*绑卡提交*/
+				$(".binding_sub").click(function() {
+					var pay_cid = $("#pay_cid").val();
+					var pay_id = $("#payment_id").val();
+					var code = $("#smscode").val();
+					if(code == "") {
+						mui.alert("请输入验证码", '提示', '', '', 'div');
+						return false;
+					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/bind_api",
+						data: {
+							token: tokens,
+							pay_id: pay_id,
+							cid: pay_cid,
+							type: 2,
+							smscode: code
+						},
+						dataType: "json",
+						success: function(e) {
+							console.log(e);
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								mui.alert(e.msg, "提示", '', function() {
+									var pay_cid = $("#pay_cid").val();
+									var money = $("#money").val();
+									var pay_id = $("#payment_id").val();
+									var site = $("#site").val();
+//									if(site == "") {
+//										mui.alert("请选择消费地区", '提示', '', '', 'div');
+//										return false;
+//									}
+//									if(money == "") {
+//										mui.alert("请输入收款金额", '提示', '', '', 'div');
+//										return false;
+//									}
+									plus.nativeUI.showWaiting();
+									$.ajax({
+										type: "post",
+										url: site_app + "/api/payrecords/pay",
+										data: {
+											token: tokens,
+											pay_cid: pay_cid,
+											money: money,
+											pay_id: pay_id,
+											type: 1,
+											mcc: $("#mcc").val(),
+											region: site,
+											id: "",
+											code: ""
+										},
+										dataType: "json",
+										success: function(e) {
+											plus.nativeUI.closeWaiting();
+											if(e.error == 00) {
+												$(".pay_popup,.mengban").show();+
+												get_code_time();
+												$(".pay_popup").attr("title", e.id);
+											}
+										}
+									})
+								}, 'div')
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				});
+				/*重新获取支付验证码*/
+				$(".pay_get_code").click(function() {
+					var pay_cid = $("#pay_cid").val();
+					var money = $("#money").val();
+					var pay_id = $("#payment_id").val();
+					var site = $("#site").val();
+					var id = $(".pay_popup").attr("title");
+//					if(site == "") {
+//						mui.alert("请选择消费地区", '提示', '', '', 'div');
+//						return false;
+//					}
+//					if(money == "") {
+//						mui.alert("请输入收款金额", '提示', '', '', 'div');
+//						return false;
+//					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/pay",
+						data: {
+							token: tokens,
+							pay_cid: pay_cid,
+							money: money,
+							pay_id: pay_id,
+							type: 3,
+							mcc: $("#mcc").val(),
+							region: site,
+							id: id,
+							code: ""
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								mui.toast(e.msg);
+								get_code_time();
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					})
+				});
+				$(".pay_sub").click(function() {
+					var pay_cid = $("#pay_cid").val();
+					var money = $("#money").val();
+					var pay_id = $("#payment_id").val();
+					var id = $(".pay_popup").attr("title");
+					var code = $("#pay_code").val();
+					var site = $("#site").val();
+//					if(site == "") {
+//						mui.alert("请选择消费地区", '提示', '', '', 'div');
+//						return false;
+//					}
+//					if(money == "") {
+//						mui.alert("请输入收款金额", '提示', '', '', 'div');
+//						return false;
+//					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/pay",
+						data: {
+							token: tokens,
+							pay_cid: pay_cid,
+							money: money,
+							pay_id: pay_id,
+							type: 2,
+							mcc: $("#mcc").val(),
+							region: site,
+							id: id,
+							code: code
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								mui.alert(e.msg, "提示", '', function() {
+									setTimeout(function() {
+										plus.webview.currentWebview("../index/receivables.html").close();
+									}, 300);
+									var list = plus.webview.currentWebview().opener();
+									//触发父页面的自定义事件(refresh),从而进行刷新
+									mui.fire(list, 'index');
+									//返回true,继续页面关闭逻辑
+									return true;
+								}, 'div')
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					})
+				});
+				$(".close,.mengban").click(function() {
+					$(".mode_popup,.industry_popup").animate({
+						bottom: "-330px"
+					});
+					$(".bank_popup").animate({
+						bottom: "-400px"
+					});
+					$(".mengban,.code_popup,.binding_popup,.pay_popup").hide();
+				});
+
+				$(".add_bank").click(function() {
+					mui.openWindow({
+						url: "binding_card.html",
+						id: "binding_card",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: false //自动显示等待框，默认为true
+							//title: '', //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$(".receivables").click(function() {
+					mui.openWindow({
+						url: "../index/receivables_record.html",
+						id: "receivables_record",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title: $("#pay_cid").val()
+						},
+						waiting: {
+							autoShow: false //自动显示等待框，默认为true
+							//title: '', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".icon-wenhao").click(function() {
+					mui.openWindow({
+						url: "../user/help_center.html",
+						id: "help_center",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: false //自动显示等待框，默认为true
+							//title: '', //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				function getpayment(cids) {
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/getpayment",
+						data: {
+							token: tokens,
+							cid: cids
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								if(e.data[0].payment_region == 0) {
+									$(".site").hide();
+								} else {
+									$(".site").show();
+									$.ajax({
+										type: 'post',
+										url: site_app + '/api/payrecords/city_all',
+										async: false,
+										data: {
+											token: tokens,
+											id: "0",
+											pay_id: e.data[0].payment_id
+										},
+										dataType: 'json',
+										success: function(e) {
+											if(e.error == 0) {
+												cData = e.data;
+											} else {
+												mui.alert(e.msg, '提示', '', '', 'div')
+											}
+										}
+									})
+								}
+								$(".max").text("￥" + e.data[0].payment_max_money);
+								$(".max").attr("title", e.data[0].payment_max_money);
+								$(".min").text("￥" + e.data[0].payment_min_money);
+								$("#payment_id").val(e.data[0].payment_id);
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div')
+							}
+						}
+					});
+				}
+				var city_picker = new mui.PopPicker({
+					layer: 2
+				});
+				$("#site").on("tap", function() {
+					city_picker.setData(cData);
+					setTimeout(function() {
+						city_picker.show(function(items) {
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							} else if((items[1] || {}).text == undefined) {
+								(items[1] || {}).text = "";
+							}
+							//							else if((items[2] || {}).text == undefined) {
+							//								(items[2] || {}).text = "";
+							//							}
+							//该ID为接收城市ID字段 
+							$("#site").val((items[0] || {}).text + "-" + (items[1] || {}).text);
+							$("#site").attr("title", (items[1] || {}).value);
+							//			+ "-" + (items[2] || {}).text
+							$(".industry_list").html("");
+							$("#industry").val("");
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/payrecords/get_mcc",
+								data: {
+									token: tokens,
+									cid: $("#pay_cid").val(),
+									pay_id: $("#payment_id").val(),
+									region: (items[0] || {}).text + "-" + (items[1] || {}).text,
+									city_id: (items[1] || {}).value
+								},
+								dataType: "json",
+								success: function(e) {
+									plus.nativeUI.closeWaiting();
+									if(e.error == 0) {
+										if(e.data != false) {
+											$(".industry").show();
+											var li="";
+											for(var i = 0; i < e.data.data.length; i++) {
+												li+= "<li class='industry_radio'>" +
+													"<div class='left'>" +
+													"<div class='mui-input-row mui-radio'>" +
+													"<input name='radio' type='radio' title='" + e.data.data[i].name + "' value='" + e.data.data[i].mcc + "'>" +
+													"</div>" +
+													"</div>" +
+													"<div class='right'>" +
+													"<div class='mode_name'>" + e.data.data[i].name + "</div>" +
+													"</div>" +
+													"<div class='clear'></div>" +
+													"</li>";
+											}
+											$(".industry_list").html(li);
+										}
+									}
+
+								}
+							});
+						});
+
+					}, 200);
+
+				});
+				/*新增收款*/
+				$(".generate_plan").click(function() {
+					var pay_cid = $("#pay_cid").val();
+					var money = $("#money").val();
+					var pay_id = $("#payment_id").val();
+					var site = $("#site").val();
+					if(money == "") {
+						mui.alert("请输入收款金额", '提示', '', '', 'div');
+						return false;
+					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/pay",
+						data: {
+							token: tokens,
+							pay_cid: pay_cid,
+							money: money,
+							pay_id: pay_id,
+							type: 1,
+							mcc:$("#mcc").val(),
+							region: site,
+							id: "",
+							code: ""
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 00) {
+								$(".pay_popup,.mengban").show();
+								get_code_time();
+								$(".pay_popup").attr("title", e.id);
+							} else if(e.error == 10) {
+								if(e.type == "api") {
+									plus.nativeUI.showWaiting();
+									$.ajax({
+										type: "post",
+										url: site_app + "/api/payrecords/bind_api",
+										data: {
+											token: tokens,
+											pay_id: pay_id,
+											cid: pay_cid,
+											type: 1,
+											smscode: ""
+										},
+										dataType: "json",
+										success: function(e) {
+											plus.nativeUI.closeWaiting();
+											if(e.error == 00) {
+												$(".binding_popup,.mengban").show();
+												get_code_time();
+												$(".binding_popup").attr("title", e.id);
+											} else {
+												mui.alert(e.msg, '提示', '', '', 'div');
+											}
+										}
+									});
+								} else if(e.type == "web") {
+									mui.openWindow({
+										url: "receivables_iframe.html",
+										id: "receivables_iframe",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										extras: {
+											title: e.url,
+											type: e.tilte
+										},
+										waiting: {
+											autoShow: false //自动显示等待框，默认为true
+											//title: '', //等待对话框上显示的提示内容
+										}
+									})
+								}
+
+							} else if(e.error == 0) {
+								mui.alert(e.msg, "提示", '', function() {
+									setTimeout(function() {
+										plus.webview.currentWebview("../index/receivables.html").close();
+									}, 300);
+									var list = plus.webview.currentWebview().opener();
+									//触发父页面的自定义事件(refresh),从而进行刷新
+									mui.fire(list, 'index');
+									//返回true,继续页面关闭逻辑
+									return true;
+								}, 'div')
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				});
+				
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			});
+
+			var wait = 60;
+
+			function get_code_time() {
+				//mui.alert('手机号格式错误','提示','','','div');
+				if(wait == 0) {
+					$(".send_code").removeAttr("disabled"); //移除获取验证码按钮的disabled属性
+					$(".send_code").css('background-color', '#2DAAFC');
+					$(".send_code").html("获取验证码");
+					wait = 60;
+				} else {
+					$(".send_code").css('background-color', '#DDDDDD');
+					$(".send_code").attr("disabled", true); //设置获取验证码按钮为不可触发
+					$(".send_code").html(wait + "s");
+					wait--;
+					setTimeout("get_code_time()", 1000);
+				}
+			}
+
+			function get_code() {
+				var pay_cid = $("#pay_cid").val();
+				var pay_id = $("#payment_id").val();
+				plus.nativeUI.showWaiting();
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/payrecords/bind_api",
+					data: {
+						token: tokens,
+						cid: pay_cid,
+						pay_id: pay_id,
+						type: 3,
+						smscode: ""
+					},
+					dataType: "json",
+					success: function(e) {
+						plus.nativeUI.closeWaiting();
+						if(e.error == 0) {
+							mui.toast(e.msg);
+							get_code_time();
+						} else {
+							mui.alert(e.msg, '提示', '', '', 'div');
+						}
+					}
+				});
+			}
+		</script>
+
+	</body>
+
+</html>

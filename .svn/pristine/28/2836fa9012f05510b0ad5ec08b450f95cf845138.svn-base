@@ -1,0 +1,36 @@
+html,body,.mui-content{
+	height: 100%;
+}
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.invite_num{
+	padding: 15px;
+	background: #fff;
+}
+.invite_num .title{
+	font-size: 20px;
+	color: #333;
+	margin-bottom: 20px;
+}
+.invite_num .num{
+	font-size: 18px;
+	color: #FD4F4E;
+	margin: 0;
+}
+.img{
+	width: 60%;
+	margin: 0 auto;
+}

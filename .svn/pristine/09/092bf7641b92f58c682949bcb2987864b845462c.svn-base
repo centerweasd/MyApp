@@ -1,0 +1,6 @@
+# Referenced at D:\00projecthl\MyApplication\app\build\intermediates\manifests\full\debug\AndroidManifest.xml:72
+-keep class io.dcloud.application.DCloudApplication { <init>(...); }
+
+# Referenced at D:\00projecthl\MyApplication\app\build\intermediates\manifests\full\debug\AndroidManifest.xml:192
+-keep class io.dcloud.multiprocess.activity.WebAppActivity1 { <init>(...); }
+

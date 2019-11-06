@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/binding_card.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a href="#" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">添加银行卡</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view">
+				<li>
+					<label>持卡人:</label>
+					<div class="right">
+						<span id="user_name"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>身份证:</label>
+					<div class="right">
+						<span id="user_card"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>银行卡:</label>
+					<div class="right">
+						<input type="text" id="bank_card" placeholder="银行卡号" oninput="value=value.replace(/[^\d]/g,'')"/>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>卡类型:</label>
+					<div class="right">
+						<input type="text" id="bank_type" placeholder="银行卡类型" readonly="readonly"/>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>预留手机:</label>
+					<div class="right">
+						<input type="text" id="phone" value="" placeholder="请输入银行预留手机号" oninput="value=value.replace(/[^\d]/g,'')"/>
+					</div>
+					<div class="clear"></div>
+				</li>
+			</ul>
+			<button type="button" class="mui-btn" id="upload_btn">上传银行卡</button>
+		</div>
+
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'my_bankCard');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				getToken();
+				var tokens = getToken();
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {  
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							$("#user_name").text(e.data.user_name);
+							$("#user_card").text(e.data.user_idcard);
+							$("#phone").val(e.data.user_phone);
+						}
+						plus.nativeUI.closeWaiting();
+					}
+				});
+				
+				/*获取卡类型*/
+				$("#bank_type").click(function(){
+					var bank_card = $("#bank_card").val();
+					if(bank_card == ""){
+						mui.alert("请输入银行卡号", '提示', '', '', 'div');
+					}
+					$.ajax({
+						type:"post",
+						url:site_app +"/api/my/get_bank_id",
+						data:{
+							token:tokens,
+							card_no:bank_card
+						},
+						dataType:"json",
+						success:function(e){
+							if(e.error == 0){
+								$("#bank_type").val(e.data.list_name);
+								$("#bank_type").attr("id",e.data.list_id);
+							}
+							
+						}
+					});
+				});
+
+				var data = {
+					token: tokens,
+					type:"2",
+					card_no: $("#bank_card").val(),
+					phone:$("#phone").val(),
+					bank_id:$("#bank_type").attr("id")
+				};
+				
+				$("#upload_btn").click(function(){
+					var bank_card = $("#bank_card").val();
+					if(bank_card == ""){
+						mui.alert("请输入银行卡号", '提示', '', '', 'div');
+					}else{
+						$.ajax({
+						type:"post",
+						url:site_app +"/api/my/card",
+						data:data,
+						dataType:"json",
+						success:function(e){
+							if(e.error == 0){
+								
+							}else{
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+					}
+					
+				});
+			});
+		</script>
+	</body>
+
+</html>

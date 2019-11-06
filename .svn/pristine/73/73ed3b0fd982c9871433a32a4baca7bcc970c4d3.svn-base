@@ -1,0 +1,37 @@
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.help_type ul li{
+	background: #fff !important;
+	border: 0 !important;
+}
+.mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body{
+	font-size: 13px;
+}
+.sign{
+	height: 40px;
+	line-height: 40px;
+	font-size: 15px;
+	color: #999999;
+	padding: 0 15px;
+	margin: 0;
+}
+.mui-table-view:before{
+	height: 0;
+}
+.mui-table-view-cell:after{
+	left: 0;
+}
+.mui-navigate-right{
+	font-size: 15px;
+}

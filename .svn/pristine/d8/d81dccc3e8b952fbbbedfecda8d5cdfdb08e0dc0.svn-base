@@ -1,0 +1,200 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/agent_apply.css" />
+		<style type="text/css">
+			html,
+			body,
+			.mui-content {
+				height: 100%;
+			}
+			
+			.mui-content {
+				position: relative;
+			}
+			
+			.want {
+				position: fixed !important;
+				bottom: 15px !important;
+			}
+			
+			.popup {
+				display: none;
+				position: fixed;
+				top: 30%;
+				left: 50%;
+				z-index: 999;
+				width: 90%;
+				margin-left: -45%;
+				padding: 20px 15px;
+				background: #fff;
+				border-radius: 8px;
+			}
+			.dhm{
+				height: 130px;
+			}
+			.pay{
+				height: auto;
+			}
+			.pay img{
+				width: 100%;
+			}
+			.popup .mui-btn {
+				bottom: 10px !important;
+			}
+			
+			.popup input {
+				font-size: 14px;
+			}
+			
+			.mengban {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, .5);
+				z-index: 998;
+			}
+			
+			.introduce {
+				margin-bottom: 60px;
+				overflow: hidden;
+			}
+			
+			.content img {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">兑换详情</h1>
+		</header>
+		<div class="mui-content">
+			<img src="../../img/exchange_banner.png" width="100%" style="display: block;" />
+			<div class="introduce">
+				<div class="content">
+
+				</div>
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue want">立即兑换</button>
+		</div>
+		<input type="hidden" id="channelTagId" value="" />
+		<input type="hidden" id="oemChannelId" value="" />
+		<!--输入兑换码-->
+		<div class="popup dhm">
+			<input type="text" id="code" value="" placeholder="请输入兑换码" />
+			<button type="button" class="mui-btn mui-btn-blue submit">确定</button>
+		</div>
+		<div class="popup pay">
+			<img src="" id="pay"/>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				var tokens = getToken();
+				var self = plus.webview.currentWebview();
+
+				$.ajax({
+					type: "get",
+					url: site_app + "/api/Points_Apply/info",
+					data: {
+						id: self.urls
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							$(".mui-title").html(e.data.title);
+							$(".introduce .content").html(e.data.remark);
+							$("#channelTagId").val(self.urls);
+							$("#oemChannelId").val(self.oem)
+						}
+					}
+				});
+				$(".want").click(function() {
+					if(self.type == "EXCHANGE_CODE") {
+						$(".dhm,.mengban").show();
+					} else if(self.type == "PAYMENT") {
+						var channelTagId = $("#channelTagId").val();
+						var oemChannelId = $("#oemChannelId").val();
+						$.ajax({
+							type: "post",
+							url: site_app + "/api/Points_Apply/bankdo",
+							data: {
+								token: tokens,
+								type: self.type,
+								channelTagId: channelTagId,
+								oemChannelId: oemChannelId
+							},
+							dataType: "json",
+							success: function(e) {
+								if(e.error == 0){
+									$(".pay,.mengban").show();
+									$("#pay").attr("src",e.data.orderUrlPath);
+								}
+							}
+						});
+					}
+				})
+				$(".submit").click(function() {
+					var channelTagId = $("#channelTagId").val();
+					var oemChannelId = $("#oemChannelId").val();
+					var content = $("#code").val();
+					if(content == ""){
+						mui.alert("请输入兑换码","提示","","","div");
+						return false;
+					}
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/Points_Apply/bankdo",
+						data: {
+							token: tokens,
+							type: self.type,
+							content:content,
+							channelTagId: channelTagId,
+							oemChannelId: oemChannelId
+						},
+						dataType: "json",
+						success: function(e) {
+							console.log(e);
+							if(e.error == 0){
+								mui.alert(e.msg,"提示","",function(){
+									$(".dhm,.mengban").hide();
+								},"div");
+							}else{
+								mui.alert(e.msg,"提示","","","div");
+
+
+							}
+						}
+					});
+				})
+				$(".mengban").click(function() {
+					$(".dhm,.pay,.mengban").hide();
+				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,58 @@
+html,body,.mui-content{
+	height: 100%;
+	background: #fff;
+}
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+.mui-title {
+	color: #fff!important;
+}
+
+.title{
+	padding: 15px 10px 5px 10px;
+	border-bottom: 1px solid #eee;
+	font-size: 15px;
+}
+
+.title img{
+	width: 6%;
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+.bank_list{
+	padding: 15px 10px;
+}
+.bank_list li{
+	height: 70px;
+	line-height: 70px;
+	background: #F2F2F2;
+	border-radius: 4px;
+	margin-bottom: 15px;
+	font-size: 14px;
+	
+}
+.bank_list li .img{
+	width: 20%;
+	text-align: center;
+}
+.bank_list li .img img{
+	width: 50%;
+	vertical-align: middle;
+}
+.bank_list li .right{
+	font-size: 12px;
+	color: #8F8F94;
+	padding-right: 10px;
+	vertical-align: middle;
+}
+.bank_list li .right span{
+	vertical-align: middle;
+	margin-bottom: 4px;
+}

@@ -1,0 +1,347 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/repayment_list.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<span class="jump iconfont icon-cuo"></span>
+			<h1 class="mui-title">智能还款</h1>
+		</header>
+		<div class="mui-content">
+			<img src="../../img/ic_edit_creditcard.png" width="100%" style="display: block;" />
+			<div class="card_info">
+				<div class="left">
+					<img src="" class="bank_logo" />
+					<span class="bank_name">--</span>
+				</div>
+				<div class="right hk_status">
+					待还款
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="hk_info">
+				<ul>
+					<li>
+						<p>完成还款时间</p>
+						<span class="li_c end_time">--</span>
+					</li>
+					<li>
+						<p>总手续费</p>
+						<span class="li_c sx_money">￥0.00元</span>
+					</li>
+					<li>
+						<p>还款总金额</p>
+						<span class="li_c h_money">￥0.00元</span>
+					</li>
+					<div class="clear"></div>
+				</ul>
+
+				<section>
+					<div class="wrap">
+						<!--大于180，则class=clip-auto circle，否则：circle-->
+						<div class="circle">
+							<!--度数为：当前进度*3.6-->
+							<div class="percent left rotate"></div>
+							<!--大于180，则class=percent right，否则为percent right wth0-->
+							<div class='percent right wth0'></div>
+						</div>
+						<div class="num">
+							<p>已还款</p>
+							<span class="already_money">0.00</span>
+							<div class="frequency">
+								第
+								<span class="l_num">0</span>
+								<span>/</span>
+								<span class="r_num">0</span> 次
+							</div>
+						</div>
+					</div>
+				</section>
+				<p class="upgrade">办理会员省更多 ></p>
+				<button type="button" class="mui-btn mui-btn-blue repayment_btn">终止计划</button>
+			</div>
+			<div class="info_list">
+			</div>
+			<p class="more" style="display: none;">点击加载更多</p>
+			<div class="no_info" style="display: none;">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+		</div>
+		<input type="hidden" id="mid" />
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						var list = plus.webview.currentWebview().opener();
+						mui.fire(list, 'repayment');
+						return true;
+					}
+				});
+				//plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				var self = plus.webview.currentWebview();
+				var page = 1;
+				/*获取详情*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/repayment/detail",
+					data: {
+						token: tokens,
+						mid: self.mid,
+						page: page
+					},
+					dataType: "json",
+                        success: function(e) {
+						console.log(JSON.stringify(e));
+						if(e.error == 0) {
+							$("#mid").val(e.mission.mission_id);
+							$(".bank_logo").attr("src", e.bank.logo);
+							$(".bank_name").text(e.bank.name + "(" + e.bank.no + ")");
+							$(".hk_status").text(e.mission.type_name);
+							$(".end_time").text(e.mission.mission_end_time);
+							$(".sx_money").text("￥" + e.mission.mission_fee + "元");
+							$(".h_money").text("￥" + e.mission.mission_money + "元");
+							$(".l_num").text(e.mission.mission_repayment_number);
+							$(".r_num").text(e.mission.mission_repayment);
+							$(".already_money").text(e.money);
+							var rotate = 360 / e.mission.mission_repayment;
+							$(".rotate").css("-webkit-transform", "rotate(" + e.mission.mission_repayment_number * rotate + "deg)")
+							var datas = e.data.data;
+							if(e.mission.mission_state !=1){
+								$(".repayment_btn").attr("disabled","disabled");
+								$(".repayment_btn").css({"background":"#ccc","border":"0"});
+								$(".repayment_btn").text("已终止")
+							}
+							if(datas == false) {
+								$(".info_list").hide();
+								$(".no_info").show();
+							} else {
+								$(".info_list,.more").show();
+								$(".no_info").hide();
+								for(var i = 0; i < datas.length; i++) {
+									var div = "<div class='mui-table-view'>";
+									var img = "";
+									for(var a = 0; a < datas[i].length; a++) {
+										if(datas[i][a].plan_type == 2) {
+											div += "<div class='view_ul' style='margin-bottom:10px;'>" +
+												"<ul>" +
+												"<li style='text-align: left;'>" +
+												"<p>扣款金额</p>" +
+												"<span class='cut'>" + datas[i][a].plan_money + "</span>" +
+												"</li>" +
+												"<li>" +
+												"<p>扣款时间</p>" +
+												"<span class='cut'>" + datas[i][a].plan_pay_time + "</span>" +
+												"</li>" +
+												"<li style='text-align: right;'>" +
+												"<p>状态</p>" +
+												"<span class='cut'>" + datas[i][a].status + "</span>" +
+												"</li>" +
+												"<div class='clear'></div>" +
+												"</ul>" +
+												"<div class='industry'>" +
+												'<label>行业：</label>' +
+												'<div class="right">' +
+												'<input type="text" class="mui-input-clear"  readonly="readonly" value="' + datas[i][a].plan_mcc_name + '" style="width:100%">' +
+												'</div>' +
+												'<div class="clear"></div>' +
+												'</div>' +
+												"</div>";
+										} else if(datas[i][a].plan_type == 1) {
+											if(datas[i][a].plan_state == 0) {
+												img = "../../img/ic_repayment_wait.png"
+											} else if(datas[i][a].plan_state == 1) {
+												img = "../../img/ic_repayment_success.png"
+											} else if(datas[i][a].plan_state == 2) {
+												img = "../../img/ic_repayment_fail.png"
+											} else if(datas[i][a].plan_state == 3) {
+												img = "../../img/ic_repayment_loading.png"
+											}
+											div += "<div class='hk_time' style='margin-top:0;'>" +
+												"<div class='left' style='width: 70%;'>" +
+												"<div class='b_m'>" +
+												"<p>还款时间</p>" +
+												"<span>" + datas[i][a].plan_pay_time + "</span>" +
+												"</div>" +
+												"<div class='b_m'>" +
+												"<p>还款金额</p>" +
+												"<span>" + datas[i][a].plan_money + "</span>" +
+												"</div>" +
+												"</div>" +
+												"<div class='right' style='width: 30%;'>" +
+												"<img src='" + img + "' />" +
+												"</div>" +
+												"<div class='clear'></div>" +
+												"</div>" +
+												"</div>";
+										}
+									}
+									$(".info_list").append(div);
+								}
+							}
+						} else {
+							mui.alert(e.msg, '提示', '', '', "div")
+						}
+					}
+				});
+				$(".more").click(function() {
+					plus.nativeUI.showWaiting();
+					page++;
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/repayment/detail",
+						data: {
+							token: tokens,
+							mid: self.mid,
+							page: page
+						},
+						dataType: "json",
+						success: function(e) {
+                            console.log(JSON.stringify(e));
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								var datas = e.data.data;
+								if(datas == false) {
+									$(".more").html("没有更多数据");
+								} else {
+									$(".info_list").show();
+									for(var i = 0; i < datas.length; i++) {
+										var div = "<div class='mui-table-view'>";
+										var img = "";
+										for(var a = 0; a < datas[i].length; a++) {
+											if(datas[i][a].plan_type == 2) {
+												div += "<div class='view_ul' style='margin-bottom:10px;'>" +
+													"<ul>" +
+													"<li style='text-align: left;'>" +
+													"<p>扣款金额</p>" +
+													"<span class='cut'>" + datas[i][a].plan_money + "</span>" +
+													"</li>" +
+													"<li>" +
+													"<p>扣款时间</p>" +
+													"<span class='cut'>" + datas[i][a].plan_pay_time + "</span>" +
+													"</li>" +
+													"<li style='text-align: right;'>" +
+													"<p>状态</p>" +
+													"<span class='cut'>" + datas[i][a].status + "</span>" +
+													"</li>" +
+													"<div class='clear'></div>" +
+													"</ul>" +
+													"<div class='industry'>" +
+													'<label>行业：</label>' +
+													'<div class="right">' +
+													'<input type="text" class="mui-input-clear" readonly="readonly" value="' + datas[i][a].plan_mcc_name + '" style="width:100%">' +
+													'<span class="iconfont icon-mjiantou"></span>' +
+													'</div>' +
+													'<div class="clear"></div>' +
+													'</div>' +
+													"</div>";
+											} else if(datas[i][a].plan_type == 1) {
+												if(datas[i][a].plan_state == 0) {
+													img = "../../img/ic_repayment_wait.png"
+												} else if(datas[i][a].plan_state == 1) {
+													img = "../../img/ic_repayment_success.png"
+												} else if(datas[i][a].plan_state == 2) {
+													img = "../../img/ic_repayment_fail.png"
+												} else if(datas[i][a].plan_state == 3) {
+													img = "../../img/ic_repayment_loading.png"
+												}
+												div += "<div class='hk_time' style='margin-top:0;'>" +
+													"<div class='left' style='width: 70%;'>" +
+													"<div class='b_m'>" +
+													"<p>还款时间</p>" +
+													"<span>" + datas[i][a].plan_pay_time + "</span>" +
+													"</div>" +
+													"<div class='b_m'>" +
+													"<p>还款金额</p>" +
+													"<span>" + datas[i][a].plan_money + "</span>" +
+													"</div>" +
+													"</div>" +
+													"<div class='right' style='width: 30%;'>" +
+													"<img src='" + img + "' />" +
+													"</div>" +
+													"<div class='clear'></div>" +
+													"</div>" +
+													"</div>";
+											}
+										}
+										$(".info_list").append(div);
+									}
+								}
+
+							} else {
+								mui.alert(e.msg, '提示', '', '', "div")
+							}
+						}
+					});
+				});
+				$(".jump").click(function() {
+					var list = plus.webview.currentWebview().opener();
+					mui.fire(list, 'repayment');
+				});
+				$(".repayment_btn").click(function() {
+                    var btnArray = ['取消', '确定'];
+                    mui.confirm('确认终止计划？', '提示', btnArray, function(e) {
+                        if(e.index == 1) {
+                            var list = plus.webview.currentWebview().opener();
+                            $.ajax({
+                                type: "post",
+                                url: site_app + "/api/repayment/close",
+                                data: {
+                                    token: tokens,
+                                    mid: $("#mid").val()
+                                },
+                                dataType: "json",
+                                success: function(e) {
+                                    console.log(JSON.stringify(e));
+                                    if(e.error == 0) {
+                                        mui.fire(list, 'repayment');
+                                    } else {
+                                        mui.alert(e.msg, '提示', '', '', "div")
+                                    }
+                                }
+                            });
+                        } else {
+                            console.log('取消');
+                        }
+                    },'div')
+
+				});
+				$(".upgrade").click(function() {
+					mui.openWindow({
+						url: "../user/my_member.html",
+						id: "my_member",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						createNew: true,
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					});
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			})
+		</script>
+	</body>
+
+</html>

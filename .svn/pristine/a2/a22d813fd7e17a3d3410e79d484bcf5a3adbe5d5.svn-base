@@ -1,0 +1,95 @@
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+.mui-title{
+	color: #fff !important; 
+}
+.grid{
+	margin-top: 10px;
+}
+.grid ul{
+	background: #fff;
+	border: none !important;
+}
+.grid ul li{
+	background: #fff !important;
+	border: none !important;
+	padding: 8px 0 !important;
+	text-align: center;
+}
+.grid ul li img{
+	width: 40%;
+}
+.mui-media-body{
+	margin-top: 0 !important;
+	font-size: 13px !important;
+}
+
+.apply_card{
+	margin-top: 10px;
+	background: #fff;
+}
+.apply_head li{
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px !important;
+}
+.apply_head li a{
+	margin: 0 -15px !important;
+}
+.apply_head li .item{
+	font-size: 15px;
+}
+.apply_head li .tips{
+	font-size: 12px;
+	color: #929292;
+	margin-right: 20px;
+}
+.mui-table-view:before,.mui-table-view:after{
+	height: 0 !important;
+}
+.card_view{
+	height: 80px;
+	border-top: 1px solid #eee;
+	padding: 10px;
+}
+.card_view .card_img{
+	width: 25%;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+}
+.card_view .card_img img{
+	width: 55%;
+	vertical-align: middle;
+}
+.card_info{
+	width: 50%;
+}
+.card_info p{
+	margin: 0;
+	color: #282828;
+}
+.card_info .card_name{
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+.card_info .tips{
+	font-size: 12px;
+	line-height: 15px;
+}
+.apply_btn{
+	width: 25%;
+	line-height: 60px;
+	text-align: center;
+}
+.apply_sub{
+	font-size: 14px;
+	color: #679FDA;
+	border: 1px solid #679FDA;
+	border-radius: 20px;
+	padding: 5px 10px;
+}

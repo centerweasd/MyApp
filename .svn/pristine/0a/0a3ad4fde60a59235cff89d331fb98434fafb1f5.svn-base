@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/rz_step.css" />
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">身份认证</h1>
+</header>
+<!--<div class="rz_step">-->
+    <!--<ul>-->
+        <!--<li class="active">-->
+            <!--<span class="iconfont icon-yuandianzhong"></span>-->
+            <!--<p>银行卡信息填写</p>-->
+            <!--<i class="line_r"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<i class="line_l"></i>-->
+            <!--<span class="iconfont icon-yuandianzhong"></span>-->
+            <!--<p>银行卡照片</p>-->
+            <!--<i class="line_r"></i>-->
+        <!--</li>-->
+        <!--<li>-->
+            <!--<i class="line_l"></i>-->
+            <!--<span class="iconfont icon-yuandianzhong"></span>-->
+            <!--<p>手持证件照片</p>-->
+        <!--</li>-->
+        <!--<div class="clear"></div>-->
+    <!--</ul>-->
+<!--</div>-->
+<div class="mui-content bankCard_rz">
+    <!--未验证-->
+    <div class="no_rz">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <label>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+                <span class="user_name">姓名</span>
+            </li>
+            <li class="mui-table-view-cell">
+                <label>身份证号：</label>
+                <span class="idcard">身份证号</span>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row">
+                    <label>身份证有效期：</label>
+                    <input type="text" class="mui-input-clear" id="idcardVali" placeholder="例如：20190101">
+                </div>
+            </li>
+        </ul>
+        <p class="tips" style="margin-top: 10px;">*仅支持银行列表中包含的银行卡类型</p>
+        <ul class="mui-table-view" style="margin-top: 10px;">
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right">
+                    <div class="mui-input-row">
+                        <label>银&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+                        <input type="text" id="bank_name" title="" readonly="readonly" placeholder="请选择银行">
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row">
+                    <label>卡&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+                    <input type="text" id="card_no" class="mui-input-clear" placeholder="请输入储蓄卡卡号">
+                </div>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row">
+                    <label>预留手机：</label>
+                    <input type="text" class="mui-input-clear phone" id="phone" placeholder="请输入预留手机号">
+                </div>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row">
+                    <label>邮&nbsp;&nbsp;&nbsp;&nbsp;箱：</label>
+                    <input type="text" class="mui-input-clear" id="email" placeholder="请输入邮箱">
+                </div>
+            </li>
+            <li class="mui-table-view-cell">
+                <div class="mui-input-row">
+                    <label>户籍所在地：</label>
+                    <input type="text" class="mui-input-clear" id="address" placeholder="请输入地址">
+                </div>
+            </li>
+        </ul>
+
+        <p class="tips" style="margin-top: 10px;">*请填写真实信息，否则结算款项将不会到账！</p>
+        <button type="button" class="mui-btn mui-btn-blue complete">完成</button>
+    </div>
+    <!--未验证 end-->
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+    mui.plusReady(function() {
+        mui.init({
+            hardwareAccelerated: true
+        });
+
+        var tokens = getToken();
+        // 身份证号
+        var idcard = '';
+        var uid = '';
+
+        plus.nativeUI.showWaiting("安全检测中，请等待");
+
+        /*获取用户信息*/
+        $.ajax({
+            url: site_app + "/api/my/info",
+            type: "post",
+            data: {
+                token: tokens
+            },
+            dataType: "json",
+            success: function(e) {
+                if(e.error == 0) {
+                    if(e.data.user_isactivation == 0) {
+                        $(".user_name").html(e.data.user_name);
+                        $(".idcard").html(e.data.user_idcard);
+                        $(".phone").val(e.data.user_phone);
+                        idcard = e.data.user_idcard;
+                        uid = e.data.user_id;
+                    } else {
+                        mui.alert('请激活账户', '提示', '', function() {
+                            mui.openWindow({
+                                url: "../user/activation.html",
+                                id: "activation",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                        }, 'div');
+                    }
+                }
+            }
+        });
+        /*获取银行列表*/
+        var bank_picker = new mui.PopPicker();
+        var bank_json = [];
+        var data;
+        $.ajax({
+            type: "post",
+            url: site_app + "/api/Huichao/bankList",
+            data: {
+                token: tokens
+            },
+            async: false,
+            dataType: "json",
+            success: function(e) {
+                console.log(JSON.stringify(e));
+                if(e.error == 0) {
+                    data = e.data;
+                    console.log(data[0])
+                }
+            }
+        });
+
+        /*选择银行列表*/
+        for(var i = 0; i < data.length; i++) {
+            var json_ = {
+                value: data[i].code,
+                text: data[i].name
+            };
+            bank_json.push(json_);
+        }
+        bank_picker.setData(bank_json);
+        $("#bank_name").on("tap", function() {
+            setTimeout(function() {
+                bank_picker.show(function(items) {
+                    if((items[0] || {}).text == undefined) {
+                        (items[0] || {}).text = "";
+                    }
+                    $("#bank_name").val((items[0] || {}).text);
+                    $("#bank_name").attr("title", (items[0] || {}).value);
+                });
+            }, 200)
+        });
+
+        /*提交银行卡信息*/
+        $(".complete").click(function() {
+            var card_no = $("#card_no").val();
+            var bank_name = $("#bank_name").val();
+            var bank_id = $("#bank_name").attr("title");
+            var mobile = $("#phone").val();
+            var idcardVali = $('#idcardVali').val();
+            var address = $('#address').val();
+            var email = $('#email').val();
+
+            if(card_no && bank_name && bank_id && mobile && idcardVali && address && email) {
+                plus.nativeUI.showWaiting();
+                $.ajax({
+                    url: site_app + "/api/Huichao/create",
+                    type: "post",
+                    data: {
+                        token: tokens,
+                        user_id: uid,
+                        mobile: mobile, // 预留手机号
+                        user_idcard: idcard, // 身份证号
+                        info_email: email,
+                        info_address: address, // 地址
+                        info_bankNo: card_no,
+                        info_cert_date: idcardVali,
+                        info_bank_code: bank_id,
+                        info_bank_name: bank_name
+                    },
+                    dataType: "json",
+                    success: function(e) {
+                        plus.nativeUI.closeWaiting();
+                        console.log(JSON.stringify(e));
+                        if(e.error == 0) {
+                            mui.alert(e.msg, '提示', '', function(){
+                                mui.openWindow({
+                                    url: "../../index.html",
+                                    id: "index",
+                                    show: {
+                                        autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                    },
+                                    waiting: {
+                                        autoShow: true, //自动显示等待框，默认为true
+                                        title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                    }
+                                })
+                            }, 'div');
+                        } else {
+                            mui.alert(e.msg, '提示', '', '', 'div');
+                        }
+                    },
+                    error: function(xhr,err,errtext){
+                        console.log(xhr.status);
+                        console.log(err);
+                        console.log(errtext);
+                    }
+                })
+            } else {
+                mui.alert('请填写完整信息', '提示', '', '', 'div');
+            }
+        });
+
+        $("body").ajaxStop(function() {
+            plus.nativeUI.closeWaiting();
+        });
+    });
+</script>
+</body>
+
+</html>

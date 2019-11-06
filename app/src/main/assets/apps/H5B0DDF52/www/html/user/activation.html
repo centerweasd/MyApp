@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/styles.css" />
+		<style type="text/css">
+			/*header {*/
+				/*width: 100%;*/
+				/*box-shadow: none !important;*/
+			/*}*/
+			
+			/*header a {*/
+				/*color: #fff;*/
+			/*}*/
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.title {
+				background: #fff;
+				text-align: center;
+				padding: 20px 0;
+				margin-bottom: 10px;
+			}
+			
+			.money {
+				font-size: 20px;
+			}
+			
+			.sure {
+				position: fixed;
+				left: 0;
+				bottom: 0;
+				width: 100%;
+				height: 50px;
+				background: #FA625F;
+				border: none;
+				font-size: 15px;
+			}
+			
+			.sure span {
+				font-size: 18px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">身份激活</h1>
+		</header>
+		<div class="mui-content">
+			<img src="../../img/ic_edit_creditcard.png" width="100%" style="display: block;" />
+			<div class="title">
+				<span class="money">￥0.00</span>
+				<p>支付金额</p>
+			</div>
+			<div class="chi" style="background: #fff;padding: 0 15px;">
+
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue sure">
+				确认支付:
+				<span class="money_s">￥0.00</span>
+			</button>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'activation');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+
+				/*获取用户信息*/
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/my/info',
+					data: {
+						'token': tokens
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(data) {
+						if(data.error == 0) {
+							$(".money,.money_s").text("￥" + data.data.config_activmoney)
+						} else {
+							mui.alert(data.msg, '提示', '', '', 'div');
+						}
+					}
+				});
+				/*获取渠道*/
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/repayment/membergetchannel',
+					data: {
+						'token': tokens
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(data) {
+						if(data.error == 0) {
+							var tex = '';
+							for(i = 0; i < data.data.length; i++) {
+								tex += '<div class="aui-flex b-line" style="padding:15px 0">';
+								tex += '<div class="aui-flex-box aui-flex-box-clear">';
+								tex += '<h4 style="color:#333">' + data.data[i].channel_name + '</h4>';
+								tex += '<p>亿万用户的选择，更快更安全</p>';
+								tex += '</div>';
+								tex += '<div class="aui-payment-method">';
+								tex += '<label class="cell-right">';
+								if(i < 1) {
+									tex += '<input type="radio" name="radio" value="' + data.data[i].channel_id + '" checked="checked">';
+								} else {
+									tex += '<input type="radio" name="radio" value="' + data.data[i].channel_id + '">';
+								}
+								tex += '<i class="cell-radio-icon"></i>';
+								tex += '</label>';
+								tex += '</div>';
+								tex += '</div>';
+							}
+							$('.chi').html(tex);
+						} else {
+							mui.alert(data.msg, '提示', '', '', 'div');
+						}
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

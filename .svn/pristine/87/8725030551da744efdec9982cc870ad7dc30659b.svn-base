@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style type="text/css">
+			header {
+				width: 100%;
+				background-color: #FF8F48 !important;
+				box-shadow: none !important;
+			}
+			
+			header a {
+				color: #fff;
+			}
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.no_info {
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				width: 50%;
+				margin-left: -25%;
+				text-align: center;
+			}
+			
+			.no_info img {
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">好友还款分润</h1>
+		</header>
+		<div class="mui-content">
+			<div class="no_info">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				plus.nativeUI.closeWaiting();
+			})
+		</script>
+	</body>
+
+</html>

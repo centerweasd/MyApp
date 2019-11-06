@@ -1,0 +1,182 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loan.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">还贷</h1>
+		</header>
+		<div class="mui-content">
+			<div class="head">
+				<p class="tt">最高可贷</p>
+				<p class="money">0</p>
+			</div>
+			<!--<div class="rate_info">
+		    	<ul>
+		    		<li>
+		    			<p>参考月利率</p>
+		    			<span class="rate">0.8%</span>
+		    		</li>
+		    		<li>
+		    			<p>放款速度</p>
+		    			<span class="speed">1小时</span>
+		    		</li>
+		    		<li>
+		    			<p>贷款期限</p>
+		    			<span class="time">2-12个月</span>
+		    		</li>
+		    		<div class="clear"></div>
+		    	</ul>
+		    </div>-->
+			<div class="condition">
+				<h1>申请条件</h1>
+				<p>1.18-45岁的大陆公民</p>
+				<p>2.本人实名制手机号</p>
+			</div>
+			<div class="condition">
+				<h1>申请流程</h1>
+				<ul>
+					<li>
+						<img src="../../img/dai_2.png" />
+						<p>身份认证</p>
+						<span class="iconfont icon-mjiantou"></span>
+					</li>
+					<li>
+						<img src="../../img/dai_3.png" />
+						<p>基本信息认证</p>
+						<span class="iconfont icon-mjiantou"></span>
+					</li>
+					<li>
+						<img src="../../img/dai_4.png" />
+						<p>运营商认证</p>
+						<span class="iconfont icon-mjiantou"></span>
+					</li>
+					<li>
+						<img src="../../img/dai_5.png" />
+						<p>银行卡认证</p>
+					</li>
+					<div class="clear"></div>
+				</ul>
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue show">立即申请</button>
+		</div>
+		<div class="popup">
+			<span class="iconfont icon-cuo"></span>
+			<div class="title">
+				<p>完善个人信息</p>
+				<p>(请填写真实的姓名，否则可能导致审核不通过)</p>
+			</div>
+			<div class="content">
+				<div class="mui-input-row">
+					<label>真实姓名</label>
+					<input type="text" id="user_name" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>身份证号</label>
+					<input type="text" id="user_id" placeholder="请输入身份证">
+				</div>
+				<div class="mui-input-row">
+					<label>手机号码</label>
+					<input type="text" id="phone" placeholder="请输入手机号">
+				</div>
+				<button type="button" class="mui-btn mui-btn-blue apply">立即申请</button>
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				var tokens = getToken();
+				getToken();
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var self = plus.webview.currentWebview();
+				$(".mui-title").html(self.name);
+				$(".money").html(self.money);
+				$(".show").click(function() {
+					$(".popup,.mengban").show();
+				});
+				$(".mengban,.icon-cuo").click(function() {
+					$(".popup,.mengban").hide();
+				});
+
+				$(".apply").click(function() {
+					plus.nativeUI.showWaiting();
+					var mobile = $("#phone").val();
+					var name = $("#user_name").val();
+					var idCard = $("#user_id").val();
+					if(name == "") {
+						plus.nativeUI.closeWaiting();
+						mui.alert('请输入姓名', '提示', '', '', 'div');
+						return false;
+					}
+					if(idCard == "") {
+						plus.nativeUI.closeWaiting();
+						mui.alert('请输入身份证号', '提示', '', '', 'div');
+						return false;
+					}
+					if(mobile == "") {
+						plus.nativeUI.closeWaiting();
+						mui.alert('请输入手机号', '提示', '', '', 'div');
+						return false;
+					}
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/Dai_Apply/bankdo",
+						data: {
+							token: tokens,
+							id: self.title,
+							bank: self.name,
+							name: name,
+							idCard: idCard,
+							mobile: mobile
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								mui.openWindow({
+									url: "../loan/loan_iframe.html",
+									id: "loan_iframe",
+									styles: {},
+									extras: {
+										urls: e.data
+									},
+									show: {
+										autoShow: true, //页面loaded事件发生后自动显示，默认为true
+									},
+									waiting: {
+										autoShow: true, //自动显示等待框，默认为true
+										title: '安全检测中，请等待', //等待对话框上显示的提示内容
+									}
+								})
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+
+					});
+				})
+				plus.nativeUI.closeWaiting();
+			})
+		</script>
+	</body>
+
+</html>

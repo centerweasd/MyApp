@@ -1,0 +1,220 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/repayment_list.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_trade.css" />
+		<style type="text/css">
+			html,
+			body,
+			.mui-content {
+				height: 100%;
+				background: #fff;
+			}
+			
+			.mui-slider-indicator.mui-segmented-control {
+				border-bottom: 1px solid #eee;
+			}
+			
+			.mui-table-view {
+				padding: 20px 10px;
+			}
+			
+			.mui-table-view li {
+				background: #F2F2F2;
+				border-radius: 4px;
+				padding: 0 10px 10px;
+				margin-bottom: 10px;
+				overflow: hidden;
+			}
+			
+			.mui-table-view li .bank_title {
+				position: relative;
+				height: 50px;
+				line-height: 50px;
+			}
+			.mui-table-view li .bank_title p{
+				width: 70%;
+				font-size: 16px;
+				color: #000;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				
+			}
+			.mui-table-view li .bank_title .dh {
+				position: absolute;
+				top: 8px;
+				right: 0;
+				display: block;
+				width: 80px;
+				height: 34px;
+				line-height: 34px;
+				text-align: center;
+				font-size: 14px;
+				color: #fff;
+				background: #FF720D;
+				border-radius: 4px;
+			}
+			
+			.yh_info {
+				margin-top: 10px;
+			}
+			.yh_info img {
+				display: none;
+			}
+			
+			.mui-bar-nav~.mui-content .mui-slider.mui-fullscreen {
+				top: 70px;
+			}
+		</style>
+
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">兑换中心</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider mui-fullscreen">
+				<div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<div class="mui-scroll">
+					</div>
+				</div>
+				<div class="mui-slider-group">
+
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				var self = plus.webview.currentWebview();
+				var page = 1;
+				//获取头部
+				$.ajax({
+					type: 'get',
+					url: site_app + '/api/Points_Apply/banklist',
+					cache: false,
+					data: {
+						id: self.urls,
+						page: page
+					},
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							var html = '';
+							for(var i = 0; i < e.data.length; i++) {
+								var num = i + 1;
+								if(i == 0) {
+									html += '<p class="mui-control-item mui-active" href="item' + num + '" title="' + e.data[i].id + '" data-type="'+e.data[i].type+'">' + e.data[i].name + '</p>';
+								} else {
+									html += '<p class="mui-control-item" href="item' + num + '" title="' + e.data[i].id + '" data-type="'+e.data[i].type+'">' + e.data[i].name + '</p>';
+								}
+								var list = '<div id="item' + num + '" class="mui-slider-item mui-control-content mui-active">' +
+									'<ul class="mui-table-view">' +
+									'</ul>' +
+									//									'<p class="more more' + e.data[i].id + '" onclick="clicks(\'' + e.data[i].id + '\',\'item' + num + '\',\'more' + e.data[i].id + '\')">加载更多</p>' +
+									'</div>';
+								$(".mui-slider-group").append(list);
+								var gallery = mui('.mui-slider');
+								gallery.slider();
+							}
+							$(".mui-scroll").html(html);
+							var gallery = mui('.mui-slider');
+							gallery.slider();
+							banklist($(".mui-scroll p:first-child").attr("title"), page, $(".mui-control-content.mui-active").attr("id"));
+						}
+					}
+				});
+				document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+					var c = document.querySelector(".mui-control-item.mui-active");
+					if(c) {
+						c.classList.remove("mui-active");
+					}
+					var target = document.querySelector(".mui-scroll .mui-control-item:nth-child(" + (parseInt(event.detail.slideNumber) + 1) + ")");
+					target.classList.add("mui-active");
+					if(target.scrollIntoView) {
+						target.scrollIntoView();
+					}
+					for(var i = 0; i < $(".mui-scroll .mui-control-item").length; i++) {
+						if(event.detail.slideNumber == i) {
+							var clas = $(".mui-control-item.mui-active").attr("href");
+							var ids = $(".mui-control-item.mui-active").attr("title");
+							if($("#" + clas + "").attr("title") != 'yes') {
+								banklist(ids, page, clas);
+							}
+						}
+					}
+				});
+				$(".mui-slider-group").on("click", ".go_apply", function() {
+					var ids = $(this).attr("title");
+					var type = $(".mui-scroll .mui-active").attr("data-type"); 
+					mui.openWindow({
+						url: "exchange_details.html",
+						id: "exchange_details",
+						extras: {
+							urls: ids,
+							type:type,
+							oem:self.urls
+						},
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: false //自动显示等待框，默认为true
+							//							//title: '', //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				function banklist(ids, page, clas) {
+					$.ajax({
+						type: 'get',
+						url: site_app + '/api/Points_Apply/prlist',
+						cache: false,
+						data: {
+							id: ids
+						},
+						success: function(e) {
+							console.log(e);
+							$("#" + clas + "").attr('title', 'yes');
+							if(e.error == 0) {
+								if(e.data == false) {} else {
+									for(var i = 0; i < e.data.length; i++) {
+										var html = '<li>' +
+											'<div class="bank_title">' +
+											'<p>'+e.data[i].name+'</p>'+
+											'<span class="dh go_apply" title="'+e.data[i].id+'" data-id="'+e.data[i].productId+'">兑换</span>' +
+											'</div>' +
+											'<div class="yh_info">' +e.data[i].remark+'</div>' +
+											'</li>';
+										$("#" + clas + ">ul").append(html);
+									}
+								}
+
+							}
+							//						
+						}
+					});
+				}
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

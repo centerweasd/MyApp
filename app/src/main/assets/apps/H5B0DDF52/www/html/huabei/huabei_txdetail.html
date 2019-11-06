@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/withdraw.css" />
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">花呗提现记录</h1>
+</header>
+<div class="mui-content">
+    <ul class="trade_list">
+
+        <!--<li>-->
+            <!--<div class="left info">-->
+                <!--<p class="trade_name fail">提现成功</p>-->
+                <!--<p class="trade_time">09月14日 14:40</p>-->
+            <!--</div>-->
+            <!--<div class="right money ">-->
+                <!--<p class="trade_t fail">实际到账：5000.00</p>-->
+                <!--<p class="trade_t">提现金额：5000.00</p>-->
+                <!--<p class="trade_t">手续费：5000.00</p>-->
+            <!--</div>-->
+            <!--<div class="clear"></div>-->
+        <!--</li>-->
+    </ul>
+    <div class="no_info">
+        <img src="../../img/no_creditbill_icon.png" />
+        <p>没有相关数据</p>
+    </div>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+<script type="text/javascript">
+    mui.plusReady(function() {
+        mui.init({
+            hardwareAccelerated: true,
+            beforeback: function() {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'txdetail');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+        });
+        var token = getToken();
+
+        $.ajax({
+            type: 'post',
+            url: site_app + '/api/Huabei/orderList',
+            data: {
+                'token': token
+            },
+            cache: false,
+            dataType: 'json',
+            success: function(data) {
+                console.log(JSON.stringify(data));
+                if(data.error == 0) {
+                    var content = '';
+                    if(data.data.list.length>0){
+                        $('.no_info').addClass('mui-hidden');
+                    }
+                    var list = data.data.list;
+                    for(i=0;i<list.length;i++){
+                        content += '<li><div class="left info">';
+                        if(list[i].log_stats==1){
+                            content += '<p class="trade_name success">提现成功</p>';
+                            content += '<p class="trade_time">'+list[i].log_time+'</p>';
+                            content += '</div>';
+                            content += '<div class="right money ">';
+                            content += '<p class="trade_t success">实际到账：'+ list[i].log_money +'</p>';
+                        }else if(list[i].log_stats==0 || list[i].log_stats==3){
+                            content += '<p class="trade_name warning">申请中</p>';
+                            content += '<p class="trade_time">'+list[i].log_time+'</p>';
+                            content += '</div>';
+                            content += '<div class="right money ">';
+                            content += '<p class="trade_t warning">实际到账：'+ list[i].log_money +'</p>';
+                        }else{
+                            content += '<p class="trade_name fail">提现失败</p>';
+                            content += '<p class="trade_time">'+list[i].log_time+'</p>';
+                            content += '</div>';
+                            content += '<div class="right money ">';
+                            content += '<p class="trade_t fail">实际到账：'+ list[i].log_money +'</p>';
+                        }
+                        content += '<p class="trade_t">提现金额：'+ list[i].log_num +'</p>';
+                        content += '<p class="trade_t">手续费：'+ Math.round((list[i].log_num-list[i].log_money)*100)/100 +'</p>';
+                        content += '</div><div class="clear"></div></li>';
+                    }
+                    $(".trade_list").html(content);
+                } else {
+                    mui.alert(data.msg, '提示', '', '', 'div');
+                }
+            }
+        })
+
+    })
+</script>
+</body>
+
+</html>

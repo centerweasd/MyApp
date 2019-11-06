@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/rz_step.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">身份信息</h1>
+		</header>
+		<div class="mui-content">
+			<!--已验证-->
+			<div class="yes_rz">
+				<div class="user_tips">
+					<p>*本人的身份证信息(不可更改)</p>
+				</div>
+				<ul class="mui-table-view user_rz">
+					<li class="mui-table-view-cell">
+						<label>姓&nbsp;&nbsp;&nbsp;&nbsp;名：<i></i></label>
+						<span class="user_name"></span>
+					</li>
+					<li class="mui-table-view-cell">
+						<label>身份证：</label>
+						<span class="user_card"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'data_authentiction');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+
+				var tokens = getToken();
+				getToken();
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								$(".user_name").html(e.data.user_name);
+								$(".user_card").html(e.data.user_idcard);
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

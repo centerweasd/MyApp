@@ -1,0 +1,181 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/reg.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">忘记密码</h1>
+		</header>
+		<div class="mui-content">
+			<div class="logo">
+				<img class="logo3" src="../../img/logo3.png" />
+			</div>
+			<!--<p style="text-align: center;margin-bottom: 40px;">您身边的生活管家</p> -->
+			
+			<form class="mui-input-group reg_form">
+				<div class="mui-input-row phone">
+					<img src="../../img/phone_icon.png" />
+					<input type="number" class="mui-input-clear" id="phone" oninput="func(this.value)" onblur="func(this.value)" placeholder="请输入您的手机号">
+				</div>
+				<div class="mui-input-row phone">
+					<img src="../../img/auth_code_icon.png" />
+					<input type="text" class="" id="code" placeholder="请输入短信验证码" style="width: 50%;">
+					<button type="button" class="mui-btn mui-btn-blue hq_code" id="getSms" disabled="disabled">获取验证码</button>
+				</div>
+				<div class="mui-input-row">
+					<img src="../../img/password_icon.png" />
+					<input type="password" id="newpassword" class="mui-input-password" oninput="input_(this.value)" maxlength="16" placeholder="请输入新密码(6~16位数字或字母)">
+				</div>
+				<div class="not_collet">
+					收不到验证码？
+				</div>
+				<button type="button" class="mui-btn mui-btn-blue edit_pw" disabled="disabled">确定</button>
+
+			</form>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			//JS失去焦点事件
+			function func(value) {
+				if(value.length > 11) {
+					$("#phone").val(value.slice(0, 11))
+				} else if(value.length == 11) {
+					$("#getSms").removeAttr('disabled');
+					$("#getSms").css('background-color', '#FF8F48');
+				} else if(value.length < 11) {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true);
+				}
+			}
+
+			function input_(value) {
+				if(value.length >= 6) {
+					$(".edit_pw").removeAttr("disabled");
+					$(".edit_pw").css('background-color', '#FF8F48');
+				} else if(value.length < 6) {
+					$(".edit_pw").css('background-color', '#DDDDDD');
+					$(".edit_pw").attr("disabled", true);
+				}
+			}
+			var wait = 60;
+
+			function get_code_time() {
+				//mui.alert('手机号格式错误','提示','','','div');
+				if(wait == 0) {
+					$("#getSms").removeAttr("disabled"); //移除获取验证码按钮的disabled属性
+					$("#getSms").css('background-color', '#FF8F48');
+					$("#getSms").html("获取验证码");
+					wait = 60;
+				} else {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true); //设置获取验证码按钮为不可触发
+					$("#getSms").html(wait + "s");
+					wait--;
+					setTimeout("get_code_time()", 1000);
+				}
+			}
+
+			//发送短信验证码
+
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+
+				$("#getSms").click(function() {
+					//mui.alert('手机号格式错误','提示','','','div');
+					var phone = $('#phone').val();
+
+					if(!isphone(phone)) {
+						mui.alert('手机号格式错误', '提示', '', '', 'div');
+						return false;
+					}
+
+					$.ajax({
+						type: 'GET',
+						url: site_app + '/api/Main/getsms',
+						data: {
+							'phone': phone,
+							type: 2
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+							if(data.error == 0) {
+								get_code_time();
+							}
+							mui.alert(data.msg, '提示', '', '', 'div');
+						}
+					});
+				})
+				$(".edit_pw").click(function() {
+					//mui.alert('手机号格式错误','提示','','','div');
+					var phone = $('#phone').val();
+					var code = $('#code').val();
+					var newpassword = $('#newpassword').val();
+
+					if(!isphone(phone)) {
+						mui.alert('手机号格式错误', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(code == '') {
+						mui.alert('请输入验证码', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(newpassword == '') {
+						mui.alert('请输入新密码', '提示', '', '', 'div');
+						return false;
+					}
+					$.ajax({
+						type: 'post',
+						url: site_app + '/api/Main/ForgetPass',
+						data: {
+							'phone': phone,
+							'code': code,
+							'newpassword': newpassword
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+							if(data.error == 0) {
+								mui.alert(data.msg, '提示', '', function() {
+									mui.openWindow({
+										url: "../login/login.html",
+										id: "login",
+										show: {
+											autoShow: true, //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+
+						}
+					});
+				})
+
+				plus.nativeUI.closeWaiting();
+			})
+		</script>
+	</body>
+
+</html>

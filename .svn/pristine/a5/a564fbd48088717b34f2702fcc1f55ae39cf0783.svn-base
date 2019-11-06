@@ -1,0 +1,111 @@
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.profit_info{
+	background: #FF8F48;
+	text-align: center;
+	color: #fff;
+	padding-bottom: 20px;
+}
+.profit_info p{
+	margin-bottom: 20px;
+}
+.profit_info .sign{
+	font-size: 14px;
+	color: #fff;
+}
+.profit_info .profit_money{
+	font-size: 25px;
+	color: #fff;
+}
+.profit_info .total_monry{
+	color: #fff;
+	font-size: 15px;
+}
+.invite_num{
+	padding: 5px 0;
+	background: rgba(226, 142, 51,0.8);
+}
+.invite_num li{
+	width: 50%;
+	text-align: center;
+	float: left;
+}
+.invite_num li:first-child{
+	border-right: 1px solid #fff;
+}
+
+.invite_num li p{
+	margin: 0;
+	color: #fff;
+}
+.invite_num li .num{
+	font-size: 16px;
+	color: #fff;
+}
+.invite_num li .sign{
+	font-size: 12px;
+}
+
+.profit_mode{
+	margin: 10px 5px;
+}
+
+.profit_mode li{
+	width: calc(98% / 2);
+	background: #fff;
+	float: left;
+	margin-bottom: 2%;
+}
+.profit_mode li:nth-child(odd){
+	margin-right: 2%;
+}
+.profit_mode li .title{
+	height: 40px;
+	line-height: 40px;
+	font-size: 14px;
+	padding: 0 10px;
+	border-bottom: 1px solid #eee;
+}
+.profit_mode li .title img{
+	width: 20%;
+	vertical-align: middle;
+	margin-bottom: 4px;
+	margin-right: 4px;
+}
+.profit_mode li .title .iconfont{
+	font-size: 14px !important;
+	 color: #ccc;
+}
+
+.profit_mode li .mode_info{
+	text-align: center;
+	padding: 0 10px;
+}
+.profit_mode li .mode_info p{
+	margin: 5px auto;
+}
+.profit_mode li .mode_info .money{
+	color: #333;
+	font-size: 16px !important;
+}
+.profit_mode li .mode_info .sign{
+	font-size: 12px;
+}
+.profit_mode li .mode_info .profit_num{
+	text-align: left;
+}
+.profit_mode li .mode_info .profit_num .num{
+	color: #333;
+	font-size: 14px;
+}

@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/share_code.css" />
+		<style type="text/css">
+			#imgOne {
+				width: 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left back"></a>
+			<h1 class="mui-title">我的二维码</h1>
+			<img src="../../img/qrcode_share.png" class="share" />
+		</header>
+		<div class="mui-content">
+			<div class="title">
+				邀请好友,享受更多权益
+			</div>
+
+			<div class="code_info">
+				<div class="user_info">
+					<div class="left img">
+						<img src="../../img/avater_image.png" class="user_img" />
+					</div>
+					<div class="left info">
+						<p class="user_name">姓名</p>
+						<p class="vip_level">--</p>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div id="saveImg">
+				</div>
+				<img src="" id="imgOne" />
+				<p class="tips">长按二维码复制链接</p>
+				<div class="matching_a"></div>
+				<div class="matching_b"></div>
+			</div>
+			<div class="sign">
+				<p>-乐活-</p>
+				<p>信用卡财务优化专家</p>
+			</div>
+		</div>
+		<input type="hidden" id="sharehref" value="" />
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+					mui.init({
+						hardwareAccelerated: true,
+						gestureConfig: {
+							longtap: true
+						}
+					});
+					window.addEventListener('login', function(e) {
+						//执行刷新
+						location.reload();
+					});
+
+					window.addEventListener('activation', function(e) {
+						//执行刷新
+						location.reload();
+					});
+					var self = plus.webview.currentWebview();
+					var tokens;
+					if(self.title == 1) {
+						$(".back").show();
+						tokens = getToken();
+						getToken();
+					} else {
+						tokens = localStorage.getItem("token");
+					}
+					var tokensss = tokens;
+
+					if(!tokens) {
+						window.addEventListener('apply_load', function(e) {
+							location.reload();
+						});
+					};17853684671
+					setInterval(function() {
+						if(self.title == 1) {
+							$(".back").show();
+							tokens = getToken();
+							getToken();
+						} else {
+							tokens = localStorage.getItem("token");
+						};
+						if(tokensss != tokens) {
+							window.addEventListener('apply_load', function(e) {
+								location.reload();
+							});
+						}
+					}, 100);
+
+					/*获取用户信息*/
+					$.ajax({
+						url: site_app + "/api/my/info",
+						type: "post",
+						data: {
+							token: tokens
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								if(e.data.user_isactivation == 0) {
+									$(".user_name").text(e.data.user_name);
+									$(".vip_level").text(e.data.type_name);
+									if(e.data.user_img == "") {
+										$(".user_img").attr("src", "../../img/avater_image.png");
+									} else {
+										$(".user_img").attr("src", e.data.user_img);
+									}
+									$.ajax({
+										url: site_app + "/api/my/share",
+										type: "post",
+										data: {
+											token: tokens
+										},
+										dataType: "json",
+										success: function(e) {
+											if(e.error == 0) {
+												$("#saveImg").attr("title", e.url);
+												$("#sharehref").val(e.url);
+												var qrcode = $('#saveImg').qrcode(e.url).hide();
+												var canvas = qrcode.find('canvas').get(0);
+												$('#imgOne').attr('src', canvas.toDataURL("image/jpg"))
+											} else {
+												var btnArray = ['确定'];
+												mui.confirm("请先进行实名认证", '提示', btnArray, function(e) {
+													if(e.index == 0) {
+														mui.openWindow({
+															url: "../user/data_authentication.html",
+															id: "data_authentication",
+															show: {
+																autoShow: true //页面loaded事件发生后自动显示，默认为true
+															},
+															waiting: {
+																autoShow: false //自动显示等待框，默认为true
+																//title: '', //等待对话框上显示的提示内容
+															}
+														})
+													}
+												}, 'div')
+											}
+										}
+									});
+								} else {
+									mui.alert('请激活账户', '提示', '', function() {
+										mui.openWindow({
+											url: "../user/activation.html",
+											id: "activation",
+											show: {
+												autoShow: true //页面loaded事件发生后自动显示，默认为true
+											},
+											waiting: {
+												autoShow: false //自动显示等待框，默认为true
+												//title: '', //等待对话框上显示的提示内容
+											}
+										})
+									}, 'div');
+								}
+							}
+						}
+					});
+					/*获取二维码链接*/
+					document.getElementById("imgOne").addEventListener('longtap', function() {
+						var actionList = {
+							cancel: "取消",
+							buttons: [{
+								title: "复制链接",
+							}, {
+								title: "保存图片"
+							}]
+						};
+						var imgurl = $("#saveImg").attr("title");
+						//弹出actionSheet选项
+						plus.nativeUI.actionSheet(actionList, function(e) {
+							if(e.index == 1) {
+								if(mui.os.ios) {
+									copy_txt(imgurl)
+								} else if(mui.os.android) {
+									copyToClip(imgurl);
+								}
+							} else if(e.index == 2) {
+								bitmapSavePic($("#imgOne").attr("src"))
+							}
+						});
+					})
+					/*复制链接*/
+					function copyToClip(txt) {
+						var Context = plus.android.importClass("android.content.Context");
+						var main = plus.android.runtimeMainActivity();
+						var clip = main.getSystemService(Context.CLIPBOARD_SERVICE);
+						plus.android.invoke(clip, "setText", txt);
+						mui.toast('复制链接成功', {
+							duration: 'long',
+							type: 'div'
+						})
+					}
+
+					function copy_txt(txt) {
+						var UIPasteboard = plus.ios.importClass("UIPasteboard");
+						//这步会有异常因为UIPasteboard是不允许init的，init的问题会在新版中修改 
+						var generalPasteboard = UIPasteboard.generalPasteboard();
+						// 设置/获取文本内容: www.bcty365.com
+						generalPasteboard.setValueforPasteboardType(txt, "public.utf8-plain-text");
+						var value = generalPasteboard.valueForPasteboardType("public.utf8-plain-text");
+						mui.toast('复制链接成功', {
+							duration: 'long',
+							type: 'div'
+						})
+					}
+
+					function bitmapSavePic(src) {
+						var bm = new plus.nativeObj.Bitmap("imgOne") //path: ( String ) 可选 Bitmap对象自动加载图片的地址
+						bm.loadBase64Data($('#imgOne').attr('src'), function(i) {
+							bm.save('_doc/project_barcode.jpg', {
+								overwrite: true,
+								format: "jpg",
+								quality: 100
+							}, function(i) {
+								console.log(i);
+								saveToGallery(i.target);
+								//							mui.toast('保存图片成功', {
+								//								duration: 'long',
+								//								type: 'div'
+								//							})
+								bm.clear(); // 销毁bitmap
+							}, function(e) {
+								mui.toast('保存图片失败', {
+									duration: 'long',
+									type: 'div'
+								});
+								bm.clear(); // 销毁bitmap
+							});
+						}, function(e) {}); //加载base64为数据到bm实例对象
+					}
+					var bmloadSuccessCB = function(e) {}
+					var bmloadErrorCB = function(err) {}
+					var bmSaveSuccessCB = function(e) {
+						console.log(e);
+						console.log("保存成功");
+						console.log("保存地址：" + e.target);
+						saveToGallery(e.target)
+					};
+					var bmSaveErrorCB = function(error) {
+						plus.nativeUI.toast("保存失败");
+						console.log("code：" + error.code + ";msg:" + error.message);
+					};
+
+					function saveToGallery(path) {
+						plus.gallery.save(path, function(e) {
+							mui.toast('保存图片成功', {
+								duration: 'long',
+								type: 'div'
+							})
+						}, function(err) {
+							mui.toast('保存图片失败', {
+								duration: 'long',
+								type: 'div'
+							})
+						});
+					}
+					$(".share").click(function() {
+						var ids = [{
+								id: "weixin",
+								ex: "WXSceneSession"
+							}, {
+								id: "weixin",
+								ex: "WXSceneTimeline"
+							}, {
+								id: "sinaweibo"
+							}, {
+								id: "tencentweibo"
+							}, {
+								id: "qq"
+							}],
+							bts = [{
+								title: "发送给微信好友"
+							}, {
+								title: "分享到微信朋友圈"
+							}];
+						plus.nativeUI.actionSheet({
+							cancel: "取消",
+							buttons: bts
+						}, function(e) {
+							var i = e.index;
+							if(i > 0) {
+								var s_id = ids[i - 1].id;
+								var share = shares[s_id];
+								if(share.authenticated) {
+									shareMessage(share, ids[i - 1].ex);
+								} else {
+									share.authorize(function() {
+										shareMessage(share, ids[i - 1].ex);
+									}, function(e) {
+										console.log("认证授权失败：" + e.code + " - " + e.message);
+									});
+								}
+							}
+						});
+					});
+					var shares = {};
+					plus.share.getServices(function(s) {
+						if(s && s.length > 0) {
+							for(var i = 0; i < s.length; i++) {
+								var t = s[i];
+								shares[t.id] = t;
+							}
+						}
+					}, function() {
+						console.log("获取分享服务列表失败");
+					});
+
+					function shareMessage(share, ex) {
+						var msg = {
+							extra: {
+								scene: ex
+							}
+						};
+						msg.href = $("#saveImg").attr("title");
+						msg.title = "乐活";
+						msg.content = "乐活--免费使用，还款1万仅需75元。";
+						msg.thumbs = ["_www/img/share_logo.png"];
+						share.send(msg, function() {
+							mui.toast("分享到\"" + share.description + "\"成功！ ");
+						}, function(e) { 
+							mui.toast("分享到\"" + share.description + "\"失败: " + e.code + " - " + e.message);
+						});
+					}
+					$("body").ajaxStop(function() {
+						plus.nativeUI.closeWaiting();
+					});
+				}
+
+			)
+		</script>
+	</body>
+
+</html>

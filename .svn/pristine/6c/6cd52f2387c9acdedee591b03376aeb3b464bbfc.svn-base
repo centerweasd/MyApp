@@ -1,0 +1,1035 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/home.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+
+				</div>
+			</div>
+			<div class="notice">
+				<div class="left icon_gg">
+					<img src="../../img/icon_gg_2.png" />
+					<span class="text-white">乐活</span>
+					<span class="stub"></span>
+				</div>
+				<div class="notice_info left">
+					<ul class="notice-txt">
+						<li>恭喜用户:132****9801的好友升级为会员，获得109.80分润</li>
+						<li>恭喜用户:156****5434的好友升级为会员，获得109.80分润</li>
+						<li>恭喜用户:168****8756的好友升级为会员，获得109.80分润</li>
+						<li>恭喜用户:155****4323的好友升级为会员，获得109.80分润</li>
+						<li>恭喜用户:180****7867的好友升级为会员，获得109.80分润</li>
+					</ul>
+				</div>
+				<div class="right">
+					<img class="message" src="../../img/notice.png" />
+				</div>
+				<div class="clear"></div>
+			</div>
+
+			<div class="mui-grid">
+				<div class="sh_tab">
+					<ul>
+						<li class="hk" title="1">
+							<div class="left">
+								<img src="../../img/icon_h_9.png" />
+							</div>
+							<div class="right">
+								<p>智能还款</p>
+								<span>还款安全无忧</span>
+							</div>
+							<div class="clear"></div>
+						</li>
+						<li class="sk" title="2">
+							<div class="left">
+								<img class="kefu_icon" src="../../img/icon_h_13.png" />
+							</div>
+							<div class="right">
+								<p>在线客服</p>
+								<span>联系我的客服</span>
+							</div>
+							<div class="clear"></div>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+				<div class="apply_tab">
+					<ul>
+						<li title="1">
+							<div class="left">
+								<img src="../../img/icon_h_8.png" />
+							</div>
+							<div class="right">
+								<p class="brown title">信用卡申请</p>
+								<!--<p>用乐活快速办卡</p>-->
+							</div>
+							<div class="clear"></div>
+						</li>
+						<li title="2">
+							<div class="left">
+								<img src="../../img/icon_h_7.png" />
+							</div>
+							<div class="right">
+								<p class="brown title">领取会员福利</p>
+								<!--<p>乐活兑换大礼</p>-->
+							</div>
+							<div class="clear"></div>
+						</li>
+					</ul>
+					<div class="clear"></div>
+				</div>
+				<div class="grid">
+					<ul class="grid_list">
+						<!--<li title="1">
+							<div class="grid_img">
+								<img src="../../img/icon_h_1.png" />
+							</div>
+							<p>还款详情</p>
+						</li>
+						<li title="2">
+							<div class="grid_img">
+								<img src="../../img/icon_h_2.png" />
+							</div>
+							<p>收款明细</p>
+						</li>-->
+						<li title="3">
+							<div class="grid_img">
+								<img src="../../img/icon_h_3.png" />
+							</div>
+							<p>明细查询</p>
+						</li>
+						<li title="4">
+							<div class="grid_img">
+								<img src="../../img/icon_h_4.png" />
+							</div>
+							<p>会员</p>
+						</li>
+						<li title="5">
+							<div class="grid_img">
+								<img src="../../img/icon_h_5.png" />
+							</div>
+							<p>加入我们</p>
+						</li>
+						<!--<li title="7">
+							<div class="grid_img">
+								<img src="../../img/icon_h_11.png" />
+							</div>
+							<p>翌块链</p>
+						</li>
+						<li title="7">
+							<div class="grid_img">
+								<img src="../../img/icon_h_12.png" />
+							</div>
+							<p>翌涨跌</p>
+						</li>-->
+						<li title="6">
+							<div class="grid_img">
+								<img src="../../img/icon_h_6.png" />
+							</div>
+							<p>使用帮助</p>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+
+			</div>
+
+			<!--<div class="insurance">-->
+				<!--<span class="iconfont icon-anquan"></span> 众安银行卡盗刷险保障账户资金安全-->
+			<!--</div>-->
+			<div class="daily" id="daily">
+				<div class="title">
+					<div class="left">
+						<!--<img src="../../img/icon_gg_3.png" />-->
+						<span class="daily_h">乐活指南</span>
+					</div>
+					<div class="right">
+						<span class="iconfont icon-mjiantou"></span>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="daily_content">
+					<h1 class="daily_name">--</h1>
+					<!--<div class="content">-->
+						<!--&#45;&#45;-->
+					<!--</div>-->
+				</div>
+			</div>
+
+			<div class="daily">
+				<!--<div class="title">-->
+					<!--<div class="left">-->
+						<!--&lt;!&ndash;<img src="../../img/icon_gg_3.png" />&ndash;&gt;-->
+						<!--<span class="daily_h">乐活精选</span>-->
+					<!--</div>-->
+					<!--<div class="right">-->
+						<!--&lt;!&ndash;<span class="iconfont icon-mjiantou"></span>&ndash;&gt;-->
+					<!--</div>-->
+					<!--<div class="clear"></div>-->
+				<!--</div>-->
+				<div class="jingxuan">
+					<!--<img class="jingxuan-img" src="../../img/jingxuan.jpg" alt="乐活精选">-->
+					<!--<img class="jingxuan-img" src="../../img/guo1.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/guo2.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/guo3.jpg" alt="">-->
+					<!--<img class="jingxuan-img" src="../../img/guo4.jpg" alt="">-->
+					<img class="jingxuan-img" src="../../img/shouye.png" alt="">
+				</div>
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<div class="update-view">
+			<div class="updateProDiv">升级中，请勿退出或执行其他操作:
+				<progress value="" max="" id="proDownFile"></progress>
+				<span class="persent"></span>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/test.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+
+			    plus.nativeUI.closeWaiting();
+				// plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = localStorage.getItem("token");
+
+				// window.addEventListener('index', function(e) { //执行刷新
+				// 	location.reload();
+				// });
+				// window.addEventListener('user', function(e) { //执行刷新
+				// 	location.reload();
+				// });
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('message', function(e) { //执行刷新
+					/*获取未读消息*/
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/Message/getnumber",
+						data: {
+							token: tokens
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								$(".message").attr("src", "../../img/notice.png")
+							} else if(e.error == 1) {
+								$(".message").attr("src", "../../img/notice_f.png")
+							}
+						}
+					});
+				});
+				mui('.mui-bar').on('tap', '#more', function() {
+					mui('#topPopover').popover('show', document.getElementById("more"));
+				});
+				mui(".mui-slider").slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+
+				// /*更新APP*/
+				//
+				// if(localStorage.getItem('updateTime')){
+				// 	var ot = localStorage.getItem('updateTime');
+                //     var nowTime = new Date().getTime();
+                //     var hour = (nowTime-ot)/3600000;
+                //     if(hour > 24){
+                //         updateVersion();
+				// 	}
+				// } else {
+                //     updateVersion();
+				// }
+				//
+				// function updateVersion(){
+                //     var system;
+                //     if(mui.os.ios) {
+                //         system = "ios"
+                //     } else if(mui.os.android) {
+                //         system = "android"
+                //     }
+                //     plus.runtime.getProperty(plus.runtime.appid, function(wgtinfo) {
+                //         version = wgtinfo.version;
+                //         $.ajax(site_app + '/api/Common/version', {
+                //             async: false,
+                //             data: {
+                //                 os: system,
+                //                 version: version
+                //             },
+                //             type: 'POST', //HTTP请求类型
+                //             dataType: "json",
+                //             success: function(data) {
+                //                 if(data.error == 0) {
+                //                     if(data.data.code == 0) {
+                //                         mui.confirm('已有最新版本，是否更新版本！', '温馨提示', ['取消', '升级'], function(e) {
+                //                             if(e.index == 1) {
+                //                                 if(mui.os.ios) {
+                //                                     plus.runtime.openURL(data.data.url);
+                //                                 } else {
+                //                                     downWgt(true, data.data.url);
+                //                                 }
+                //                             } else {
+                //                                 var nt = new Date().getTime();
+                //                                 localStorage.setItem("updateTime", nt);
+                //                                 mui.toast('可以在"设置中心"手动更新！');
+                //                             }
+                //                         }, 'div');
+                //                     }
+                //                 }
+                //             },
+                //             error: function(xhr, error, errorThrown) {
+                //                 console.log(errorThrown);
+                //             }
+                //         });
+                //     });
+				// }
+				//
+				//
+				// function downWgt(key, paths) {
+				// 	$(".update-view,.mengban").show();
+				// 	var dtask = plus.downloader.createDownload(paths, {}, function(d, status) {
+				// 		if(status == 200) {
+				// 			var pass = d.filename;
+				// 			plus.runtime.install(pass);
+				// 			clearInterval(i);
+				// 			$(".update-view,.mengban").hide();
+				// 		} else {
+				// 			plus.nativeUI.alert("下载更新资源失败！");
+				// 		}
+				//
+				// 	});
+				// 	dtask.addEventListener("statechanged", function(d, status) {
+				// 		var total = parseInt(d.totalSize);
+				// 		var cur = parseInt(d.downloadedSize);
+				// 	}, false);
+				// 	dtask.start();
+				// 	var i = setInterval(function() {
+				// 		var totalSize = dtask.totalSize;
+				// 		var downloadedSize = dtask.downloadedSize;
+				// 		$('#proDownFile').attr('value', downloadedSize);
+				// 		$('#proDownFile').attr('max', totalSize);
+				// 	}, 100);
+				// }
+
+				/*banner*/
+				$.ajax({
+					type: "get",
+					url: site_app + "/api/Img/index",
+					data: {
+						type: "2"
+					},
+					cache: true,
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							var img = '';
+							var ImgList = e.data;
+							img += '<div class="mui-slider-item mui-slider-item-duplicate" title="0">' +
+								'<img src="' + ImgList[0].img_img + '" style="display:block">' +
+								'</div>';
+							for(var i = 0; i < ImgList.length; i++) {
+								img += '<div class="mui-slider-item" title="' + i + '">' +
+									'<img src="' + ImgList[i].img_img + '" style="display:block">' +
+									'</div>';
+							}
+							img += '<div class="mui-slider-item mui-slider-item-duplicate" title="0">' +
+								'<img src="' + ImgList[0].img_img + '" style="display:block">' +
+								'</div>';
+							$(".mui-slider-group").html(img);
+							var gallery = mui('.mui-slider');
+							gallery.slider();
+							mui(".mui-slider").slider({
+								interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+							});
+						}
+					}
+				});
+
+				/*获取未读消息*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/Message/getnumber",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							$(".message").attr("src", "../../img/notice.png")
+						} else if(e.error == 1) {
+							$(".message").attr("src", "../../img/notice_f.png")
+						}
+					}
+				});
+
+				// 点击banner图
+				$(".mui-slider-group").on("click", ".mui-slider-item", function(e) {
+                    var title = Number($(this).attr("title"));
+				    switch(title){
+						case 0:
+							mui.openWindow({
+								url: "../user/my_member.html",
+								id: "my_member",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							});
+							break;
+						case 1:
+                            mui.openWindow({
+                                url: "../user/my_member.html",
+                                id: "my_member",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            });
+                            break;
+						case 2:
+                            mui.openWindow({
+                                url: "../user/my_member_gift.html",
+                                id: "my_member_gift",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            });
+                            break;
+						case 3:
+                            mui.openWindow({
+                                url: "../user/share_code.html",
+                                id: "share_code",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            });
+                            break;
+						default :
+						    console.log('没有选项');
+					}
+
+					// var title = $(this).attr("title");
+					// mui.openWindow({
+					// 	url: "banner_h_iframe.html",
+					// 	id: "banner_h_iframe",
+					// 	show: {
+					// 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+					// 	},
+					// 	extras: {
+					// 		urls: title
+					// 	},
+					// 	waiting: {
+					// 		autoShow: true, //自动显示等待框，默认为true
+					// 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+					// 	}
+					// })
+				});
+				/*公告文字上下轮播*/
+				var pages = 1;
+				$.ajax({
+					url: site_app + "/api/My/article",
+					type: "post",
+					data: {
+						token: tokens,
+						type: "1",
+						page: pages
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							/*顶部滚动信息*/
+							var datas = e.data.data;
+							for(var a = 0; a < datas.length; a++) {
+								var li = "<li title='" + datas[a].article_id + "'>" + datas[a].article_title + "</li>";
+								$(".notice-txt").append(li);
+							}
+						}
+					}
+				});
+				notice($('.notice-txt'));
+				$(".notice-txt").on("click", "li", function() {
+					// var title = $(this).attr("title");
+                    // mui.openWindow({
+                    // 	url: "../user/help_detailed.html",
+                    // 	id: "help_detailed",
+                    // 	show: {
+                    // 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+                    // 	},
+                    // 	extras: {
+                    // 		ids: title
+                    // 	},
+                    // 	waiting: {
+                    // 		autoShow: true, //自动显示等待框，默认为true
+                    // 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                    // 	}
+                    // });
+                    mui.openWindow({
+                        url: "message.html",
+                        id: "message",
+                        show: {
+                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                        },
+                        waiting: {
+                            autoShow: true, //自动显示等待框，默认为true
+                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                        }
+                    });
+				});
+				$(".message").click(function() {
+					mui.openWindow({
+						url: "message.html",
+						id: "message",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				function notice(ul) {
+					var num = 0;
+					setInterval(function() {
+						num++;
+						if(num == ul.find('li').length) {
+							num = 0;
+							ul.css({
+								marginTop: 0
+							});
+						}
+						$('.notice-txt').animate({
+							marginTop: -50 * num
+						}, 400);
+					}, 4000);
+				}
+
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							//alert(e.data.user_isactivation);
+							if(e.data.user_isactivation == 0) {
+
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				$(".sh_tab li").click(function() {
+					var title = $(this).attr("title");
+					if(!tokens) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						if(title == 1) {
+							mui.openWindow({
+								url: "card_list.html",
+								id: "card_list",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								extras: {
+									title: "1"
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 2) {
+							// mui.openWindow({
+							// 	url: "sk_list.html",
+							// 	id: "sk_list",
+							// 	show: {
+							// 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+							// 	},
+							// 	extras: {
+							// 		title: "2"
+							// 	},
+							// 	waiting: {
+							// 		autoShow: true, //自动显示等待框，默认为true
+							// 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							// 	}
+							// });
+                            mui.openWindow({
+                                url: "kefu.html",
+                                id: "kefu",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            });
+						}
+					}
+
+				});
+
+				$(".apply_tab li").click(function() {
+					var title = $(this).attr("title");
+					if(!tokens) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						if(title == 1) {
+							mui.openWindow({
+								url: "../apply/apply_card.html",
+								id: "apply_card",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 2) {
+                            mui.openWindow({
+                                url: "../user/my_member_gift.html",
+                                id: "my_member_gift",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                            // mui.alert('敬请期待！', '提示', '确定', '', 'div');
+							// mui.openWindow({
+							// 	url: "../user/exchange.html",
+							// 	id: "exchange",
+							// 	show: {
+							// 		autoShow: true, //页面loaded事件发生后自动显示，默认为true
+							// 	},
+							// 	waiting: {
+							// 		autoShow: true, //自动显示等待框，默认为true
+							// 		title: '安全检测中，请等待', //等待对话框上显示的提示内容
+							// 	}
+							// })
+
+						}
+					}
+
+				});
+				$(".grid_list li").click(function() {
+					var title = $(this).attr("title");
+					if(!tokens) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						if(title == 1) {
+							mui.openWindow({
+								url: "../user/my_bankCard.html",
+								id: "my_bankCard",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 2) {
+							mui.openWindow({
+								url: "../user/my_bankCard.html",
+								id: "my_bankCard",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 3) {
+							mui.openWindow({
+								url: "../user/my_bankCard.html",
+								id: "my_bankCard",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 4) {
+							// mui.alert('系统升级中，敬请期待！', '提示', '', '', 'div');
+                            mui.openWindow({
+                                url: "../user/my_member.html",
+                                id: "my_member",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+						} else if(title == 5) {
+                            // mui.alert('敬请期待！', '提示', '确定', '', 'div');
+                            mui.openWindow({
+                                url: "../user/wechat_group.html",
+                                id: "wechat_group",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+							// mui.openWindow({
+							// 	url: "../loan/loan.html",
+							// 	id: "loan",
+							// 	show: {
+							// 		autoShow: true //页面loaded事件发生后自动显示，默认为true
+							// 	},
+							// 	extras: {
+							// 		title: "1"
+							// 	},
+							// 	waiting: {
+							// 		autoShow: true, //自动显示等待框，默认为true
+							// 		title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							// 	}
+							// })
+						} else if(title == 6) {
+							mui.openWindow({
+								url: "../user/help_center.html",
+								id: "help_center",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								extras: {
+									title: "1"
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待' //等待对话框上显示的提示内容
+								}
+							})
+						} else if(title == 7) {
+							mui.alert("系统升级中，敬请期待!", '提示', '', '', 'div');
+						}
+					}
+				});
+				
+				/*日报*/
+				var article_type;
+				$.ajax({
+					type:"post",
+					url:site_app+"/api/Common/publicstore",
+					async: false,
+					success:function(e){
+						if(e.error == 0){
+							$(".daily_name").html(e.data.article_title);
+							// $(".daily_content .content").html(e.data.article_body);
+							article_type = e.data.article_type;
+						}
+					}
+				});
+				$("#daily").click(function(){
+					mui.openWindow({
+						url: "../user/help_list.html",
+						id: "help_list",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							typeid: article_type
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+                // 热更新
+                var downloadWgtUrl = null; // 升级包目录
+                var downloadApkUrl = null; // 升级包目录
+                var iosURL = null; // 苹果地址
+                var oldVer = null; // 当前应用版本号
+                var newVer = null; // 新版本号
+                var isios = null; // ios是否需要升级 0 不升级 2 appStore升级 1 差量升级
+                var isandroid = null; // android是否需要升级 0 不升级 2 apk升级 1 差量升级
+                // plusReady 加载完毕执行
+                function plusReady() {
+                    // 获取本地应用资源版本号
+                    plus.runtime.getProperty(plus.runtime.appid, function (inf) {
+                        oldVer = inf.version;
+                        checkUpdate();
+                    });
+                }
+
+                // 检测更新
+                function checkUpdate() {
+                    $.ajax({
+                        type: "post",
+                        url: site_app + "/api/my/app_upgrade",
+                        data: {
+                            oldVer: oldVer
+                        },
+                        dataType: "json",
+                        success: function(e) {
+                            console.log(JSON.stringify(e));
+                            if(e.error == 0) {
+                                var d = e.data;
+                                newVer = d.app_verber; // 版本号
+                                isios = d.ios_type; // ios是否需要升级 0 不升级 2 appStore升级 1 差量升级
+                                iosURL = d.app_down_applelink;
+                                downloadWgtUrl = d.wgtURL;
+                                downloadApkUrl = d.app_down_androlink;
+                                isandroid = d.andr_type; // android是否需要升级 0 不升级 2 apk升级 1 差量升级
+
+                                // 监听应用启动界面关闭事件
+                                if (plus.navigator.hasSplashscreen()) { // 启动页未关闭
+                                    document.addEventListener("splashclosed", checkOs, false);
+                                } else { //启动界面已关闭
+                                    checkOs();
+                                }
+                            } else if (e.error == 1) {
+                                console.log('已是最新版本');
+                            } else {
+                                mui.alert(e.msg,'','','','div');
+                            }
+                        },
+                        error: function(xhr,err,errThrown){
+                            console.log(err);
+                            console.log(errThrown);
+                        }
+                    });
+                }
+
+                /**
+                 　　* 判断手机系统检测升级
+                 　　*/
+                function checkOs() {
+                    var isupdate = compareVersion(oldVer, newVer); // 是否差量升级
+
+                    if (!isupdate) {
+                        return false;
+                    }
+
+                    if (plus.os.name == 'Android') {    // Android 用户
+                        if (isandroid == 0) {
+                            return false;
+                        } else if (isandroid == 2) {
+                            plus.nativeUI.alert("已有最新版本！", function () {
+                                createDownload();
+                            }, "请升级", "确定");
+                        } else {
+                            downWgt();
+                        }
+                    } else { // 苹果用户
+                        if (isios == 0) {
+                            return false;
+                        } else if (isios == 2) {
+                            plus.nativeUI.alert("已有最新版本！", function () {
+                                plus.runtime.openURL(iosURL);
+                            }, "请升级", "确定");
+                        } else {
+                            downWgt();
+                        }
+                    }
+                }
+
+                /**
+                 * 比较版本大小，如果新版本nv大于旧版本ov则返回true，否则返回false
+                 * @param {String} ov
+                 * @param {String} nv
+                 * @return {Boolean}
+                 */
+                function compareVersion(ov, nv) {
+                    if (!ov || !nv || ov == "" || nv == "") {
+                        return false;
+                    }
+                    var b = false,
+                        ova = ov.split(".", 4),
+                        nva = nv.split(".", 4);
+                    for (var i = 0; i < ova.length && i < nva.length; i++) {
+                        var so = ova[i], no = parseInt(so), sn = nva[i], nn = parseInt(sn);
+                        if (nn > no || sn.length > so.length) {
+                            return true;
+                        } else if (nn < no) {
+                            return false;
+                        }
+                    }
+                    if (nva.length > ova.length && 0 == nv.indexOf(ov)) {
+                        return true;
+                    }
+                }
+
+                // 下载wgt文件
+                function downWgt() {
+                    $(".update-view,.mengban").show();
+                    var dtask = plus.downloader.createDownload(downloadWgtUrl, {}, function(d, status) {
+                        if(status == 200) {
+                            var pass = d.filename;
+                            plus.runtime.install(pass);
+                            clearInterval(i);
+                            $(".update-view,.mengban").hide();
+                            console.log('热更新完成');
+							if (plus.os.name != 'Android') {
+								plus.plugintest.appshut(["Html5", "Plus", "AsyncFunction", "ArrayArgument!"],
+										function (result) {
+											alert(result);
+										}, function (result) {
+											alert(result);
+										});
+							}
+                        } else {
+                            plus.nativeUI.alert("下载更新资源失败！");
+                        }
+
+                    });
+                    dtask.addEventListener("statechanged", function(d, status) {
+                        var total = parseInt(d.totalSize);
+                        var cur = parseInt(d.downloadedSize);
+                    }, false);
+                    dtask.start();
+                    var i = setInterval(function() {
+                        var totalSize = dtask.totalSize;
+                        var downloadedSize = dtask.downloadedSize;
+                        $('#proDownFile').attr('value', downloadedSize);
+                        $('#proDownFile').attr('max', totalSize);
+                    }, 100);
+                }
+
+                /**
+                 * 创建下载任务 安卓
+                 */
+                function createDownload() {
+                    var dtask = plus.downloader.createDownload(downloadApkUrl, {}, function (d, status) {
+                        // 下载完成
+                        if (status == 200) {
+                            plus.runtime.install(d.filename, {}, function () {
+                            }, function (DOMException) {
+                                console.log(JSON.stringify(DOMException));
+                            });
+                        } else {
+                            mui.alert("下载安装包失败: " + status,'','','','div');
+                        }
+                    });
+                    dtask.start();
+                }
+
+                plusReady();
+
+
+			});
+
+			//禁用安卓返回键
+			var first;
+			mui.back = function() {
+				//首次按键，提示‘再按一次退出应用’
+				if(!first) {
+					first = new Date().getTime();
+					mui.toast('再按一次退出应用');
+					setTimeout(function() {
+						first = null;
+					}, 1000);
+				} else {
+					if(new Date().getTime() - first < 1000) {
+						plus.runtime.quit();
+						localStorage.removeItem("sj");
+					}
+				}
+			};
+
+
+
+
+
+
+
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/feedback.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">意见反馈</h1>
+		</header>
+		<div class="mui-content">
+
+			<form class="mui-input-group " id="form-feed">
+
+				<div class="title">
+					留言标题
+				</div>
+				<div class="mui-input">
+					<input type="text" id="title" name="title" class="mui-input" placeholder="请输入标题例如某疑问...">
+				</div>
+				<div class="title">
+					联系人姓名
+				</div>
+				<div class="mui-input">
+					<input type="text" id="name" name="name" class="mui-input" placeholder="请输入您的联系姓名">
+				</div>
+				<div class="title">
+					联系人手机
+				</div>
+				<div class="mui-input">
+					<input type="text" id="phone" name="phone" class="mui-input" maxlength="11" placeholder="请输入可以联系到您的手机号">
+				</div>
+				<div class="title">
+					留言内容
+				</div>
+				<div class="mui-text-center">
+					<textarea id="textarea" id="body" name="body" rows="5" placeholder="反馈留言信息内容" style="font-size: 15px;"></textarea>
+				</div>
+				<div class="mui-input-group reg_form">
+					<button type="button" class="mui-btn mui-btn-blue edit_pw add-feed ">提交</button>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/My/info',
+					data: {
+						'token': tokens
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								var datas = e.data;
+								$('#phone').val(datas.user_phone);
+								$('#name').val(datas.user_name);
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						} else {
+							mui.alert(e.msg, '提示', '', '', 'div');
+							return false;
+						}
+					}
+				});
+				//提交反馈	
+				$(".edit_pw").click(function() {
+					var title = $('#title').val();
+					var name = $('#name').val();
+					var phone = $('#phone').val();
+					var body = $('#body').val();
+					if(title == '') {
+						mui.alert('请输入标题', '提示', '', '', 'div');
+						return false;
+					}
+					if(name == '') {
+						mui.alert('请输入姓名', '提示', '', '', 'div');
+						return false;
+					}
+					if(phone == '') {
+						mui.alert('请输入手机号', '提示', '', '', 'div');
+						return false;
+					}
+					if(body == '') {
+						mui.alert('请输入留言反馈内容', '提示', '', '', 'div');
+						return false;
+					}
+					var pdata = $('#form-feed').serialize();
+					$.ajax({
+						type: 'post',
+						url: site_app + '/api/My/feedback?token=' + tokens,
+						data: pdata,
+						cache: false,
+						dataType: 'json',
+						success: function(e) {
+							mui.alert(e.msg, '提示', '', function() {
+								window.location.reload();
+							}, 'div');
+						}
+					});
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

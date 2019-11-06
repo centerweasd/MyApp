@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/exchange.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_pq5c4cjadsn.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">积分兑换</h1>
+		</header>
+		<div class="mui-content">
+			<img src="../../img/ex_1.png" width="100%" />
+			<div class="title">
+				<img src="../../img/ex_2.png" /> 兑换推荐
+			</div>
+			<ul class="bank_list">
+				
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				$.ajax({
+					type: "get",
+					url: site_app + "/api/Points_Apply/getBank",
+					data: "",
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							for(var i = 0; i < e.data.length; i++) {
+								var html = '<li title="'+e.data[i].id+'">' +
+									'<div class="left img">' +
+									'<img src="'+e.data[i].imagePath+'"/>' +
+									'</div>' +
+									'<div class="left bank_name">' +e.data[i].name +'</div>' +
+									'<div class="right">' +
+									e.data[i].remark +
+									'<span class="iconfont icon-youjiantou"></span>' +
+									'</div>' +
+									'<div class="clear"></div>' +
+									'</li>';
+									$(".bank_list").append(html);
+							}
+						}
+					}
+				});
+				$(".bank_list").on("click", "li", function() {
+					var ids = $(this).attr("title");
+					mui.openWindow({
+						url: "exchange_center.html",
+						id: "exchange_center",
+						extras: {
+							urls: ids
+						},
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: false //自动显示等待框，默认为true
+							//							//title: '', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

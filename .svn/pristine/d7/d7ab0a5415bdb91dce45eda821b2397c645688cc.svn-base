@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/indirect_invite.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">间接邀请</h1>
+		</header>
+		<div class="mui-content">
+			<!--<div class="invite_num">-->
+				<!--<span class="title">间接邀请人数</span>-->
+				<!--<span class="num">0</span>-->
+			<!--</div>-->
+			<div class="invite-person">
+				<ul class="invite-person-ul">
+
+				</ul>
+			</div>
+			<div class="img">
+				<img src="../../img/image.png" width="100%"/>
+				<p class="mui-text-center">没有相关数据</p>
+			</div>
+
+			
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				var tokens = getToken();
+				// plus.nativeUI.closeWaiting();
+                $.ajax({
+                    type: "post",
+                    url: site_app + "/api/my/info",
+                    data: {
+                        token: tokens
+                    },
+                    dataType: "json",
+                    success: function(e) {
+                        $.ajax({
+                            type: "post",
+                            url: site_app + "/api/my/interpolation",
+                            data: {
+                                token: tokens,
+								uid: e.data.user_id
+                            },
+                            dataType: "json",
+                            success: function(data) {
+                                if(data.error == 0) {
+                                    var datas = data.data.list;
+                                    if(datas.length > 0){
+										$('.img').addClass('mui-hidden');
+									}
+                                    for(var a = 0; a < datas.length; a++) {
+                                        var li = "<li class='invite-person-li'><div class='in-name'>"
+											+ datas[a].user_name + "</div><div class='in-phone'>"
+											+ datas[a].user_phone
+											+ "</div></li>";
+                                        $(".invite-person-ul").append(li);
+                                    }
+                                } else {
+                                    mui.alert(data.msg, '提示', '', '', 'div');
+								}
+                            }
+                        });
+                    }
+                });
+                $("body").ajaxStop(function() {
+                    plus.nativeUI.closeWaiting();
+                });
+			})
+			
+		</script>
+	</body>
+
+</html>

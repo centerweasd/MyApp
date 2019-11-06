@@ -1,0 +1,532 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/user.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<!--<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">我的</h1>
+		</header>-->
+		<div class="mui-content">
+			<div class="user_info">
+				<h1>我的</h1>
+				<div class="portrait_info">
+					<div class="portrait left" id="portrait">
+						<img src="../../img/avater_image.png" />
+					</div>
+
+					<div class="name_level left go_login">
+						<p class="user_name">登录/注册 </p>
+						<p class="vip_level">未认证</p>
+					</div>
+					<div class="user_code right">
+						<span class="iconfont icon-erweima" style="font-size: 24px;"></span>
+						<span class="iconfont icon-mjiantou" style="font-size: 18px;"></span>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="property">
+					<ul>
+						<!--<li style="width:22%;">-->
+							<!--<p class="money lj_jf">0</p>-->
+							<!--<p>累计积分</p>-->
+						<!--</li>-->
+						<li style="width:22%;">
+							<p class="money my_m">￥0.00</p>
+							<p>我的余额</p>
+						</li>
+						<li style="width:56%;">
+							<span class="recharge btn">会员</span>
+							<span class="carry_btn btn">提现</span>
+						</li>
+						<div class="clear"></div>
+					</ul>
+				</div>
+			</div>
+
+			<ul class="mui-table-view user_list">
+				<li class="mui-table-view-cell" title="1">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_1.png" width="7%" />
+						<span class="item">在线客服</span>
+					</a>
+				</li>
+			</ul>
+			<ul class="mui-table-view user_list">
+				<li class="mui-table-view-cell" title="2">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_2.png" width="7%" />
+						<span class="item">推广中心</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="3">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_3.png" width="7%" />
+						<span class="item">我的交易</span>
+					</a>
+				</li>
+				<!--<li class="mui-table-view-cell" title="4">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_4.png" width="7%" />
+						<span class="item">我的保证金</span>
+					</a>
+				</li>-->
+				<li class="mui-table-view-cell" title="5">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_5.png" width="7%" />
+						<span class="item">我的分润</span>
+					</a>
+				</li>
+				
+				<!--<li class="mui-table-view-cell" title="6">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_6.png" width="7%" />
+						<span class="item">我的优惠劵</span>
+					</a>
+				</li>-->
+			</ul>
+
+			<ul class="mui-table-view user_list">
+				<li class="mui-table-view-cell" title="7">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_7.png" width="7%" />
+						<span class="item">我的银行卡</span>
+						<span class="right tips" id="user_card">0张</span>
+						<div class="clear"></div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="8">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_8.png" width="7%" />
+						<span class="item">我的费率</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="9">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_9.png" width="7%" />
+						<span class="item">会员权益</span>
+					</a>
+				</li>
+				<!--<li class="mui-table-view-cell" title="10">-->
+					<!--<a class="mui-navigate-right">-->
+						<!--<img src="../../img/user_icon_10.png" width="7%" />-->
+						<!--<span class="item">城市代理申请</span>-->
+					<!--</a>-->
+				<!--</li>-->
+			</ul>
+
+			<ul class="mui-table-view user_list" style="margin: 0;">
+				<li class="mui-table-view-cell" title="11">
+					<a class="mui-navigate-right">
+						<div class="left">
+							<img src="../../img/user_icon_11.png" width="20%" />
+							<span class="item">资料认证</span>
+						</div>
+						<span class="right tips" id="real">未认证</span>
+						<div class="clear"></div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="12">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_12.png" width="7%" />
+						<span class="item">帮助中心</span>
+					</a>
+				</li>
+				<li class="mui-table-view-cell" title="13">
+					<a class="mui-navigate-right">
+						<img src="../../img/user_icon_13.png" width="7%" />
+						<span class="item">设置中心</span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				window.addEventListener('user', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				/*修改头像*/
+				document.getElementById('portrait').addEventListener('tap', function() {
+					mui.openWindow({
+						url: "upload_head.html",
+						id: "upload_head",
+						styles: {},
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".carry_btn").click(function() {
+					mui.openWindow({
+						url: "withdraw_cash.html",
+						id: "withdraw_cash",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".recharge").click(function() {
+					// mui.openWindow({
+					// 	url: "recharge.html",
+					// 	id: "recharge",
+					// 	show: {
+					// 		autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					// 	},
+					// 	waiting: {
+					// 		autoShow: true, //自动显示等待框，默认为true
+					// 		title: '安全检测中，请等待', //等待对话框上显示的提示内容
+					// 	}
+					// })
+                    mui.openWindow({
+                        url: "my_member.html",
+                        id: "my_member",
+                        show: {
+                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                        },
+                        waiting: {
+                            autoShow: true, //自动显示等待框，默认为true
+                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                        }
+                    })
+				});
+
+				var tokens = localStorage.getItem("token");
+				var uid='';
+				/*用户信息展示*/
+				if(!tokens) {
+					$(".name_level").html("<p class='user_name'>登录/注册</p>" +
+						"<p class='vip_level'>未认证</p>");
+				} else {
+					/*获取用户信息*/
+					$.ajax({
+						url: site_app + "/api/my/info",
+						type: "post",
+						data: {
+							token: tokens
+						},
+						dataType: "json",
+						success: function(e) {
+						    console.log(JSON.stringify(e));
+							if(e.error == 0) {
+								if(e.data.user_isactivation == 0) {
+								    uid = e.data.user_id;
+									$(".name_level").removeClass("go_login");
+									// $(".lj_jf").html(e.data.user_total_integral);
+									$(".my_m").html(e.data.user_moeny);
+									var info = "<p class='user_name'>";
+									if(e.data.user_nickname!=0 && e.data.user_nickname!=null){
+                                        info+=e.data.user_nickname;
+									} else {
+                                        info+=e.data.user_name;
+									}
+									info+="<span class='edit_nick'>编辑昵称</span></p>" +
+                                        "<p class='vip_level'>级别：" + e.data.type_name + "</p>"	;
+                                    $(".name_level").html(info);
+
+									if(e.data.user_img == "") {
+										$("#portrait img").attr("src", "../../img/avater_image.png");
+									} else {
+										$("#portrait img").attr("src", e.data.user_img);
+									}
+								} else {
+									mui.alert('请激活账户', '提示', '', function() {
+										mui.openWindow({
+											url: "../user/activation.html",
+											id: "activation",
+											show: {
+												autoShow: true //页面loaded事件发生后自动显示，默认为true
+											},
+											waiting: {
+												autoShow: true, //自动显示等待框，默认为true
+												title: '安全检测中，请等待' //等待对话框上显示的提示内容
+											}
+										})
+									}, 'div');
+								}
+
+							}
+						}
+					});
+				}
+				$(".go_login").click(function() {
+					if($(this).hasClass("go_login") == true) {
+						mui.openWindow({
+							url: "../login/login.html",
+							id: "login",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						$(this).removeClass("go_login")
+					}
+				});
+
+				// 编辑昵称
+                $(".name_level").on('tap','.user_name',function(){
+                    mui.prompt('','请输入您的昵称','编辑昵称','',function(e){
+						if(e.index===1 && e.value){
+						    $.ajax({
+								type:"post",
+								url: site_app + "/api/my/enickname",
+								data: {
+								    token: tokens,
+									uid: uid,
+                                    user_nickname: e.value
+								},
+								dataType: "json",
+								success: function(e){
+								    console.log(JSON.stringify(e));
+								    if(e.error == 0){
+                                        mui.alert('修改成功','','',function(){
+                                            plus.nativeUI.showWaiting();
+                                            setInterval(function(){
+                                                location.reload();
+											},300);
+                                            location.reload();
+										},'div');
+									} else {
+                                        mui.alert(e.msg,'','','','div');
+									}
+								},
+								error: function(jqxhr,textStatus,errorThrown){
+								    console.log(jqxhr.readyState+' '+jqxhr.status);
+								    console.log(errorThrown);
+                                    mui.alert(textStatus,'','','','div');
+								}
+							})
+						}
+                    },'div')
+				});
+
+				/*获取验证状态及银行卡数量*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/index",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.real == 0) {
+								$("#real").text("未认证");
+							} else {
+								$("#real").text("认证通过");
+							}
+							$("#user_card").text(e.user_card + "张");
+						}
+					}
+				});
+
+				$(".user_code").click(function() {
+					mui.openWindow({
+						url: "share_code.html",
+						id: "share_code",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".user_list li").click(function() {
+					var title = $(this).attr("title");
+					if(title == 1) {
+						mui.openWindow({
+							url: "../index/kefu.html",
+							id: "kefu",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 2) {
+						mui.openWindow({
+							url: "invite_friend.html",
+							id: "invite_friend",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 3) {
+						mui.openWindow({
+							url: "my_trade.html",
+							id: "my_trade",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 4) {
+						mui.openWindow({
+							url: "my_grade.html",
+							id: "my_grade",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 5) {
+						mui.openWindow({
+							url: "my_shareProfit.html",
+							id: "my_shareProfit",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 6) {
+						mui.openWindow({
+							url: "my_discount.html",
+							id: "my_discount",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 7) {
+						mui.openWindow({
+							url: "my_bankCard.html",
+							id: "my_bankCard",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 8) {
+						mui.openWindow({
+							url: "my_rate.html",
+							id: "my_rate",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 9) {
+						mui.openWindow({
+							url: "my_member.html",
+							id: "my_member",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 10) {
+						mui.openWindow({
+							url: "agent_apply.html",
+							id: "agent_apply",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 11) {
+						mui.openWindow({
+							url: "data_authentication.html",
+							id: "data_authentication",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 12) {
+						mui.openWindow({
+							url: "help_center.html",
+							id: "help_center",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 13) {
+						mui.openWindow({
+							url: "setting.html",
+							id: "setting",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					}
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

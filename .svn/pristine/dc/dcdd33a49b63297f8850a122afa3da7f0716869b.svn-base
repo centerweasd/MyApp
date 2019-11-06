@@ -1,0 +1,133 @@
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.head{
+	background-image: url(../img/head-bj.png);
+    height: 12rem;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    background-color: #fff;
+}
+.aui-head-user {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    top: 44%;
+    left: 50%;
+    margin-left: -40px;
+    margin-top: -10px;
+}
+.aui-head-user img {
+    width: 80px;
+    height: 80px;
+    display: block;
+    border: none;
+    border-radius: 100%;
+}
+
+.aui-head-name {
+    width: 180px;
+    height: 25px;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    margin-left: -90px;
+    font-size: 14px;
+    text-align: center;
+}
+.aui-head-name h2 {
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+}
+.aui-head-name h2 em {
+	color: #000;
+    font-style: normal;
+}
+
+.aui-palace,.aui-explain{
+	background: #fff;
+	margin-top: 10px;
+	padding: 10px;
+}
+.aui-palace .title,.aui-explain .title{
+	text-align: center;
+	font-size: 16px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+.aui-palace .title i{
+	display: inline-block;
+	width: 33%;
+	height: 1px;
+	background: #ccc;
+	margin-bottom: 5px;
+}
+.aui-palace .title span{
+	display: inline-block;
+	width: 30%;
+}
+.aui-palace p{
+	text-align: center;
+	margin: 0;
+	font-size: 14px;
+}
+.aui-explain .title i{
+	display: inline-block;
+	width: 33%;
+	height: 1px;
+	background: #ccc;
+	margin-bottom: 5px;
+}
+.aui-explain .title span{
+	display: inline-block;
+	width: 30%;
+}
+.mui-btn{
+	width: 100%;
+	background: #2EABFB;
+	border: none;
+	padding: 9px;
+	margin-top: 10px;
+}
+.explain .privilege_title{
+	font-size: 14px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.explain .privilege_title span{
+	display: inline-block;
+	width: 4px;
+	height: 18px;
+	background: #2EABFB;
+	vertical-align: middle;
+	margin-bottom: 2px;
+}
+.privilege_ct{
+	padding-left: 30px;
+	font-size: 14px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

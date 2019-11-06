@@ -1,0 +1,374 @@
+header {
+				width: 100%;
+				background-color: #FF8F48 !important;
+				box-shadow: none !important;
+			}
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.pay_method{
+	background: #fff;
+}
+.pay_method ul li{
+	font-size: 14px;
+	color: #333;
+}
+.pay_method ul li img{
+	width: 7%;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+.mui-table-view:before,.mui-table-view:after{
+	height: 0;
+}
+.mui-table-view-cell:after{
+	left: 0;
+}
+
+.card_info{
+	position: relative;
+	width: 90%;
+	margin: 20px auto 0;
+}
+.card_info>img{
+	width: 100%;
+}
+.card_info .card_t{
+	position: absolute;
+	top: 0;
+	left: 50%;
+	width: 90%;
+	height: 40px;
+	line-height: 40px;
+	margin-left: -45%;
+	color: #fff;
+	font-size: 14px;
+}
+.card_info .card_logo{
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	width: 12%;
+	margin-left: -6%;
+}
+.card_info .card_logo img{
+	width: 100%;
+}
+.card_info .card_b{
+	position: absolute;
+	left: 50%;
+	bottom: 20%;
+	width: 90%;
+	margin-left: -45%;
+	color: #fff;
+	font-size: 12px;
+}
+.card_info .card_b ul li{
+	width: 50%;
+	height: 22px;
+	line-height: 22px;
+	float: left;
+	text-align: center;
+}
+.card_info .card_b ul li:first-child{
+	border-right: 1px solid #fff;
+}
+.card_info .card_b ul li span{
+	font-size: 15px;
+}
+
+.input_money{
+	background: #fff;
+}
+.input_money .title{
+	height: 40px;
+	line-height: 40px;
+	font-size: 15px;
+	padding: 0 15px;
+}
+.input_money .mui-input-row{
+	padding: 0 15px;
+	/*border-bottom: 1px solid #ddd;*/
+}
+.input_money .sign{
+	display: inline-block;
+	height: 40px;
+	line-height: 40px;
+	font-size: 30px;
+	vertical-align: middle;
+}
+.input_money .recalculate{
+	height: 24px;
+	line-height: 24px;
+	font-size: 14px;
+	background: #2DABF8;
+	color: #fff;
+	padding: 0 15px;
+	border-radius: 20px;
+	margin-top: 8px;
+}
+.input_money .money{
+	width: 40%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 14px;
+	padding: 0;
+	border: 0;
+	margin: 0;
+}
+.custom_plan{
+	position: relative;
+	overflow: hidden;
+	height: 40px;
+}
+.input_money .custom{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	text-align: right;
+	padding: 0 15px;
+	color: #333;
+}
+.custom_f{
+	position: absolute;
+	top: 0;
+	left: 100%;
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	padding: 0 15px;
+	font-size: 14px;
+	color: #333;
+}
+.custom_money{
+	width: 60% !important;
+	border: none !important;
+	font-size: 12px;
+	margin: 0 !important;
+	padding: 0 !important;
+	
+}
+.custom_money::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:#999999;
+}
+.custom_money:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:#999999;
+}
+.custom_money::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:#999999;
+}
+.custom_money:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:#999999;
+}
+.mui-input-row .mui-input-clear~.mui-icon-clear{
+	right: 25%;
+}
+
+.mui-checkbox input[type=checkbox]:checked:before {
+	content: '\e442' !important;
+	color: #1EBD80 !important;
+}
+
+.mui-checkbox input[type=checkbox]:before {
+	font-size: 24px !important;
+}
+
+.mui-checkbox input[type=checkbox] {
+	position: static !important;
+	width: 24px !important;
+	height: 24px !important;
+	    float: right;
+    margin-top: 8px;
+}
+
+
+.generate_plan{
+	left: 50%;
+	width: 90%;
+	margin: 15px 0 15px -45%;
+	background: #2DABF8;
+	border: 1px solid #2DABF8;
+	padding: 10px 12px;
+}
+
+
+.mui-radio input[type=radio]:checked:before {
+	content: '\e442' !important;
+	color: #1EBD80 !important;
+}
+
+.mui-radio input[type=radio]:before {
+	font-size: 24px !important;
+}
+
+.mui-radio input[type=radio] {
+	position: static !important;
+	width: 24px !important;
+	height: 24px !important;
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+.num_list{
+	display: none;
+}
+.num_list li{
+	height: 65px;
+	border-bottom: 1px solid #eee;
+	padding: 0 15px;
+}
+.num_list li .left{
+	margin-top: 12px;
+}
+.num_list li .left p{
+	margin: 0;
+}
+.num_list li .quota{
+	color: #333;
+	font-size: 14px;
+}
+.num_list li .poundage{
+	font-size: 12px;
+}
+.num_list li .mui-radio{
+	line-height: 65px;
+	text-align: right;
+	font-size: 12px;
+	color: #999999;
+	vertical-align: middle;
+}
+
+.site,.industry {
+	height: 40px;
+	line-height: 38px;
+	background: #fff;
+	font-size: 14px;
+	padding: 0 15px;
+	border-top: 1px solid #eee;  
+}
+.site input,.industry input{
+	display: inline-block;
+	width: auto;
+	height: 30px;
+	border: 0;
+	font-size: 14px;
+	margin: 0;
+	text-align: left;
+	padding: 0;
+}
+.popup {
+	position: fixed;
+	left: 0;
+	bottom: -330px;
+	width: 100%;
+	background: #F0EFF4;
+	z-index: 99;
+}
+
+.popup .title {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	font-size: 14px;
+	background: #fff;
+	margin-bottom: 10px;
+}
+
+.popup .title span {
+	position: absolute;
+	top: 0;
+	font-size: 13px;
+	color: #999999;
+}
+
+.popup .title .close {
+	left: 15px;
+}
+
+.popup .title .sure {
+	right: 15px;
+}
+.mui-radio input[type=radio]:checked:before {
+	content: '\e442' !important;
+	color: #1EBD80 !important;
+}
+
+.mui-radio input[type=radio]:before {
+	font-size: 24px !important;
+}
+
+.mui-radio input[type=radio] {
+	position: static !important;
+	width: 24px !important;
+	height: 24px !important;
+}
+
+.popup .mui-table-view:before,
+.mui-table-view:after {
+	height: 0 !important;
+}
+
+.popup ul {
+	height: 280px;
+	overflow: auto;
+	background-color: #F0EFF4;
+}
+
+.popup ul li {
+	background: #fff;
+	margin-bottom: 4px;
+}
+
+.popup ul li>.left {
+	width: 10%;
+	text-align: right;
+	padding-top: 8px;
+}
+
+.popup ul li>.right {
+	width: 90%;
+	padding-left: 6px;
+}
+
+.popup ul li .mode_name {
+	height: 40px;
+	line-height: 40px;
+	font-size: 15px;
+}
+.mengban {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .5);
+	z-index: 98;
+}
+
+.choose_time{
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	font-size: 14px;
+	border-top: 1px solid #EEEEEE;
+}
+.choose_time label{
+	line-height: 40px;
+	padding: 0 0!important;
+}
+.choose_time input{
+	font-size: 14px;
+}	

@@ -1,0 +1,456 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/card_info.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">银行</h1>
+			<span class="iconfont icon-sangedian" id="edit_bank"></span>
+		</header>
+		<div class="card_info">
+			<div class="card_num">
+				<span class="left num"></span>
+				<div class="clear"></div>
+			</div>
+			<div class="bill_info">
+				<div class="left">
+					<p class="surplus">0.00元</p>
+					<p>信用额度</p>
+				</div>
+				<div class="right">
+					<ul style="margin-top: 10px;">
+						<li>账单日 <span class="zd_day">--</span></li>
+						<li>还款日 <span class="hk_day">--</span></li>
+					</ul>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="mui-content">
+			<div class="mui-slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1">银行服务</a>
+					<a class="mui-control-item" href="#item2">还款记录</a>
+				</div>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+				<div class="mui-slider-group">
+					<div id="item1" class="mui-slider-item mui-control-content">
+						<ul class="mui-table-view">
+							<!--<li class="mui-table-view-cell" title="1">
+								<a class="mui-navigate-right">
+									<div class="left type_img">
+										<img src="../../img/profit_cash_icon.png" />
+									</div>
+									<div class="left type">
+										<p class="type_name">快捷收款</p>
+										<p class="type_tips">银联无卡收款</p>
+									</div>
+									<div class="clear"></div>
+								</a>
+							</li>-->
+							<li class="mui-table-view-cell" title="1">
+								<a class="mui-navigate-right">
+									<div class="left type_img">
+										<img src="../../img/bank_service_tel.png" />
+									</div>
+									<div class="left type">
+										<p class="type_name">联系银行</p>
+										<p class="type_tips">银行服务</p>
+									</div>
+									<div class="clear"></div>
+								</a>
+							</li>
+							<li class="mui-table-view-cell" title="2">
+								<a class="mui-navigate-right">
+									<div class="left type_img">
+										<img src="../../img/bank_service_map.png" />
+									</div>
+									<div class="left type">
+										<p class="type_name">银行网点</p>
+										<p class="type_tips">查询银行网点</p>
+									</div>
+									<div class="clear"></div>
+								</a>
+							</li>
+						</ul>
+					</div>
+
+					<div id="item2" class="mui-slider-item mui-control-content">
+						<div class="info_list">
+
+						</div>
+						<p class="more" style="display: none;">点击加载更多</p>
+						<div class="no_info" style="display: none;">
+							<img src="../../img/no_creditbill_icon.png" />
+							<p>没有相关数据</p>
+						</div>
+					</div>
+
+				</div>
+				<!--底部按钮-->
+				<div class="bottom_btn">
+					<!--<ul>-->
+						<!--<li class="already_repaid">快捷收款</li>-->
+						<!--<li class="repayment_btn">立即还款</li>-->
+						<!--<div class="clear"></div>-->
+					<!--</ul>-->
+					<button class="mui-btn mui-btn-primary repayment_btn">立即还款</button>
+				</div>
+			</div>
+
+			<div class="mengban"></div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'index');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('repayment', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				var self = plus.webview.currentWebview();
+
+				/*银行详情*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/card_info",
+					data: {
+						token: tokens,
+						cid: self.title,
+						type: "1"
+					},
+					dataType: "json",
+					async: true,
+					success: function(e) {
+						if(e.error == 0) {
+							$(".mui-title").text(e.data.list_name);
+							$(".mui-title").attr("title", e.data.list_tel);
+							$(".mui-title").attr("data-id", e.data.card_id);
+							$(".card_num").attr("title", e.data.card_no);
+							$(".card_num .num").text("**** **** **** " + (e.data.card_no).substring((e.data.card_no).length - 4));
+							$(".zd_day").text(e.data.card_account_day);
+							$(".hk_day").text(e.data.card_repayment_day);
+							$(".surplus").text(e.data.card_credit_limit + "元");
+						}
+					}
+				});
+				$(".mui-table-view-cell").click(function(e) {
+					event.stopPropagation();
+					var _con = $('.detailed_modify'); // 设置目标区域
+					if(!_con.is(e.target) && _con.has(e.target).length === 0) {
+
+					} else {
+						$("#modify_input").focus();
+						$(".modify_popup").animate({
+							bottom: "0"
+						});
+						$(".mengban").show();
+					}
+				});
+				$(".already_repaid").click(function() {
+					mui.openWindow({
+						url: "receivables.html",
+						id: "receivables",
+						show: {  
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title: self.title
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("#edit_bank").click(function() {
+					mui.openWindow({
+						url: "edit_card.html",
+						id: "edit_card",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							name: $(".mui-title").text(),
+							dataid: $(".mui-title").attr("data-id"),
+							card: $(".card_num").attr("title")
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".repayment_btn").click(function() {
+					mui.openWindow({
+						url: "repayment_channel.html",
+						id: "repayment_channel",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title: self.title
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("#item1 li").click(function() {
+					var title = $(this).attr("title");
+					//					if(title == 1) {
+					//						mui.openWindow({
+					//							url: "receivables.html",
+					//							id: "receivables",
+					//							show: {
+					//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+					//							},
+					//							extras: {
+					//								title: self.title
+					//							},
+					//							waiting: {
+					//								//autoShow: true, //自动显示等待框，默认为true
+					//								//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+					//							}
+					//						})
+					//					} else
+					if(title == 1) {
+						var tel = $(".mui-title").attr("title");
+						var actionstyle = {
+							cancel: "取消",
+							buttons: [{
+								title: tel
+							}]
+						};
+						plus.nativeUI.actionSheet(actionstyle, function(e) {
+							if(e.index == 1) {
+								var btnArray = ['取消', '拨打'];
+								var Phone = tel;
+								mui.confirm('是否拨打 ' + Phone + ' ？', '提示', btnArray, function(e) {
+									if(e.index == 1) {
+										plus.device.dial(Phone, true);
+									}
+								}, 'div');
+							}
+
+						})
+					} else if(title == 2) {
+						mui.openWindow({
+							url: "../index/bank_dot.html",
+							id: "bank_dot",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							extras: {
+								name: $(".mui-title").text()
+							},
+							waiting: {
+								//autoShow: true, //自动显示等待框，默认为true
+								//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+							}
+						})
+					}
+				});
+
+				var page = 1;
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/repayment/index",
+					data: {
+						token: tokens,
+						cid: self.title,
+						page:page
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							var result = e.data.data;
+							if(result == 0) {
+								$(".info_list,.more").hide();
+								$(".no_info").show();
+							} else {
+								$(".no_info").hide();
+								$(".info_list,.more").show();
+							}
+							for(var i = 0; i < result.length; i++) {
+								var mission_state = result[i].mission_state;
+								var img;
+								if(mission_state == 1) {
+									img = "../../img/ic_repayment_loading.png"
+								} else if(mission_state == 2) {
+									img = "../../img/ic_repayment_success.png"
+								} else if(mission_state == 3) {
+									img = "../../img/ic_repayment_fail.png"
+								} else if(mission_state == 4) {
+									img = "../../img/ic_repayment_zz.png"
+								}
+								var div = "<div class='mui-table-view' title='" + result[i].mission_id + "'>" +
+									"<div class='view_ul'>" +
+									"<ul>" +
+									"<li style='text-align: left;'>" +
+									"<p>还款金额</p>" +
+									"<span class='cut'>" + result[i].mission_money + "</span>" +
+									"</li>" +
+									"<li>" +
+									"<p>还款笔数</p>" +
+									"<span class='cut'>" + result[i].mission_repayment + "</span>" +
+									"</li>" +
+									"<li style='text-align: right;'>" +
+									"<p>手续费</p>" +
+									"<span class='cut'>" + result[i].mission_fee + "</span>" +
+									"</li>" +
+									"<div class='clear'></div>" +
+									"</ul>" +
+									"</div>" +
+									"<div class='hk_time'>" +
+									"<div class='left'>" +
+									"<div class='b_m'>" +
+									"<p>开始时间</p>" +
+									"<span>" + result[i].mission_start_time + "</span>" +
+									"</div>" +
+									"<div class='b_m'>" +
+									"<p>结束时间</p>" +
+									"<span>" + result[i].mission_end_time + "</span>" +
+									"</div>" +
+									"</div>" +
+									"<div class='right'>" +
+									"<img src='" + img + "'>" +
+									"</div>" +
+									"<div class='clear'></div>" +
+									"</div>" +
+									"</div>";
+								$(".info_list").append(div);
+							}
+
+						}
+					}
+				});
+				$(".info_list").on("click", ".mui-table-view", function() {
+					var title = $(this).attr("title");
+					mui.openWindow({
+						url: "repayment_list.html",
+						id: "repayment_list",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							mid: title
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".more").click(function() {
+					plus.nativeUI.showWaiting();
+					page++;
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/repayment/index",
+						data: {
+							token: tokens,
+							cid: self.title,
+							page:page
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								var result = e.data.data;
+								if(result == 0) {
+									$(".more").html("没有更多数据了");
+								}
+
+								for(var i = 0; i < result.length; i++) {
+									var mission_state = result[i].mission_state;
+									var img;
+									if(mission_state == 1) {
+										img = "../../img/ic_repayment_loading.png"
+									} else if(mission_state == 2) {
+										img = "../../img/ic_repayment_success.png"
+									} else if(mission_state == 3) {
+										img = "../../img/ic_repayment_fail.png"
+									} else if(mission_state == 4) {
+										img = "../../img/ic_repayment_zz.png"
+									}
+									var div = "<div class='mui-table-view'>" +
+										"<div class='view_ul'>" +
+										"<ul>" +
+										"<li style='text-align: left;'>" +
+										"<p>还款金额</p>" +
+										"<span class='cut'>" + result[i].mission_money + "</span>" +
+										"</li>" +
+										"<li>" +
+										"<p>还款笔数</p>" +
+										"<span class='cut'>" + result[i].mission_repayment + "</span>" +
+										"</li>" +
+										"<li style='text-align: right;'>" +
+										"<p>手续费</p>" +
+										"<span class='cut'>" + result[i].mission_fee + "</span>" +
+										"</li>" +
+										"<div class='clear'></div>" +
+										"</ul>" +
+										"</div>" +
+										"<div class='hk_time'>" +
+										"<div class='left'>" +
+										"<div class='b_m'>" +
+										"<p>开始时间</p>" +
+										"<span>" + result[i].mission_start_time + "</span>" +
+										"</div>" +
+										"<div class='b_m'>" +
+										"<p>结束时间</p>" +
+										"<span>" + result[i].mission_end_time + "</span>" +
+										"</div>" +
+										"</div>" +
+										"<div class='right'>" +
+										"<img src='" + img + "'>" +
+										"</div>" +
+										"<div class='clear'></div>" +
+										"</div>" +
+										"</div>";
+									$(".info_list").append(div);
+								}
+
+							}
+						}
+					});
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			});
+		</script>
+	</body>
+
+</html>

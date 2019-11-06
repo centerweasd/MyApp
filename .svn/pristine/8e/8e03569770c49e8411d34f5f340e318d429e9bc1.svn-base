@@ -1,0 +1,287 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_shareProfit.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的分润</h1>
+		</header>
+		<div class="mui-content">
+			<div class="profit_info">
+				<p class="sign">当前分润</p>
+				<p class="profit_money">￥0.00</p>
+				<div class="total_monry">
+					累计分润
+					<span class="money lj_m">￥0.00</span>
+				</div>
+			</div>
+			<ul class="invite_num">
+				<li class="direct">
+					<p class="fs14">直接好友（共<span class="zj_num_all">0</span>人）</p>
+					<p class="sign zj_num">VIP：0人</p>
+				</li>
+				<li class="indirect">
+					<p class="fs14">间接好友（共<span class="jj_num_all">0</span>人）</p>
+					<p class="sign jj_num">VIP：0人</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+			<ul class="profit_mode">
+				<li title="1">
+					<div class="title">
+						<img src="../../img/profit_upgrade_icon.png" /> 好友升级
+						<!--<span class="iconfont icon-mjiantou right"></span>-->
+						<div class="clear"></div>
+					</div>
+					<div class="mode_info">
+						<p class="money sj_m">￥0.00</p>
+						<p class="sign">分润金额</p>
+						<p class="sign profit_num">
+							分润笔数
+							<span class="num sj_num">0</span>
+						</p>
+					</div>
+				</li>
+				<li title="2">
+					<div class="title">
+						<img src="../../img/profit_repayment_icon.png" /> 好友还款
+						<!--<span class="iconfont icon-mjiantou right"></span>-->
+						<div class="clear"></div>
+					</div>
+					<div class="mode_info">
+						<p class="money hk_m">￥0.00</p>
+						<p class="sign">分润金额</p>
+						<p class="sign profit_num">
+							分润笔数
+							<span class="num hk_num">0</span>
+						</p>
+					</div>
+				</li>
+				<!--<li title="3">-->
+					<!--<div class="title">-->
+						<!--<img src="../../img/profit_cash_icon.png" /> 好友收款-->
+						<!--&lt;!&ndash;<span class="iconfont icon-mjiantou right"></span>&ndash;&gt;-->
+						<!--<div class="clear"></div>-->
+					<!--</div>-->
+					<!--<div class="mode_info">-->
+						<!--<p class="money sk_m">￥0.00</p>-->
+						<!--<p class="sign">分润金额</p>-->
+						<!--<p class="sign profit_num">-->
+							<!--分润笔数-->
+							<!--<span class="num sk_num">0</span>-->
+						<!--</p>-->
+					<!--</div>-->
+				<!--</li>-->
+				<!--<li title="4">-->
+					<!--<div class="title">-->
+						<!--<img src="../../img/profit_trans_icon.png" /> 交易返现-->
+						<!--&lt;!&ndash;<span class="iconfont icon-mjiantou right"></span>&ndash;&gt;-->
+						<!--<div class="clear"></div>-->
+					<!--</div>-->
+					<!--<div class="mode_info">-->
+						<!--<p class="money jy_m">￥0.00</p>-->
+						<!--<p class="sign">分润金额</p>-->
+						<!--<p class="sign profit_num">-->
+							<!--分润笔数-->
+							<!--<span class="num jy_num">0</span>-->
+						<!--</p>-->
+					<!--</div>-->
+				<!--</li>-->
+				<!--<li title="5">-->
+					<!--<div class="title">-->
+						<!--<img src="../../img/profit_loan_icon.png" /> 办理贷款-->
+						<!--&lt;!&ndash;<span class="iconfont icon-mjiantou right"></span>&ndash;&gt;-->
+						<!--<div class="clear"></div>-->
+					<!--</div>-->
+					<!--<div class="mode_info">-->
+						<!--<p class="money dk_m">￥0.00</p>-->
+						<!--<p class="sign">分润金额</p>-->
+						<!--<p class="sign profit_num">-->
+							<!--分润笔数-->
+							<!--<span class="num dk_num" >0</span>-->
+						<!--</p>-->
+					<!--</div>-->
+				<!--</li>-->
+				<!--<li title="6">-->
+					<!--<div class="title">-->
+						<!--<img src="../../img/profit_makecard_icon.png" /> 办信用卡-->
+						<!--&lt;!&ndash;<span class="iconfont icon-mjiantou right"></span>&ndash;&gt;-->
+						<!--<div class="clear"></div>-->
+					<!--</div>-->
+					<!--<div class="mode_info">-->
+						<!--<p class="money bk_m">￥0.00</p>-->
+						<!--<p class="sign">分润金额</p>-->
+						<!--<p class="sign profit_num">-->
+							<!--分润笔数-->
+							<!--<span class="num bk_num">0</span>-->
+						<!--</p>-->
+					<!--</div>-->
+				<!--</li>-->
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				$.ajax({
+					type:"post",
+					url:site_app+"/api/My/getbonus",
+					data:{
+						token:tokens
+					},
+					dataType:"json",
+					success:function(e){
+						if(e.error == 0){
+							$(".profit_money").text("￥"+e.data.money);
+							$(".lj_m").text("￥"+e.data.coutmoney);
+							$(".zj_num").text('VIP：'+e.data.puser+"人");  // 直接邀请
+							$(".jj_num").text('VIP：'+e.data.countuser+"人"); // 间接邀请
+                            $(".zj_num_all").text(e.data.puser_all);  // 直接邀请
+                            $(".jj_num_all").text(e.data.countuser_all); // 间接邀请
+							$(".sj_m").text("￥"+e.data.money_1);
+							$(".sj_num").text(e.data.count_1);
+							$(".sk_m").text("￥"+e.data.money_2);
+							$(".sk_num").text(e.data.count_2);
+							$(".hk_m").text("￥"+e.data.money_3);
+							$(".hk_num").text(e.data.count_3);
+							$(".jy_m").text("￥"+e.data.money_4);
+							$(".jy_num").text(e.data.count_4);
+							$(".dk_m").text("￥"+e.data.money_5);
+							$(".dk_num").text(e.data.count_5);
+							$(".bk_m").text("￥"+e.data.money_6);
+							$(".bk_num").text(e.data.count_6);
+							
+						}
+					}
+				});
+
+				$(".direct").click(function() {
+					mui.openWindow({
+						url: "direct_invite.html",
+						id: "direct_invite",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				// $(".indirect").click(function() {
+				// 	mui.openWindow({
+				// 		url: "indirect_invite.html",
+				// 		id: "indirect_invite",
+				// 		show: {
+				// 			autoShow: true //页面loaded事件发生后自动显示，默认为true
+				// 		},
+				// 		waiting: {
+				// 			autoShow: true, //自动显示等待框，默认为true
+				// 			title: '安全检测中，请等待' //等待对话框上显示的提示内容
+				// 		}
+				// 	})
+				// });
+
+//				$(".profit_mode li").click(function() {
+//					var title = $(this).attr("title");
+//					if(title == 1) {
+//						mui.openWindow({
+//							url: "sj_profit.html",
+//							id: "sj_profit",
+//							show: {
+//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+//							}
+//						})
+//					} else if(title == 2) {
+//						mui.openWindow({
+//							url: "hk_profit.html",
+//							id: "hk_profit",
+//							show: {
+//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+//							}
+//						})
+//					} else if(title == 3) {
+//						mui.openWindow({
+//							url: "sk_profit.html",
+//							id: "sk_profit",
+//							show: {
+//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+//							}
+//						})
+//					} else if(title == 4) {
+//						mui.openWindow({
+//							url: "trade_returns.html",
+//							id: "trade_returns",
+//							show: {
+//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+//							}
+//						})
+//					} else if(title == 5) {
+//						mui.openWindow({
+//							url: "loan_detailed.html",
+//							id: "loan_detailed",
+//							show: {
+//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+//							}
+//						})
+//					} else if(title == 6) {
+//						mui.openWindow({
+//							url: "applyCard_detailed.html",
+//							id: "applyCard_detailed",
+//							show: {
+//								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+//							},
+//							waiting: {
+//								autoShow: true, //自动显示等待框，默认为true
+//								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+//							}
+//						})
+//					}
+//
+//				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		
+		</script>
+	</body>
+
+</html>

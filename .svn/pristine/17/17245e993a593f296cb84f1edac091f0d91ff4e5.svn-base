@@ -1,0 +1,310 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/reg.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_pq5c4cjadsn.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content">
+			<div class="logo">
+				<img class="logo3" src="../../img/logo3.png" />
+			</div>
+			<form class="mui-input-group reg_form" id="form-reg">
+				<div class="mui-input-row phone">
+					<img src="../../img/phone_icon.png" />
+					<input type="number" id="phone" name="phone" class="mui-input-clear" oninput="func(this.value)" onblur="func(this.value)" placeholder="请输入您的手机号">
+				</div>
+				<div class="mui-input-row phone">
+					<img src="../../img/auth_code_icon.png" />
+					<input type="text" id="smscode" name="smscode" class="" placeholder="请输入短信验证码" style="width: 50%;">
+					<button type="button" class="mui-btn mui-btn-blue hq_code" id="getSms" disabled="disabled">获取验证码</button>
+				</div>
+				<div class="mui-input-row">
+					<img src="../../img/password_icon.png" />
+					<input type="password" id="keywords" name="keywords" oninput="input_(this.value)" class="mui-input-password" maxlength="16" placeholder="请输入密码(6~16位数字或字母)">
+				</div>
+				<div class="mui-input-row phone">
+					<img src="../../img/phone_icon.png" />
+					<input type="text" id="recommend" name="recommend" class="mui-input-clear" placeholder="请输入邀请码(没有可不填)">
+				</div>
+
+				<input id="rekeywords" name="rekeywords" type="hidden" value="" />
+				<input id="Longitude" name="Longitude" type="hidden" value="" />
+				<input id="latitude" name="latitude" type="hidden" value="" />
+				<div class="not_collet">
+					收不到验证码？
+				</div>
+				<button type="button" class="mui-btn mui-btn-blue reg" disabled="disabled">注册</button>
+				<div class="mui-checkbox protocol">
+					<input name="Checkbox" type="checkbox">
+					<label>我已阅读并同意</label>
+					<span class="reg_xy">注册协议</span>
+				</div>
+			</form>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			function func(value) {
+				if(value.length > 11) {
+					$("#phone").val(value.slice(0, 11))
+				} else if(value.length == 11) {
+					$("#getSms").removeAttr('disabled');
+					$("#getSms").css('background-color', '#007aff');
+				} else if(value.length < 11) {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true);
+				}
+			}
+
+			function input_(value) {
+				if(value.length >= 6) {
+					$(".reg").removeAttr("disabled");
+					$(".reg").css('background-color', '#2DAAFC');
+				} else if(value.length < 6) {
+					$(".reg").css('background-color', '#DDDDDD');
+					$(".reg").attr("disabled", true);
+				}
+			}
+
+			var wait = 60;
+
+			function get_code_time() {
+				//mui.alert('手机号格式错误','提示','','','div');
+				if(wait == 0) {
+					$("#getSms").removeAttr("disabled"); //移除获取验证码按钮的disabled属性
+					$("#getSms").css('background-color', '#2DAAFC');
+					$("#getSms").html("获取验证码");
+					wait = 60;
+				} else {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true); //设置获取验证码按钮为不可触发
+					$("#getSms").html(wait + "s");
+					wait--;
+					setTimeout("get_code_time()", 1000);
+				}
+			}
+
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				if(plus.os.name == "Android") {
+					var context = plus.android.importClass("android.content.Context");
+					var locationManager = plus.android.importClass("android.location.LocationManager");
+					var main = plus.android.runtimeMainActivity();
+					var mainSvr = main.getSystemService(context.LOCATION_SERVICE);
+					androidIsOpen = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
+					if(androidIsOpen) {
+						//获取经纬度
+						plus.geolocation.getCurrentPosition(geoInf, function(e) {
+
+						}, {
+							geocode: true,
+							provider: 'amap'
+						});
+					} else {
+						mui.alert("请打开手机GPS", '提示', '', function() {
+							var main = plus.android.runtimeMainActivity(); //获取activity
+							var Intent = plus.android.importClass('android.content.Intent');
+							var Settings = plus.android.importClass('android.provider.Settings');
+							var intent = new Intent(Settings.ACTION_SECURITY_SETTINGS); //可设置表中所有Action字段
+							main.startActivity(intent);
+						}, "div")
+					}
+				} else {
+					plus.geolocation.getCurrentPosition(geoInf, function(e) {
+
+					}, {
+						geocode: true,
+						provider: 'amap'
+					});
+				}
+
+				$("#getSms").click(function() {
+					if(plus.os.name == "Android") {
+						var context = plus.android.importClass("android.content.Context");
+						var locationManager = plus.android.importClass("android.location.LocationManager");
+						var main = plus.android.runtimeMainActivity();
+						var mainSvr = main.getSystemService(context.LOCATION_SERVICE);
+						androidIsOpen = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
+						if(androidIsOpen) {
+							//获取经纬度  
+							plus.geolocation.getCurrentPosition(geoInf, function(e) {
+
+							}, {
+								geocode: true,
+								provider: 'amap'
+							});
+
+						} else {
+
+						}
+					} else {
+						plus.geolocation.getCurrentPosition(geoInf, function(e) {
+
+						}, {
+							geocode: true,
+							provider: 'amap'
+						});
+					}
+					//mui.alert('手机号格式错误','提示','','','div');
+					var phone = $('#phone').val();
+
+					if(!isphone(phone)) {
+						mui.alert('手机号格式错误', '提示', '', '', 'div');
+						return false;
+					}
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: 'get',
+						url: site_app + '/api/Main/getsms',
+						data: {
+							'phone': phone,
+							type: 1
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+							plus.nativeUI.closeWaiting();
+							if(data.error == 0) {
+								get_code_time();
+								mui.toast("发送成功")
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				})
+
+				function geoInf(position) {
+					var codns = position.coords; //获取地理坐标信息；
+					var longt = codns.longitude; //获取到当前位置的经度
+					var lat = codns.latitude; //获取到当前位置的纬度；
+					$('#latitude').val(lat);
+					$('#Longitude').val(longt);
+				}
+				$(".reg").click(function() {
+					var phone = $('#phone').val();
+					var smscode = $('#smscode').val();
+					var keywords = $('#keywords').val();
+
+					if(!isphone(phone)) {
+						mui.alert('手机号格式错误', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(smscode == '') {
+						mui.alert('请输入短信码', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(keywords == '') {
+						mui.alert('请输入注册密码', '提示', '', '', 'div');
+						return false;
+					}
+					$('#rekeywords').val(keywords);
+
+					if(!$("input[type='checkbox']").is(':checked')) {
+						mui.alert('请阅读并同意注册协议', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(plus.os.name == "Android") {
+						var context = plus.android.importClass("android.content.Context");
+						var locationManager = plus.android.importClass("android.location.LocationManager");
+						var main = plus.android.runtimeMainActivity();
+						var mainSvr = main.getSystemService(context.LOCATION_SERVICE);
+						androidIsOpen = mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
+						if(androidIsOpen) {
+							//获取经纬度  
+							plus.geolocation.getCurrentPosition(geoInf, function(e) {
+
+							}, {
+								geocode: true,
+								provider: 'amap'
+							});
+
+						} else {
+							mui.alert("请打开手机GPS", '提示', '', function() {
+								var main = plus.android.runtimeMainActivity(); //获取activity
+								var Intent = plus.android.importClass('android.content.Intent');
+								var Settings = plus.android.importClass('android.provider.Settings');
+								var intent = new Intent(Settings.ACTION_SECURITY_SETTINGS); //可设置表中所有Action字段
+								main.startActivity(intent);
+							}, "div")
+							return false;
+						}
+					} else {
+						plus.geolocation.getCurrentPosition(geoInf, function(e) {
+
+						}, {
+							geocode: true,
+							provider: 'amap'
+						});
+					}
+					var pdata = $('#form-reg').serialize();
+					plus.nativeUI.showWaiting();
+					$.ajax({
+						type: 'post',
+						url: site_app + '	/api/Main/register',
+						data: pdata,
+						cache: false,
+						dataType: 'json',
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								mui.alert(e.msg, '提示', '', function() {
+									mui.openWindow({
+										url: "login.html",
+										id: "login",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+
+						}
+					});
+
+				});
+
+				$(".reg_xy").click(function() {
+					mui.openWindow({
+						url: "reg_protocol.html",
+						id: "reg_protocol",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				plus.nativeUI.closeWaiting();
+				 
+			})
+		</script>
+	</body>
+
+</html>

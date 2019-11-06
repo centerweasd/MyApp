@@ -1,0 +1,601 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/styles.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_member.css" />
+		<style>
+			.aui-scrollView{
+				background: url("../../img/member-back5.jpg");
+				background-size: 100% 100%;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">会员权益</h1>
+		</header>
+		<section class="aui-scrollView">
+			<div class="aui-flex aui-flex-gradual">
+				<div class="aui-flex-user">
+					<img src="../../img/avater_image.png" alt="" id="user_img">
+				</div>
+				<div class="aui-flex-box">
+					<h2 id="name"></h2>
+					<p>
+						<em id="grade"></em>
+					</p>
+				</div>
+			</div>
+			<!--<div class="member-content">-->
+				<!--<img class="my-member-img" src="../../img/my_member.png" alt="会员权益">-->
+				<!--<button class="my-member-btn hidden">立即升级VIP</button>-->
+			<!--</div>-->
+			<div class="member-content">
+				<!--<img class="my-member-img" src="../../img/member_card.png" alt="会员权益">-->
+				<table class="member-table" border="1">
+					<tr class="table-th">
+						<th class="pd4">级别</th>
+						<th class="pd4">延期费率(%)<br>（线上/线下）</th>
+						<!--<th class="pd4">晋升收益</th>-->
+						<th class="pd4">使用条件</th>
+					</tr>
+					<!--<tr class="table-td" style="background-color: #ffd39b">-->
+						<!--<td class="pd4">联合创始人</td>-->
+						<!--<td>0.56%/0.46%</td>-->
+						<!--<td>70%</td>-->
+						<!--<td>3000名</td>-->
+					<!--</tr>-->
+					<!--<tr class="table-td" style="background-color: #ffe7ba">-->
+						<!--<td>总经理</td>-->
+						<!--<td>0.58%/0.48%</td>-->
+						<!--<td>60%</td>-->
+						<!--<td>1500名</td>-->
+					<!--</tr>-->
+					<!--<tr class="table-td" style="background-color: #ffe4b5">-->
+						<!--<td>助理总经理</td>-->
+						<!--<td>0.62%/0.52%</td>-->
+						<!--<td>50%</td>-->
+						<!--<td>300名</td>-->
+					<!--</tr>-->
+					<!--<tr class="table-td" style="background-color: #ffebcd">-->
+						<!--<td>总监</td>-->
+						<!--<td>0.67%/0.57%</td>-->
+						<!--<td>40%</td>-->
+						<!--<td>30名</td>-->
+					<!--</tr>-->
+					<tr class="table-td" style="background-color: #ffd39b">
+						<td class="grade-n">超级会员</td>
+						<td>0.58 / 0.48</td>
+						<!--<td>30%</td>-->
+						<td class="grade-n up-btn" title="1">108元升级</td>
+					</tr>
+					<tr class="table-td" style="background-color: #ffe7ba">
+						<td class="grade-n">黄金会员</td>
+						<td>0.62 / 0.52</td>
+						<!--<td>30%</td>-->
+						<td class="grade-n up-btn" title="2">88元升级</td>
+					</tr>
+					<tr class="table-td" style="background-color: #ffe4b5">
+						<td class="grade-n">白银会员</td>
+						<td>0.70 / 0.60</td>
+						<!--<td>30%</td>-->
+						<td class="grade-n up-btn" title="3">60元升级</td>
+					</tr>
+					<tr class="table-td" style="background-color: #fffacd">
+						<td>普通会员</td>
+						<td>0.85 / 0.75</td>
+						<!--<td>0</td>-->
+						<td>免费注册</td>
+					</tr>
+				</table>
+			</div>
+			<div class="member-ex">
+				<h4>VIP特权</h4>
+				<p>特权一：可领取价值698元商品一件。</p>
+				<p>特权二：享受卡账延期手续费返还，每一万返15起。</p>
+				<!--<p>特权三：享受推广返佣，永久管道收益。</p>-->
+				<!--<p>特权四：等级提升可享受更高手续费返还。</p>-->
+				<!--<p>特权五：可享受下级会员（低等级）的手续费价差分润。</p>-->
+				<!--<p>备注：VIP会员等级随着推广有效人数的增加而提升。</p>-->
+			</div>
+			<footer class="aui-tabBar aui-tabBar-fixed hidden">
+				<button class="aui-tabBar-btn">立即升级VIP</button>
+			</footer>
+
+
+			<!--<div class="long_hight">-->
+				<!--您已是最高等级，无需升级！-->
+			<!--</div>-->
+			<!--<div class="aui-flex-member-list hidden">-->
+				<!--<h2>优享会员</h2>-->
+				<!--<ul class="aui-cho-box" id="itme">-->
+
+				<!--</ul>-->
+				<!--<div style="display:none">-->
+					<!--<input name="" type="text" value="1" class="auiSks" />-->
+				<!--</div>-->
+				<!--<p class="aui-total b-line">-->
+					<!--需要支付： <span></span> 元-->
+
+				<!--</p>-->
+				<!--<div class="chi">-->
+
+				<!--</div>-->
+			<!--</div>-->
+
+			<!--<footer class="aui-tabBar aui-tabBar-fixed hidden">-->
+				<!--<button class="aui-tabBar-btn">立即升级</button>-->
+			<!--</footer>-->
+		</section>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/jquery-1.8.0.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'user');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('member', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var token = getToken();
+				getToken();
+
+				var pmoney = '';
+				var pchennel_id = '';
+				var ptitle = '';
+
+
+                $.ajax({
+                    type: 'post',
+                    url: site_app + '/api/my/info',
+                    data: {
+                        'token': token
+                    },
+                    cache: false,
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data.error == 0) {
+                            if(data.data.user_isactivation == 0) {
+                                $("#name").html(data.data.user_name);
+                                $("#grade").html(data.data.type_name);
+                                if(data.data.user_img == "") {
+                                    $("#user_img").attr("src", "../../img/avater_image.png");
+                                } else {
+                                    $("#user_img").attr("src", data.data.user_img);
+                                }
+								if(data.data.user_type_id == 4){
+								    $('.aui-tabBar').removeClass('hidden');
+								} else{
+                                    $('.aui-tabBar').addClass('hidden');
+								}
+                                onload(data.data.user_type_id);
+                                $.ajax({
+                                    type: 'post',
+                                    url: site_app + '/api/repayment/membergetchannel',
+                                    data: {
+                                        'token': token
+                                    },
+                                    cache: false,
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        if(data.error == 0) {
+                                            pchennel_id = data.data[0].channel_id;
+                                            // var tex = '';
+                                            // for(i = 0; i < data.data.length; i++) {
+                                            //     tex += '<div class="aui-flex b-line" style="padding:15px 0">';
+                                            //     tex += '<div class="aui-flex-box aui-flex-box-clear">';
+                                            //     tex += '<h4>' + data.data[i].channel_name + '</h4>';
+                                            //     tex += '<p>亿万用户的选择，更快更安全</p>';
+                                            //     tex += '</div>';
+                                            //     tex += '<div class="aui-payment-method">';
+                                            //     tex += '<label class="cell-right">';
+                                            //     if(i < 1) {
+                                            //         tex += '<input type="radio" name="radio" value="' + data.data[i].channel_id + '" checked="checked">';
+                                            //     } else {
+                                            //         tex += '<input type="radio" name="radio" value="' + data.data[i].channel_id + '">';
+                                            //     }
+                                            //     tex += '<i class="cell-radio-icon"></i>';
+                                            //     tex += '</label>';
+                                            //     tex += '</div>';
+                                            //     tex += '</div>';
+                                            // }
+                                            // $('.chi').html(tex);
+                                        } else {
+                                            mui.alert(data.msg, '提示', '', '', 'div');
+                                        }
+                                    }
+                                });
+                            } else {
+                                mui.alert('请激活账户', '提示', '', function() {
+                                    mui.openWindow({
+                                        url: "../user/activation.html",
+                                        id: "activation",
+                                        show: {
+                                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                        },
+                                        waiting: {
+                                            autoShow: true, //自动显示等待框，默认为true
+                                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                        }
+                                    })
+                                }, 'div');
+                            }
+
+                        } else {
+                            mui.alert(data.msg, '提示', '', '', 'div');
+                        }
+                    }
+                });
+                $('.up-btn').click(function(){
+                    $(this).css({'background-color':'#aaaaaa'});
+                    console.log($(this).attr('title'))
+				});
+
+                // 获取支付通道
+                var wxChannel = null; // 微信支付
+                var aliChannel = null; // 支付宝支付
+                var channel = null;   //支付通道
+                mui.init({
+                    swipeBack: true //启用右滑关闭功能
+                });
+                plus.payment.getChannels(function (channels) {
+                    for (var i in channels) {
+                        if (channels[i].id == "wxpay") {
+                            wxChannel = channels[i];
+                        } else if(channels[i].id == "alipay") {
+                            aliChannel = channels[i];
+                        }
+                    }
+                }, function (e) {
+                    plus.nativeUI.alert("获取支付通道失败：" + e.message);
+                });
+
+                //升级会员
+                $(".aui-tabBar-btn").click(function() {
+                    $.ajax({
+                        type: 'post',
+                        url: site_app + '/api/payrecords/memberupgrade',
+                        data: {
+                            'token': token,
+                            'price': pmoney,
+                            'chennel_id': pchennel_id,
+                            'type_id': ptitle
+                        },
+                        cache: false,
+                        dataType: 'json',
+                        success: function(data) {
+                            if(data.error == 0) {
+                                var PAYSERVER = data.data.url;
+                                channel = aliChannel;
+                                var xhr = new XMLHttpRequest();
+                                xhr.onreadystatechange = function () {
+                                    switch (xhr.readyState) {
+                                        case 4:
+                                            if (xhr.status == 200) {
+                                                plus.payment.request(channel, xhr.responseText, function (result) {
+                                                    $.ajax({
+                                                        type: "post",
+                                                        url: site_app + "/pay/payvip/ali_notify",
+                                                        data: {
+                                                            result: result
+                                                        },
+                                                        dataType: "json",
+                                                        success: function (data) {
+                                                            if (data.error == 0) {
+                                                                plus.nativeUI.alert("支付成功,您已成为VIP会员！", function () {
+                                                                    location.reload();
+                                                                });
+                                                            } else {
+                                                                plus.nativeUI.alert("刷新失败：" + data.msg);
+                                                            }
+                                                        }
+                                                    })
+                                                }, function (error) {
+                                                    plus.nativeUI.alert("支付失败：" + error.code);
+                                                });
+                                            } else {
+                                                plus.nativeUI.alert("获取订单信息失败！");
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                };
+                                xhr.open('POST', PAYSERVER + pmoney);
+                                xhr.send();
+                                // mui.openWindow({
+                                //     url: "member_iframe.html",
+                                //     id: "member_iframe",
+                                //     show: {
+                                //         autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                //     },
+                                //     extras: {
+                                //         urls: data.data.url
+                                //     },
+                                //     waiting: {
+                                //         autoShow: true, //自动显示等待框，默认为true
+                                //         title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                //     }
+                                // })
+                                //								mui.alert(data.msg, '提示', '', '', 'div');
+                            } else {
+                                mui.alert(data.msg, '提示', '', '', 'div');
+                            }
+                        }
+                    })
+                });
+
+				// $.ajax({
+				// 	type: 'post',
+				// 	url: site_app + '/api/my/info',
+				// 	data: {
+				// 		'token': token
+				// 	},
+				// 	cache: false,
+				// 	dataType: 'json',
+				// 	success: function(data) {
+				// 		if(data.error == 0) {
+				// 			if(data.data.user_isactivation == 0) {
+				// 				$("#name").html(data.data.user_name);
+				// 				$("#grade").html(data.data.type_name);
+				// 				if(data.data.user_img == "") {
+				// 					$("#user_img").attr("src", "../../img/avater_image.png");
+				// 				} else {
+				// 					$("#user_img").attr("src", data.data.user_img);
+				// 				}
+				// 				onload(data.data.user_type_id);
+				// 				$.ajax({
+				// 					type: 'post',
+				// 					url: site_app + '/api/repayment/membergetchannel',
+				// 					data: {
+				// 						'token': token
+				// 					},
+				// 					cache: false,
+				// 					dataType: 'json',
+				// 					success: function(data) {
+				// 						if(data.error == 0) {
+				// 							var tex = '';
+				// 							for(i = 0; i < data.data.length; i++) {
+				// 								tex += '<div class="aui-flex b-line" style="padding:15px 0">';
+				// 								tex += '<div class="aui-flex-box aui-flex-box-clear">';
+				// 								tex += '<h4>' + data.data[i].channel_name + '</h4>';
+				// 								tex += '<p>亿万用户的选择，更快更安全</p>';
+				// 								tex += '</div>';
+				// 								tex += '<div class="aui-payment-method">';
+				// 								tex += '<label class="cell-right">';
+				// 								if(i < 1) {
+				// 									tex += '<input type="radio" name="radio" value="' + data.data[i].channel_id + '" checked="checked">';
+				// 								} else {
+				// 									tex += '<input type="radio" name="radio" value="' + data.data[i].channel_id + '">';
+				// 								}
+				// 								tex += '<i class="cell-radio-icon"></i>';
+				// 								tex += '</label>';
+				// 								tex += '</div>';
+				// 								tex += '</div>';
+				// 							}
+				// 							$('.chi').html(tex);
+				// 						} else {
+				// 							mui.alert(data.msg, '提示', '', '', 'div');
+				// 						}
+				// 					}
+				// 				});
+				// 			} else {
+				// 				mui.alert('请激活账户', '提示', '', function() {
+				// 					mui.openWindow({
+				// 						url: "../user/activation.html",
+				// 						id: "activation",
+				// 						show: {
+				// 							autoShow: true //页面loaded事件发生后自动显示，默认为true
+				// 						},
+				// 						waiting: {
+				// 							autoShow: true, //自动显示等待框，默认为true
+				// 							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+				// 						}
+				// 					})
+				// 				}, 'div');
+				// 			}
+				//
+				// 		} else {
+				// 			mui.alert(data.msg, '提示', '', '', 'div');
+				// 		}
+				// 	}
+				// });
+
+				function onload(type_id) {
+					$.ajax({
+						type: 'post',
+						url: site_app + '/api/my/Membership',
+						data: {
+							'token': token
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+							if(data.error == 0) {
+								// var content = '';
+								//								var arrss = [];
+								// if(data.data.sk.length>0){
+                                //     for(i = 0; i < data.data.sk.length; i++) {
+								//
+                                //         $(".hidden").show();
+                                //         var maxData = data.data.sk[0].type_id;
+                                //         if(data.data.sk[i].type_id > maxData) {
+                                //             maxData = data.data.sk[i].type_id; // 最大值
+                                //         }
+                                //         if(maxData == type_id) {
+                                //             $(".hidden").hide();
+                                //             $(".long_hight").show();
+                                //         } else {
+                                //             $(".hidden").show();
+                                //             $(".long_hight").hide();
+                                //         }
+								//
+                                //         var sk_num = (data.data.sk[i].rate_rate * 100);
+                                //         sk_num = Number(sk_num).toFixed(2);
+                                //         var hk_num = (data.data.hk[i].rate_rate * 100);
+                                //         hk_num = Number(hk_num).toFixed(2);
+                                //         if(i < 1) {
+                                //             content += '<li class="aui-flex on" value="' + data.data.sk[i].type_id + '">';
+                                //             content += '<div class="aui-flex-box">';
+                                //             content += '<h3>' + data.data.sk[i].type_name;
+                                //             content += '<em class="aui-flex-box-tj">';
+                                //             content += '<img src="../../img/icon-tj.png" alt="">';
+                                //             content += '</em>';
+                                //         } else {
+                                //             content += '<li class="aui-flex" value="' + data.data.sk[i].type_id + '">';
+                                //             content += '<div class="aui-flex-box">';
+                                //             content += '<h3>' + data.data.sk[i].type_name + '';
+                                //         }
+                                //         content += '</h3>';
+                                //         content += '<p>收款：费率:' + sk_num + '%  、结算费用:' + data.data.sk[i].rate_close_rate + '/笔</p>';
+                                //         content += '<p>还款：费率:' + hk_num + '%  、结算费用:' + data.data.hk[i].rate_close_rate + '/笔</p>';
+                                //         content += '</div>';
+                                //         content += '<div class="aui-original-thj" style="right:10px;top:10px">';
+                                //         content += '特惠价 <i>￥</i>';
+                                //         content += '</div>';
+                                //         content += '<i class="aui-price">' + data.data.sk[i].type_fee + '</i>';
+                                //         content += '<div class="aui-original-pic">￥' + (parseInt(data.data.sk[i].type_fee) + 30) + '.00';
+                                //         content += '</div>';
+                                //         content += '</li>';
+                                //     }
+                                //     $("#itme").html(content);
+                                //     $(".aui-total span").text(data.data.sk[0].type_fee);
+								// }
+								if(data.data.hk.length>0){
+                                    pmoney = data.data.hk[0].type_fee;
+                                    ptitle = data.data.hk[0].type_id;
+                                    // for(i = 0; i < data.data.hk.length; i++) {
+                                    //     $(".hidden").show();
+                                    //     var maxData = data.data.hk[0].type_id;
+                                    //     if(data.data.hk[i].type_id > maxData) {
+                                    //         maxData = data.data.hk[i].type_id; // 最大值
+                                    //     }
+                                    //     if(maxData == type_id) {
+                                    //         $(".hidden").hide();
+                                    //         $(".long_hight").show();
+                                    //     } else {
+                                    //         $(".hidden").show();
+                                    //         $(".long_hight").hide();
+                                    //     }
+									//
+                                    //     var sk_num = (data.data.hk[i].rate_rate * 100);
+                                    //     sk_num = Number(sk_num).toFixed(2);
+                                    //     var hk_num = (data.data.hk[i].rate_rate * 100);
+                                    //     hk_num = Number(hk_num).toFixed(2);
+                                    //     if(i < 1) {
+                                    //         content += '<li class="aui-flex on" value="' + data.data.hk[i].type_id + '">';
+                                    //         content += '<div class="aui-flex-box">';
+                                    //         content += '<h3>' + data.data.hk[i].type_name;
+                                    //         content += '<em class="aui-flex-box-tj">';
+                                    //         content += '<img src="../../img/icon-tj.png" alt="">';
+                                    //         content += '</em>';
+                                    //     } else {
+                                    //         content += '<li class="aui-flex" value="' + data.data.hk[i].type_id + '">';
+                                    //         content += '<div class="aui-flex-box">';
+                                    //         content += '<h3>' + data.data.hk[i].type_name + '';
+                                    //     }
+                                    //     content += '</h3>';
+                                    //     content += '<p>收款：费率:' + sk_num + '%  、结算费用:' + data.data.hk[i].rate_close_rate + '/笔</p>';
+                                    //     content += '<p>还款：费率:' + hk_num + '%  、结算费用:' + data.data.hk[i].rate_close_rate + '/笔</p>';
+                                    //     content += '</div>';
+                                    //     content += '<div class="aui-original-thj" style="right:10px;top:10px">';
+                                    //     content += '特惠价 <i>￥</i>';
+                                    //     content += '</div>';
+                                    //     content += '<i class="aui-price">' + data.data.hk[i].type_fee + '</i>';
+                                    //     content += '<div class="aui-original-pic">￥' + (parseInt(data.data.hk[i].type_fee) + 30) + '.00';
+                                    //     content += '</div>';
+                                    //     content += '</li>';
+                                    // }
+                                    // $("#itme").html(content);
+                                    // $(".aui-total span").text(data.data.hk[0].type_fee);
+								}
+
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+						}
+					})
+				}
+
+				//提交订单
+				// $(".aui-tabBar-btn").click(function() {
+				// 	var $li = $(".aui-cho-box").children("li.on");
+				// 	var money = $li.children("i").text();
+				// 	var chennel_id = $('input[type=radio]:checked').val();
+				// 	var title = $('.on').attr("value");
+				// 	$.ajax({
+				// 		type: 'post',
+				// 		url: site_app + '/api/payrecords/memberupgrade',
+				// 		data: {
+				// 			'token': token,
+				// 			'price': money,
+				// 			'chennel_id': chennel_id,
+				// 			'type_id': title
+				// 		},
+				// 		cache: false,
+				// 		dataType: 'json',
+				// 		success: function(data) {
+				// 			if(data.error == 0) {
+				// 				mui.openWindow({
+				// 					url: "member_iframe.html",
+				// 					id: "member_iframe",
+				// 					show: {
+				// 						autoShow: true //页面loaded事件发生后自动显示，默认为true
+				// 					},
+				// 					extras: {
+				// 						urls: data.data.url
+				// 					},
+				// 					waiting: {
+				// 						autoShow: true, //自动显示等待框，默认为true
+				// 						title: '安全检测中，请等待' //等待对话框上显示的提示内容
+				// 					}
+				// 				})
+				// 				//								mui.alert(data.msg, '提示', '', '', 'div');
+				// 			} else {
+				// 				mui.alert(data.msg, '提示', '', '', 'div');
+				// 			}
+				// 		}
+				// 	})
+				// });
+				// $(document).ready(function(e) {
+				// 	$(".aui-cho-box").on('click', 'li', function() {
+				// 		$(this).addClass("on").siblings().removeClass("on");
+				// 		tola();
+				// 	});
+				// });
+
+				function tola() {
+					var $li = $(".aui-cho-box").children("li.on");
+					var money = $li.children("i").text();
+					var count = $(".auiSks").val();
+					$(".aui-total span").text(money * count);
+				}
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/home.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+		<style type="text/css">
+			/*header {*/
+				/*width: 100%;*/
+				/*box-shadow: none !important;*/
+			/*}*/
+			
+			/*header a {*/
+				/*color: #fff;*/
+			/*}*/
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.no_info {
+				width: 50%;
+				margin: 30px auto;
+				text-align: center;
+			}
+			
+			.no_info img {
+				width: 100%;
+			}
+			.tixian{z-index: 99;text-align: center;margin-top: 8px;}
+			.aisle{line-height: 15px;}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">智能还款</h1>
+		</header>
+		<div class="mui-content">
+			<div class="card_list">
+			</div>
+			<div class="no_info" style="display: none;">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+			<div class="add_card" id="add_card">
+				<span class="iconfont icon-gengduo"></span> 添加信用卡
+			</div>
+		</div>
+
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'index');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = localStorage.getItem("token");
+
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				var self = plus.webview.currentWebview();
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				if(!tokens) {
+					$(".demo").show();
+					$(".card_list").hide();
+				} else {
+					/*获取信用卡列表*/
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/my/card_list",
+						data: {
+							token: tokens
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								$(".card_list").show();
+								$(".no_info").hide();
+								for(var i = 0; i < e.data.length; i++) {
+									var card = e.data[i].card_no;
+									if(e.data[i].remainingday < 10) {
+										var remainingday = "0" + e.data[i].remainingday;
+									} else {
+										var remainingday = e.data[i].remainingday;
+									}
+
+									var html = "<div class='payment_coupon binding'>" +
+										"<div class='left lefts card_info' title='" + e.data[i].card_id + "' style='padding-left:10px'>" +
+										"<div class='bank_info'>" +
+										"<img src='" + e.data[i].list_logo + "' />" +
+										"<span class='bank_name'>" + e.data[i].list_name + "</span>" +
+										"<span class='bank_num'>" + card.substring(card.length - 4) + "</span>" +
+										"<div class='clear'></div>" +
+										"</div>" +
+										"<div class='hk_day'>" +
+										"<span class='surplus_day left'>" + remainingday + "</span>" +
+										"<div class='surplus_tips left'>" +
+										"<p class='big_z'>天还款</p>" +
+										"<p class='small_z'>" + e.data[i].mission_pay_time + "到期</p>" +
+										"</div>" +
+										"<div class='surplus_money left'>" +
+										"<p class='big_z'>￥" + e.data[i].mission_money + "</p>" +
+										"<p class='small_z'>应还款</p>" +
+										"</div>" +
+										"<div class='clear'></div>" +
+										"</div>" +
+										"</div>" +
+										"<div class='right rights'>" +
+											"<div class='tixian'>"+
+											"<button class='aisle' id='aisle' title='" + e.data[i].card_id + "'>提现</button>" +
+											"</div>"+
+										"<div class='hk_btn'>" +
+										"<span class='repayment hq' title='" + e.data[i].card_id + "' id='repayment'>账单延期</span>" +
+										"</div>" +
+										"</div>" +
+										"<div class='clear'></div>" +
+										"</div>";
+									$(".card_list").append(html);
+								}
+								if(self.title == 1) {
+									$(".hq").show();
+								}
+							} else {
+								$(".card_list").hide();
+								$(".no_info").show();
+							}
+						}
+					});
+				}
+				$("#add_card").click(function() {
+					mui.openWindow({
+						url: "binding_card.html",
+						id: "binding_card",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".card_list").on("click", "#repayment", function() {
+					var titles = $(this).attr("title");
+					mui.openWindow({
+						url: "repayment_channel.html",
+						id: "repayment_channel",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title: titles
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				//模拟提现功能
+				$('.card_list').on("click","#aisle",function () {
+					console.log(">>>>>>>",111111)
+					var titles = $(this).attr("title");
+					mui.openWindow({
+						url: "../withdraw/aisle.html",
+						id: "aisle",
+						createNew: true,
+						extras: {
+							title: titles
+						},
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				})
+				// 模拟提现功能
+				$(".continue_hk").click(function() {
+					mui.openWindow({
+						url: "repayment.html",
+						id: "repayment",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".card_list").on("click", ".card_info", function() {
+					var titles = $(this).attr("title");
+					mui.openWindow({
+						url: "card_info.html",
+						id: "card_info",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title: titles
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

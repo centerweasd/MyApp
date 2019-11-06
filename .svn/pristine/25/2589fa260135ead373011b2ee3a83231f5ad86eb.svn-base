@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/find.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">发现</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="../../img/awaken_banner.png">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../img/awaken_banner.png">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../img/awaken_banner.png">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../img/awaken_banner.png">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="../../img/awaken_banner.png">
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="grid">
+				<ul class="mui-table-view mui-grid-view mui-grid-9">
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_caipiao_icon.png" />
+						<div class="mui-media-body">彩票</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_card_evaluation.png" />
+						<div class="mui-media-body">信用卡测评</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_insurance_icon.png" />
+						<div class="mui-media-body">免费赠保险</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_sign_icon.png" />
+						<div class="mui-media-body">签到</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_used_shop.png" />
+						<div class="mui-media-body">淘亮机</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_integral_icon.png" />
+						<div class="mui-media-body">金币商城</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/smalltool_illegalquery_icon.png" />
+						<div class="mui-media-body">违章查询</div>
+					</li>
+					<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3">
+						<img src="../../img/discovery_more.png" />
+						<div class="mui-media-body">全部</div>
+					</li>
+				</ul>
+			</div>
+
+			<div class="apply_card">
+				<ul class="mui-table-view apply_head">
+					<li class="mui-table-view-cell">
+						<a class="mui-navigate-right">
+							<div class="left">
+								<span class="item">世界杯主题信用卡</span>
+							</div>
+							<span class="right tips">更多</span>
+							<div class="clear"></div>
+						</a>
+					</li>
+				</ul>
+				<div class="card_list">
+					<div class="card_view">
+						<div class="left card_img">
+							<img src="../../img/big_sp_bank.png"/>
+						</div>
+						<div class="left card_info">
+							<p class="card_name">交通银行</p>
+							<p class="tips">享最低100元刷卡金</p>
+							<p class="tips">好礼三选一</p>
+						</div>
+						<div class="left apply_btn">
+							<span class="apply_sub">立即申请</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="card_view">
+						<div class="left card_img">
+							<img src="../../img/big_sp_bank.png"/>
+						</div>
+						<div class="left card_info">
+							<p class="card_name">交通银行</p>
+							<p class="tips">享最低100元刷卡金</p>
+							<p class="tips">好礼三选一</p>
+						</div>
+						<div class="left apply_btn">
+							<span class="apply_sub">立即申请</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="card_view">
+						<div class="left card_img">
+							<img src="../../img/big_sp_bank.png"/>
+						</div>
+						<div class="left card_info">
+							<p class="card_name">交通银行</p>
+							<p class="tips">享最低100元刷卡金</p>
+							<p class="tips">好礼三选一</p>
+						</div>
+						<div class="left apply_btn">
+							<span class="apply_sub">立即申请</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				mui(".mui-slider").slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+				plus.nativeUI.closeWaiting();
+			});
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_voucher.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">我的卡劵</h1>
+		    <span class="iconfont icon-paixusheng sort" title="s"></span>
+		</header>
+		<div class="mui-content">
+		    <div class="mui-slider">
+		        <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+		            <a class="mui-control-item mui-active" href="#item1">已激活</a>
+		            <a class="mui-control-item" href="#item2">待激活</a>
+		            <a class="mui-control-item" href="#item3">已使用</a>
+		            <a class="mui-control-item" href="#item4">已失效</a>
+		        </div>
+		        <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-3"></div>
+		        <div class="mui-slider-group">
+		            <div id="item1" class="mui-slider-item mui-control-content mui-active">
+		            	<div class="no_info">
+		            		<img src="../../img/no_creditbill_icon.png"/>
+		            		<p>没有相关数据</p>
+		            	</div>
+		            </div>
+		            <div id="item2" class="mui-slider-item mui-control-content">
+		            	<div class="no_info">
+		            		<img src="../../img/no_creditbill_icon.png"/>
+		            		<p>没有相关数据</p>
+		            	</div>
+		            </div>
+		             <div id="item3" class="mui-slider-item mui-control-content">
+		             	<div class="no_info">
+		            		<img src="../../img/no_creditbill_icon.png"/>
+		            		<p>没有相关数据</p>
+		            	</div>
+		            </div>
+		             <div id="item4" class="mui-slider-item mui-control-content">
+		             	<div class="no_info">
+		            		<img src="../../img/no_creditbill_icon.png"/>
+		            		<p>没有相关数据</p>
+		            	</div>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				$(".sort").click(function(){
+					var title = $(this).attr("title");
+					if(title == "s"){
+						$(this).addClass("icon-paixujiang").removeClass("icon-paixusheng");
+						$(this).attr("title","j");
+					}else{
+						$(this).addClass("icon-paixusheng").removeClass("icon-paixujiang");
+						$(this).attr("title","s");
+					}
+				});
+				
+				
+				plus.nativeUI.closeWaiting();
+			});
+		</script>
+	</body>
+
+</html>

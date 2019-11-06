@@ -1,0 +1,378 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/shop_order.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_pq5c4cjadsn.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">确认订单</h1>
+		</header>
+		<div class="mui-content">
+			<div class="address">
+				<div class="left info_tips">
+					<span class="iconfont icon-dizhi" style="font-size: 24px;"></span>
+				</div>
+				<div class="left info_ct">
+					<div class="address_info">
+						<div class="info_title">
+							<div class="left" id="names">
+
+							</div>
+							<div class="right phone" id="phone">
+
+							</div>
+							<div class="clear"></div>
+						</div>
+						<p id="addrse"> </p>
+					</div>
+				</div>
+				<div class="right info_tips">
+					<span class="iconfont icon-mjiantou" style="font-size: 14px;color: #A3A3A3;"></span>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="address_color_line">
+				<img src="../../img/purchase_address_color_line.png" />
+				<img src="../../img/purchase_address_color_line.png" />
+				<img src="../../img/purchase_address_color_line.png" />
+			</div>
+
+			<div class="product">
+				<div class="product_info">
+					<div class="product_img left">
+						<img id="goods_img" src=" " />
+					</div>
+					<div class="product_js left">
+						<div class="product_name">
+
+						</div>
+						<p id="goods_title"></p>
+						<div class="money_info">
+							<div class="left red">
+								￥<span class="product_money"></span>
+							</div>
+							<div class="right">
+								x<span class="num">1</span>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="choose_list">
+					<div class="choose">
+						<label>购买数量</label>
+						<div class="buy_num right">
+							<span class="jian">－</span>
+							<span class="num">1</span>
+							<span class="jia">＋</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<input type="hidden" id="price" name="price" value="0" />
+					<input type="hidden" id="addrees" name="addrees" value="0" />
+					<input type="hidden" id="goods_num" name="goods_num" value="1" />
+					<input type="hidden" id="goods_id" name="goods_id" value="0" />
+					<!--<div class="choose norms">
+						<label>优惠</label>
+						<span>选择优惠券</span>
+						<img src="../../img/arrow_right.png" class="youjiantou" />
+						<div class="clear"></div>
+					</div>-->
+					<div class="choose">
+						<label>配送方式</label>
+						<span>快递  免邮</span>
+						<div class="clear"></div>
+					</div>
+
+					<div class="choose">
+						<label>买家留言</label>
+						<input type="text" class="message" id="leavea" name="leavea" placeholder="选填：填写内容已和卖家协商确认" />
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="total">
+					共<span class="num">1</span>件商品 小计：<span class="red">￥<span class="product_money"></span></span>
+				</div>
+			</div>
+
+			<div class="go_pay">
+				<div class="go_info">
+					合计：<span class="red">￥<span class="product_money"></span></span>
+					<button type="button" class="mui-btn mui-btn-blue sub">提交订单</button>
+				</div>
+			</div>
+		</div>
+
+		<!--收货地址弹窗-->
+		<div class="popup">
+			<div class="yh_title">
+				请选择优惠券
+				<span class="iconfont icon-cuo"></span>
+			</div>
+			<ul class="mui-table-view wsy_list">
+				<div class="no_info wsy_no" style="display: none;">
+					<img src="../../img/no_creditbill_icon.png">
+					<p>没有相关数据</p>
+				</div>
+				<li class="mui-table-view-cell">
+					<span class="circular c_1"></span>
+					<span class="circular c_2"></span>
+					<div class="head">
+						<div class="left"><span class="money">200</span> 元</div><span class="right">商城积分券</span>
+						<div class="clear"></div>
+					</div>
+					<div class="info">
+						<div class="left">
+							<p>领取时间:2018-10-11 18:55</p>
+							<p>过期时间:长期</p>
+						</div>
+						<div class="right"><span class="lj">立即使用</span></div>
+						<div class="clear"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<span class="circular c_1"></span>
+					<span class="circular c_2"></span>
+					<div class="head">
+						<div class="left"><span class="money">200</span> 元</div><span class="right">商城积分券</span>
+						<div class="clear"></div>
+					</div>
+					<div class="info">
+						<div class="left">
+							<p>领取时间:2018-10-11 18:55</p>
+							<p>过期时间:长期</p>
+						</div>
+						<div class="right"><span class="lj">立即使用</span></div>
+						<div class="clear"></div>
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<span class="circular c_1"></span>
+					<span class="circular c_2"></span>
+					<div class="head">
+						<div class="left"><span class="money">200</span> 元</div><span class="right">商城积分券</span>
+						<div class="clear"></div>
+					</div>
+					<div class="info">
+						<div class="left">
+							<p>领取时间:2018-10-11 18:55</p>
+							<p>过期时间:长期</p>
+						</div>
+						<div class="right"><span class="lj">立即使用</span></div>
+						<div class="clear"></div>
+					</div>
+				</li>
+			</ul>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+
+				window.addEventListener('shop', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var token = getToken();
+				var goods_id = plus.webview.currentWebview().goods_id;
+				var type = plus.webview.currentWebview().type;
+				var aid = plus.webview.currentWebview().aid;
+
+				if(aid == null) {
+					aid = 0;
+				}
+				window.addEventListener('doit', function(e) { //执行刷新
+					aid = e.detail.inputVal;
+					cfmorder();
+					//					location.reload();
+				});
+				var addrees_f;
+				cfmorder();
+
+				function cfmorder() {
+					$.ajax({
+						url: site_app + "/api/Order/cfmorder",
+						type: "get",
+						data: {
+							id: goods_id,
+							aid: aid,
+							token: token
+						},
+						async: true,
+						dataType: "json",
+						success: function(e) {
+							console.log(e);
+							if(e.error == 0) {
+								var datas = e.data;
+								addrees_f = datas.addrees;
+								if(datas.addrees == null) {
+									$(".address_info").html("请选择收货地址");
+								} else {
+									var addrees = datas.addrees;
+									$('#names').html('收货人：' + addrees.name);
+									$('#phone').html(addrees.phone);
+									$('#addrse').html('收货地址：' + addrees.addrse);
+									$('#addrees').val(addrees.aid);
+								}
+								var goods = datas.goods;
+								$('#goods_id').val(goods.goods_id);
+								$('#goods_img').attr('src', goods.goods_img);
+								$('#goods_title').html('商品名称：' + goods.goods_title);
+								$('.product_name').html(goods.goods_jingle);
+								$('.product_money').html(goods.price);
+								$('#price').val(goods.price);
+								$('#mfzs').html(datas.goods_give_integral); //标题
+							} else {
+								mui.toast(e.msg, '');
+							}
+						}
+					})
+
+				}
+				$('.norms').click(function() {
+					$(".popup").animate({
+						bottom: "0"
+					});
+					$("html,body").css("overflow", "hidden");
+					$(".mengban").show();
+				})
+				$(".icon-cuo,.mengban").click(function() {
+					$(".popup").animate({
+						bottom: "-100%"
+					});
+					$("html,body").css("overflow", "auto");
+					$(".mengban").hide();
+				})
+				var num = 1;
+				$(".jian").click(function() {
+					num--;
+					if(num <= 1) {
+						num = 1
+					}
+					var pr = $('#price').val();
+					$('.product_money').html(pr * num);
+					$(".num").text(num);
+					$('#goods_num').val(num);
+				});
+				$(".jia").click(function() {
+					num++;
+					var pr = $('#price').val();
+					$('.product_money').html(pr * num);
+					$(".num").text(num);
+					$('#goods_num').val(num);
+				});
+				$(".address").click(function() {
+					if(addrees_f == null) {
+						mui.alert('请添加收货地址', '提示', '', function() {
+							mui.openWindow({
+								url: "../find/add_address.html",
+								id: "add_address",
+								show: {
+									autoShow: true //页面loaded事件发生后自动显示，默认为true
+								},
+								extras: {
+									modes: 'shop_order',
+									goods_id: goods_id,
+									type: type
+								},
+								createNew: true,
+								waiting: {
+									autoShow: false //自动显示等待框，默认为true
+									//title: '', //等待对话框上显示的提示内容
+								}
+							})
+						}, 'div');
+					} else {
+						mui.openWindow({
+							url: "../find/address.html",
+							id: "address",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							extras: {
+								goods_id: goods_id,
+								type: type
+							},
+							createNew: true,
+							waiting: {
+								autoShow: false //自动显示等待框，默认为true
+								//title: '', //等待对话框上显示的提示内容
+							}
+						})
+					}
+				})
+
+				//点击创建订单
+				$(".sub").click(function() {
+					var num = $('#goods_num').val();
+					var leavea = $('#leavea').val();
+					var cid = 0;
+					var gid = $('#goods_id').val();
+					var aid = $('#addrees').val();
+					$.ajax({
+						url: site_app + "/api/Order/suborder",
+						type: "post",
+						data: {
+							num: num,
+							leavea: leavea,
+							cid: cid,
+							gid: gid,
+							aid: aid,
+							token: token
+						},
+						dataType: "json",
+						success: function(e) {
+							console.log(e);
+							mui.toast(e.msg, '');
+							if(e.error == 0) {
+								//如果等于0 拿到订单直接跳转
+								//如果data .type 等于 integral 直接完成跳转购买的页面
+								//如果是其他的需要跳转到支付页面
+								if(e.data.type == 'sintegral') {
+
+								} else {
+									mui.openWindow({
+										url: "../find/shop_pay.html",
+										id: "shop_pay",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										extras: {
+											sn: e.data.order_no
+										},
+										createNew:true,
+										waiting: {
+											autoShow: false //自动显示等待框，默认为true
+											//title: '', //等待对话框上显示的提示内容
+										}
+									})
+								}
+
+							}
+						}
+					})
+				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			})
+		</script>
+	</body>
+
+</html>

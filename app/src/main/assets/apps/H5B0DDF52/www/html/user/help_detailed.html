@@ -1,0 +1,83 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/help_detailed.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">帮助详情</h1>
+		</header>
+		<div class="mui-content">
+			<div class="ask">
+				<div class="left sign">
+					<span>Q</span>
+				</div>
+				<div class="left" id="title">
+					加载中..
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="answer">
+				<div class="left sign">
+					<span>A</span>
+				</div>
+				<div class="left content" id="content">
+					<iframe src="" width="100%" height="100%" frameborder="0" id="iframe"></iframe>
+				</div>
+				<div class="clear"></div>
+			</div>
+
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			function reinitIframe() {
+				var iframe = document.getElementById("iframe");
+				try {
+					iframe.height = iframe.contentWindow.document.documentElement.scrollHeight;
+				} catch(ex) {}
+			}
+			mui.plusReady(function() {
+				window.setInterval("reinitIframe()", 200);
+				mui.init({
+					hardwareAccelerated: true
+				});
+				//plus.nativeUI.showWaiting("加载中");
+				var tokens = getToken();
+				getToken();
+				var id = plus.webview.currentWebview().ids;
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/My/article_detail',
+					data: {
+						'token': tokens,
+						'id': id
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(e) {
+						if(e.error == 0) {
+							$("#title").html(e.data.article_title);
+							$("#content iframe").attr("src", e.data.article_url);
+						}
+					}
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			});
+		</script>
+	</body>
+
+</html>

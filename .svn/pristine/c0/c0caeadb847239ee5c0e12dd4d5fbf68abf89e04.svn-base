@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/agent_apply.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">城市代理申请</h1>
+		</header>
+		<div class="mui-content">
+			<img src="../../img/ic_agent_apply_banner.png" width="100%" style="display: block;" />
+			<div class="introduce">
+				自2018年起，城市代理项目正式启动，面向全国招募城市代理商自2018年起，城市代理项目正式启动，面向全国招募城市代理商 自2018年起，城市代理项目正式启动，面向全国招募城市代理商自2018年起，城市代理项目正式启动，面向全国招募城市代理商
+			</div>
+			<div class="apply_form">
+				<div class="mui-input-row">
+					<input type="text" class="mui-input-clear" id="agent_name" name="" placeholder="请输入姓名">
+				</div>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input-clear" id="agent_company" name="" placeholder="请输入公司名称(可不填)">
+				</div>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input-clear" id="agent_city" name="" placeholder="请输入代理城市">
+				</div>
+				<div class="mui-input-row">
+					<input type="text" class="mui-input-clear phone" id="agent_phone" readonly="readonly" name="" placeholder="请输入手机号">
+				</div>
+			</div>
+			<p class="tips">请保持电话畅通，三个工作日内会有招商人员的回电</p>
+			<button type="button" class="mui-btn mui-btn-blue want">我要入驻</button>
+			<button type="button" class="mui-btn mui-btn-blue apply_btn">立即入驻</button>
+			<button type="button" class="mui-btn mui-btn-blue want1" style="display: none;">您已是代理</button>
+			<button type="button" class="mui-btn mui-btn-blue want2" style="display: none;">申请中</button>
+			<div class="telephone">
+				
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var token = getToken();
+				getToken();
+				$(".want").click(function() {
+					$(".apply_form,.apply_btn").show();
+					$(".introduce,.want").hide();
+					$(".introduce,.want1").hide();
+					$(".introduce,.want2").hide();
+				})
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/my/Agency',
+					data: {
+						'token': token
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(data) {
+						if(data.error == 1) {
+							if(data.data.type == 0) {
+								$(".introduce,.want").hide();
+								$(".apply_form,.apply_btn").hide();
+								$(".introduce,.want1").hide();
+								$(".introduce,.want2").show();
+							} else if(data.data.type == 1) {
+								$(".introduce,.want").hide();
+								$(".apply_form,.apply_btn").hide();
+								$(".introduce,.want1").show();
+								$(".introduce,.want2").hide();
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+						} else {
+							$("#agent_phone").val(data.data.phone);
+						}
+						$(".telephone").html('<div class="telephone"> ' + data.data.tel + '</div>');
+					}
+				});
+				$(".apply_btn").click(function() {
+					var agent_name = $("#agent_name").val();
+					var agent_company = $("#agent_company").val();
+					var agent_city = $("#agent_city").val();
+					var agent_phone = $("#agent_phone").val();
+					if(agent_name == '') {
+						mui.alert('请输入姓名', '提示', '', '', 'div');
+						return false;
+					}
+					if(agent_city == '') {
+						mui.alert('请输入代理城市', '提示', '', '', 'div');
+						return false;
+					}
+					$.ajax({
+						type: 'post',
+						url: site_app + '/api/my/AgentAdmission',
+						data: {
+							'token': token,
+							'phone': agent_phone,
+							'city': agent_city,
+							'name': agent_name,
+							'company': agent_company
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+							if(data.error == 0) {
+								$(".introduce,.want").hide();
+								$(".apply_form,.apply_btn").hide();
+								$(".introduce,.want1").hide();
+								$(".introduce,.want2").show();
+								mui.alert(data.msg, '提示', '', '', 'div');
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+
+						}
+					});
+				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

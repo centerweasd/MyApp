@@ -1,0 +1,234 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_grade.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的保证金</h1>
+		</header>
+		<div class="mui-content">
+			<div class="head">
+				<div class="aui-head-user">
+					<img src="../../img/avater_image.png" alt="">
+				</div>
+				<div class="aui-head-name">
+					<h2>
+                       	保证金金额：
+                        <em class="type_fee">0</em>
+                    </h2>
+				</div>
+			</div>
+			<div class="aui-palace">
+				<div class="title">
+					<i></i>
+					<span class="type_name">升级会员</span>
+					<i></i>
+				</div>
+				<p class="sk_free">收款费率：0</p>
+				<p class="hk_free">还款费率：0</p>
+				<button type="button" class="mui-btn mui-btn-blue upgrade" style="display: none;">马上升级 享受特权</button>
+				<button type="button" class="mui-btn mui-btn-blue retreat" style="display: none;">退保证金</button>
+			</div>
+			<div class="aui-explain">
+				<div class="title">
+					<i></i>
+					<span>VIP特权说明</span>
+					<i></i>
+				</div>
+				<div class="explain">
+					<div class="privilege_title">
+						<span></span> VIP3等级特权
+					</div>
+					<div class="privilege_ct">
+						<p class="sk">收款：</p>
+						<p class="hk">还款：</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'user');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+
+				window.addEventListener('user', function(e) { //执行刷新
+					location.reload();
+				});
+
+				/*获取头像*/
+				var deposit_id;
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					async: true,
+					dataType: "json",
+					success: function(e) {
+						console.log(e)
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								if(e.data.user_img == site_app) {
+									$(".aui-head-user img").attr("src", "../../img/avater_image.png");
+								} else {
+									$(".aui-head-user img").attr("src", e.data.user_img);
+								}
+								/*获取头部信息*/
+
+								$.ajax({
+									type: "post",
+									url: site_app + "/api/Deposit/DepositInfo",
+									data: {
+										token: tokens,
+										type_id: e.data.user_type_id
+									},
+									async: true,
+									dataType: "json",
+									success: function(e) {
+										console.log(e);
+										if(e.error == 0) {
+											if(e.date == false) {
+												$(".type_fee").text(e.data[0].type_fee);
+												$(".type_name").text("成为" + e.data[0].type_name);
+												$(".type_name").attr("title", e.data[0].rate_type_id);
+												$(".sk_free").text("收款费率：" + e.data[1].rate_rate + "%+" + e.data[1].rate_close_rate + "元");
+												$(".hk_free").text("还款费率：" + e.data[0].rate_rate + "%+" + e.data[0].rate_close_rate + "元");
+												$(".upgrade").show().siblings("button").hide();
+											} else {
+												deposit_id = e.date.deposit_id;
+												if(e.date.deposit_state == 1) {
+													$(".type_fee").text(e.date.deposit_money);
+													$(".type_name").text("推荐邀请");
+													$(".sk_free").text("需邀请" + e.arr.member_sum + "人").attr("title", e.arr.member_sum);
+													$(".hk_free").text("已邀请" + e.arr.member_user + "人").attr("title", e.arr.member_user);
+													$(".retreat").show().siblings("button").hide();
+												} else if(e.date.deposit_state == 2) {
+													$(".type_fee").text("已退款");
+													$(".type_name").text("推荐邀请");
+													$(".sk_free").text("需邀请" + e.arr.member_sum + "人").attr("title", e.arr.member_sum);
+													$(".hk_free").text("已邀请" + e.arr.member_user + "人").attr("title", e.arr.member_user);
+													$(".mui-btn").hide();
+												}
+											}
+
+										}
+									}
+								});
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true, //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				/*退保证金*/
+				$(".retreat").click(function() {
+					if($(".hk_free").attr("title") < $(".sk_free").attr("title")) {
+						mui.alert("未达到邀请人数", '提示', '', '', 'div');
+						return false;
+					}
+					mui.confirm('确定退款保证金？', '温馨提示', ['取消', '确定'], function(e) {
+						if(e.index == 1) {
+							plus.nativeUI.showWaiting();
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/Deposit/Index",
+								data: {
+									token: tokens,
+									id: deposit_id
+								},
+								dataType: "json",
+								success: function(e) {
+									if(e.error == 0) {
+										mui.alert("保证金退款成功", '提示', '', function() {
+											location.reload();
+										}, 'div');
+									} else {
+										mui.alert(e.msg, '提示', '', '', 'div');
+									}
+									plus.nativeUI.closeWaiting();
+								}
+							});
+						}
+					}, 'div');
+
+				})
+
+				/*VIP特权说明*/
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/my/Membership',
+					data: {
+						'token': tokens
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(data) {
+						console.log(data);
+						if(data.error == 0){
+							$(".privilege_ct .sk").text("收款：费率"+data.data.sk[0].rate_rate*100+"%  结算费用" + data.data.sk[0].rate_close_rate + "/笔");
+							$(".privilege_ct .hk").text("收款：费率"+data.data.hk[0].rate_rate*100+"%  结算费用" + data.data.hk[0].rate_close_rate + "/笔")
+						}
+					}
+				})
+				$(".upgrade").click(function() {
+					mui.openWindow({
+						url: "my_member.html",
+						id: "my_member",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							typeId: $(".type_name").attr("title")
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/rz_step.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">变更结算卡</h1>
+		</header>
+		<div class="rz_step">
+			<ul>
+				<li class="active">
+					<span class="iconfont icon-yuandianzhong"></span>
+					<p>身份认证</p>
+					<i class="line_r" style="background: #FF8F48;"></i>
+				</li>
+				<li class="active">
+					<i class="line_l" style="background: #FF8F48;"></i>
+					<span class="iconfont icon-yuandianzhong"></span>
+					<p>照片认证</p>
+					<i class="line_r" style="background: #FF8F48;"></i>
+				</li>
+				<li class="active">
+					<i class="line_l" style="background: #FF8F48;"></i>
+					<span class="iconfont icon-yuandianzhong"></span>
+					<p>结算卡认证</p>
+				</li>
+				<div class="clear"></div>
+			</ul>
+		</div>
+		<div class="mui-content bankCard_rz" style="padding-top: 98px;">
+			<ul class="mui-table-view">
+				<li class="mui-table-view-cell">
+					<label>姓&nbsp;&nbsp;&nbsp;&nbsp;名：</label>
+					<span class="user_name">姓名</span>
+				</li>
+			</ul>
+			<ul class="mui-table-view" style="margin-top: 15px;">
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>卡&nbsp;&nbsp;&nbsp;&nbsp;号：</label>
+						<input type="text" id="card_no" class="mui-input-clear" placeholder="请输入储蓄卡卡号">
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<div class="mui-input-row">
+							<label>银&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+							<input type="text" id="bank_name" title="" readonly="readonly" placeholder="请选择银行">
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<div class="mui-input-row">
+							<label>地&nbsp;&nbsp;&nbsp;&nbsp;址：</label>
+							<input type="text" class="" id="site" readonly="readonly" placeholder="请选择开户行所在城市" style="width: 80%;">
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell">
+					<div class="mui-input-row">
+						<label>支&nbsp;&nbsp;&nbsp;&nbsp;行：</label>
+						<input type="text" class="mui-input-clear" id="branch" placeholder="请输入开户行">
+					</div>
+				</li>
+				<li class="mui-table-view-cell">
+					<label>电&nbsp;&nbsp;&nbsp;&nbsp;话：</label>
+					<span class="phone" id="phone">--</span>
+				</li>
+			</ul>
+			<p class="tips" style="margin-top: 10px;">*请绑定主流银行结算卡，如：招商、建设、农业、工商等</p>
+			<p class="tips">*请填写真实信息，否则结算款项将不会到账！</p>
+			<button type="button" class="mui-btn mui-btn-blue complete">完成</button>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'bankCard_rz');
+						//返回 true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				var tokens = getToken();
+				getToken();
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								$(".user_name").html(e.data.user_name);
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				/*获取银行列表*/
+				var bank_picker = new mui.PopPicker();
+				var bank_json = [];
+				var data;
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/bank_list",
+					data: {
+						token: tokens
+					},
+					async: false,
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							data = e.data;
+						}
+					}
+				});
+
+				/*选择银行列表*/
+				for(var i = 0; i < data.length; i++) {
+					var json_ = {
+						value: data[i].list_id,
+						text: data[i].list_name
+					};
+					bank_json.push(json_);
+				}
+				bank_picker.setData(bank_json);
+				$("#bank_name").on("tap", function() {
+					setTimeout(function() {
+						bank_picker.show(function(items) {
+							console.log(items);
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							}
+							console.log((items[0] || {}).text);
+							$("#bank_name").val((items[0] || {}).text);
+							$("#bank_name").attr("title", (items[0] || {}).value);
+						});
+					}, 200)
+				});
+
+				/*选择城市列表*/
+				var city_picker = new mui.PopPicker({
+					layer: 3
+				});
+				city_picker.setData(cityData3);
+				$("#site").on("tap", function() {
+					setTimeout(function() {
+						city_picker.show(function(items) {
+							console.log(items);
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							} else if((items[1] || {}).text == undefined) {
+								(items[1] || {}).text = "";
+							} else if((items[2] || {}).text == undefined) {
+								(items[2] || {}).text = "";
+							}
+							//该ID为接收城市ID字段 
+							$("#site").val((items[0] || {}).text + "-" + (items[1] || {}).text + "-" + (items[2] || {}).text);
+						});
+					}, 200);
+				});
+				/*获取银行卡信息*/
+				$.ajax({
+					type:"post",
+					url:site_app+"/api/my/card_info",
+					data:{
+						token:tokens,
+						type:2
+					},
+					dataType:"json",
+					success:function(e){
+						console.log(e);
+						if(e.error == 0){
+							$("#card_no").val(e.data.card_no);
+							$("#bank_name").val(e.data.list_name);
+							$("#site").val(e.data.card_province+"-"+e.data.card_city);
+							$("#branch").val(e.data.card_branch);
+							$("#phone").html(e.data.card_phone);
+						}
+					}
+				});
+				$(".complete").click(function() {
+					var self = plus.webview.currentWebview();
+					var card_no = $("#card_no").val();
+					var bank_name = $("#bank_name").val();  
+					var site = $("#site").val();
+					var branch = $("#branch").val();
+					if(card_no != "" && bank_name != "" && site != "" && branch != "") {
+						$.ajax({
+							type: "post",
+							url: site_app + "/api/my/card_edit",
+							data: {
+								token: tokens,
+								cid: self.card_id,
+								card_no: card_no,
+								phone: $("#phone").text(),
+								bank_id: $("#bank_name").attr("title"),
+								type: "2",
+								region: $("#site").val(),
+								branch: branch = $("#branch").val()
+							},
+							dataType: "json",
+							success: function(e) {
+								console.log(e);
+								if(e.error == 0) {
+									mui.alert("修改成功", '提示', '', function() {
+										setTimeout(function() {
+											plus.webview.currentWebview("../index/change_bankCard.html").close();
+										}, 300);
+										var list = plus.webview.currentWebview().opener();
+										//触发父页面的自定义事件(refresh),从而进行刷新
+										mui.fire(list, 'bankCard_rz');
+									}, 'div');
+								} else {
+									mui.alert(e.msg, '提示', '', '', 'div');
+								}
+							}
+						});
+					} else {
+						mui.alert('请填写完整信息', '提示', '', '', 'div');
+					}
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

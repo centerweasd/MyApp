@@ -1,0 +1,415 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/my_rate.css" />
+    <style>
+        .hint{
+            color: #666666;
+            padding-left: 20px;
+        }
+        .type_info,.rate{
+            text-align: center!important;
+            width: 50%!important;
+        }
+        .type_name{
+            margin: 0;
+            line-height: 40px;
+            font-size: 18px!important;
+        }
+        .mui-btn-danger{
+            height: 40px;
+            min-width: 90px;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">选择还款通道</h1>
+</header>
+<div class="mui-content">
+    <div class="mui-slider">
+        <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+            <a class="mui-control-item mui-active" href="#item1">落地商户</a>
+            <a class="mui-control-item" href="#item2">线上商户</a>
+        </div>
+        <div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-6"></div>
+        <div class="mui-slider-group">
+            <div id="item1" class="mui-slider-item mui-control-content mui-active">
+
+            </div>
+            <div id="item2" class="mui-slider-item mui-control-content">
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+<script type="text/javascript">
+    mui.plusReady(function() {
+        mui.init({
+            hardwareAccelerated: true,
+            beforeback: function() {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'index');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+        });
+        plus.nativeUI.showWaiting("安全检测中，请等待");
+        //这个地方需要获取上个页面传值过来的银行卡的ID
+        var self = plus.webview.currentWebview();
+        var bankid = self.title;
+        var token = getToken();
+        getToken();
+        var uid = '';
+        var idCard = '';
+        var bank = '';
+        var bankList = '';
+
+        $.ajax({
+            type: 'post',
+            url: site_app + '/api/my/info',
+            data: {
+                'token': token
+            },
+            dataType: 'json',
+            success: function(e){
+                if(e.error == 0){
+                    uid = e.data.user_id;
+                    idCard = e.data.user_idcard;
+                    $.ajax({
+                        type: 'post',
+                        url: site_app + '/api/Baofu/getChannel',
+                        data: {
+                            'token': token,
+                            'bankid': bankid,
+                            'uid': uid
+                        },
+                        cache: false,
+                        dataType: 'json',
+                        success: function(data) {
+                            if(data.error == 0) {
+                                bank = data.bank;
+                                bankList = data.bankList;
+                                var content = '<p class="hint">提示：还款金额50,000元以上请选择线上商户。</p><ul class="mui-table-view">';
+                                var content1 = '<p class="hint">提示：还款金额最低2000元。工商银行和交通银行暂不支持线上商户。</p><ul class="mui-table-view">';
+                                for(i = 0; i < data.data.length; i++) {
+                                    if(data.data[i].payment_cut == 1) {
+                                        //小额通道
+                                        content += '<li>';
+                                        content += '<div class="left type_info">';
+                                        content += '<h3 class="type_name">'+data.data[i].payment_name+'</h3>';
+                                        content += '</div>';
+                                        content += '<div class="right rate">';
+                                        content += '<button class="mui-btn mui-btn-danger sbtn" name="'+data.data[i].payment_id+'" title="'+data.data[i].payment_list+'">立即进入</button>';
+                                        content += '</div>';
+                                        content += '<div class="clear"></div>';
+                                        content += '</li>';
+                                    } else if(data.data[i].payment_cut == 2){
+                                        //大额通道
+                                        content1 += '<li>';
+                                        content1 += '<div class="left type_info">';
+                                        content1 += '<h3 class="type_name">'+data.data[i].payment_name+'</h3>';
+                                        content1 += '</div>';
+                                        content1 += '<div class="right rate">';
+                                        content1 += '<button class="mui-btn mui-btn-danger lbtn" name="'+data.data[i].payment_id+'" title="'+data.data[i].payment_list+'">立即进入</button>';
+                                        content1 += '</div>';
+                                        content1 += '<div class="clear"></div>';
+                                        content1 += '</li>';
+                                    }
+                                }
+                                content += '</ul>';
+                                content1 += '</ul>';
+                                $("#item1").html(content);
+                                $("#item2").html(content1);
+
+                            } else {
+                                mui.alert(data.msg, '提示', '', '', 'div');
+                            }
+                        }
+                    });
+                } else {
+                    mui.alert(e.msg, '提示', '', '', 'div');
+                }
+            }
+        });
+
+        $('#item1').on('click','.sbtn',function(){
+            var title = $(this).attr("title");
+            var paymentid = $(this).attr("name");
+            $.ajax({
+                type: 'post',
+                url: site_app + '/api/Baofu/is_regist',
+                data: {
+                    'token': token,
+                    'bankid': bankid,
+                    'uid': uid,
+                    'type': 1,
+                    'list': title
+                },
+                cache: false,
+                dataType: 'json',
+                success: function(e){
+                    if(e.error == 0){
+                        if(e.data.is_regist==1){
+                            mui.openWindow({
+                                url: "repayment.html",
+                                id: "repayment",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                extras: {
+                                    bankid: bankid,
+                                    uid: uid,
+                                    paymentid: paymentid,
+                                    list: title,
+                                    type: 1,
+                                    bank: bank,
+                                    bankList: bankList
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                        } else if(e.data.is_regist==0){
+                            mui.confirm('您还未认证该渠道，请先认证','渠道认证',['取消','去认证'],function(e){
+                                if(e.index===1){
+                                    plus.nativeUI.showWaiting();
+                                    $.ajax({
+                                        type: "post",
+                                        url: site_app + "/api/JiFu/register", // 即富支付
+                                        data: {
+                                            token: token,
+                                            type: "1",
+                                            uid: uid,
+                                            uname: bank.card_name,
+                                            idCard: idCard,
+                                            bankno: bank.card_no,
+                                            phone: bank.card_phone,
+                                            expired: bank.card_exp_date,
+                                            bankName: bank.card_bank_id,
+                                            cvn2: bank.card_cvn,
+                                            payment_list: title,
+                                            payment_cut: 1
+                                        },
+                                        dataType: "json",
+                                        success: function(d) {
+                                            plus.nativeUI.closeWaiting();
+                                            if(d.error == 0) {
+                                                mui.toast("短信发送成功");
+                                                var openOrderId = d.data.openOrderId;
+                                                var platMerchantCode = d.data.platMerchantCode;
+                                                mui.prompt('已发送短信到手机：'+bank.card_phone,'请输入手机验证码','手机验证','',function(e){
+                                                    if(e.index===1 && e.value){
+                                                        $.ajax({
+                                                            type:"post",
+                                                            url: site_app + "/api/my/card",
+                                                            data: {
+                                                                token: token,
+                                                                uid: uid,
+                                                                type: "1",
+                                                                bank_id: bank.card_bank_id, // 银行id
+                                                                customerName: bank.card_name, // 用户姓名
+                                                                idNo: idCard, // 身份证号
+                                                                bankCardNo: bank.card_no, // 银行卡号
+                                                                mobile: bank.card_phone, // 手机号
+                                                                limit: bank.card_credit_limit, // 信用额度
+                                                                cvn: bank.card_cvn,
+                                                                exp_date: bank.card_exp_date, // 卡的有效期
+                                                                account_day: bank.card_account_day, // 账单日
+                                                                repayment_day: bank.card_repayment_day, // 还款日
+                                                                verCode: e.value, // 手机验证码
+                                                                openOrderId: openOrderId,
+                                                                platMerchantCode: platMerchantCode,
+                                                                region: bank.card_province+'-'+bank.card_city+'-'+bank.card_district, // 开户行地址
+                                                                payment_list: title,
+                                                                payment_cut: 1
+                                                            },
+                                                            dataType: "json",
+                                                            success: function(data){
+                                                                if(data.error == 0){
+                                                                    location.reload();
+                                                                } else {
+                                                                    mui.alert(data.msg,'','','','div');
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                },'div');
+                                            } else {
+                                                mui.alert(d.msg, '提示', '', '', 'div');
+                                            }
+                                        }
+                                    });
+                                }
+                            },'div');
+                        }
+                    } else {
+                        mui.alert(e.msg, '提示', '', '', 'div');
+                    }
+                }
+            })
+
+        });
+        $('#item2').on('click','.lbtn',function(){
+            var title = $(this).attr("title");
+            var paymentid = $(this).attr("name");
+            $.ajax({
+                type: 'post',
+                url: site_app + '/api/Baofu/is_regist',
+                data: {
+                    'token': token,
+                    'bankid': bankid,
+                    'uid': uid,
+                    'type': 2,
+                    'list': title
+                },
+                cache: false,
+                dataType: 'json',
+                success: function(e){
+                    if(e.error == 0){
+                        if(e.data.is_regist==1){
+                            mui.openWindow({
+                                url: "repayment.html",
+                                id: "repayment",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                extras: {
+                                    bankid: bankid,
+                                    uid: uid,
+                                    paymentid: paymentid,
+                                    list: title,
+                                    type: 2,
+                                    bank: bank,
+                                    bankList: bankList
+                                },
+                                waiting: {
+                                    autoShow: true //自动显示等待框，默认为true
+                                    // title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                        } else if(e.data.is_regist==0){
+                            mui.confirm('您还未认证该渠道，请先认证','渠道认证',['取消','去认证'],function(e){
+                                if(e.index===1){
+                                    plus.nativeUI.showWaiting();
+                                    $.ajax({
+                                        type: "post",
+                                        url: site_app + "/api/JiFu/big_register", // 即富支付
+                                        data: {
+                                            token: token,
+                                            type: "1",
+                                            uid: uid,
+                                            uname: bank.card_name,
+                                            idCard: idCard,
+                                            bankno: bank.card_no,
+                                            phone: bank.card_phone,
+                                            expired: bank.card_exp_date,
+                                            bankName: bank.card_bank_id,
+                                            cvn2: bank.card_cvn,
+                                            payment_list: title,
+                                            payment_cut: 2
+                                        },
+                                        dataType: "json",
+                                        success: function(d) {
+                                            plus.nativeUI.closeWaiting();
+                                            if(d.error == 0) {
+                                                mui.toast("短信发送成功");
+                                                var openOrderId = d.data.openOrderId;
+                                                var platMerchantCode = d.data.platMerchantCode;
+                                                mui.prompt('已发送短信到手机：'+bank.card_phone,'请输入手机验证码','手机验证','',function(e){
+                                                    if(e.index===1 && e.value){
+                                                        $.ajax({
+                                                            type:"post",
+                                                            url: site_app + "/api/my/card",
+                                                            data: {
+                                                                token: token,
+                                                                uid: uid,
+                                                                type: "1",
+                                                                bank_id: bank.card_bank_id, // 银行id
+                                                                customerName: bank.card_name, // 用户姓名
+                                                                idNo: idCard, // 身份证号
+                                                                bankCardNo: bank.card_no, // 银行卡号
+                                                                mobile: bank.card_phone, // 手机号
+                                                                limit: bank.card_credit_limit, // 信用额度
+                                                                cvn: bank.card_cvn,
+                                                                exp_date: bank.card_exp_date, // 卡的有效期
+                                                                account_day: bank.card_account_day, // 账单日
+                                                                repayment_day: bank.card_repayment_day, // 还款日
+                                                                verCode: e.value, // 手机验证码
+                                                                openOrderId: openOrderId,
+                                                                platMerchantCode: platMerchantCode,
+                                                                region: bank.card_province+'-'+bank.card_city+'-'+bank.card_district, // 开户行地址
+                                                                payment_list: title,
+                                                                payment_cut: 2
+                                                            },
+                                                            dataType: "json",
+                                                            success: function(data){
+                                                                if(data.error == 0){
+                                                                    mui.alert('认证成功','','',function(){
+                                                                        mui.openWindow({
+                                                                            url: "repayment.html",
+                                                                            id: "repayment",
+                                                                            show: {
+                                                                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                                                            },
+                                                                            extras: {
+                                                                                bankid: bankid,
+                                                                                uid: uid,
+                                                                                paymentid: paymentid,
+                                                                                list: title,
+                                                                                type: 2,
+                                                                                bank: bank,
+                                                                                bankList: bankList
+                                                                            },
+                                                                            waiting: {
+                                                                                autoShow: true //自动显示等待框，默认为true
+                                                                                // title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                                                            }
+                                                                        })
+                                                                    },'div');
+                                                                    location.reload();
+                                                                } else {
+                                                                    mui.alert(data.msg,'','','','div');
+                                                                }
+                                                            }
+                                                        })
+                                                    }
+                                                },'div');
+                                            } else {
+                                                mui.alert(d.msg, '提示', '', '', 'div');
+                                            }
+                                        }
+                                    });
+                                }
+                            },'div');
+                        }
+                    } else {
+                        mui.alert(e.msg, '提示', '', '', 'div');
+                    }
+                }
+            })
+        });
+
+        $("body").ajaxStop(function() {
+            plus.nativeUI.closeWaiting();
+        });
+
+    })
+</script>
+</body>
+
+</html>

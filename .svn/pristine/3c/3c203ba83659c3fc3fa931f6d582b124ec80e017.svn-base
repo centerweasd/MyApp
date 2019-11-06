@@ -1,0 +1,152 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/bankinfo.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title"></h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+
+				</div>
+			</div>
+			<!--专属特权-->
+			<div class="privilege">
+				<div class="title">
+					<img src="../../img/a_tips_4.png" />
+				</div>
+				<ul class="privilege_list">
+				</ul>
+				<div class="clear"></div>
+			</div>
+
+			<!--优势-->
+			<div class="advantage">
+				<ul>
+				</ul>
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue handle" title="" data-name="">立即办卡</button>
+
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui(".mui-slider").slider({
+				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+			});
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'apply_card');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				mui(".mui-slider").slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var self = plus.webview.currentWebview();
+				$.ajax({
+					type: "get",
+					url: site_app + "	/api/Bank_Apply/bankinfo",
+					data: {
+						id: self.urls
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							$(".mui-title").html(e.data.name);
+							$(".handle").attr("title",e.data.ChannelId);
+							$(".handle").attr("data-name",e.data.name);
+							var img = '';
+							var ImgList = e.data.ImgList;
+							if(ImgList == false) {
+
+							} else {
+								img += '<div class="mui-slider-item mui-slider-item-duplicate">' +
+									'<a href="#">' +
+									'<img src="' + ImgList[0] + '">' +
+									'</a>' +
+									'</div>';
+								for(var i = 0; i < ImgList.length; i++) {
+									img += '<div class="mui-slider-item">' +
+										'<a href="#">' +
+										'<img src="' + ImgList[i] + '">' +
+										'</a>' +
+										'</div>';
+								}
+								img += '<div class="mui-slider-item mui-slider-item-duplicate">' +
+									'<a href="#">' +
+									'<img src="' + ImgList[0] + '">' +
+									'</a>' +
+									'</div>';
+								$(".mui-slider-group").html(img);
+								var gallery = mui('.mui-slider');
+								gallery.slider();
+								mui(".mui-slider").slider({
+									interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+								});
+							}
+							for(var s = 0; s < e.data.StyleList.length; s++) {
+								var StyleList = '<li>' +
+									'<img src="../../img/a_tips_10.png" />' +
+									'<span>' + e.data.StyleList[s] + '</span>' +
+									'</li>';
+								$(".privilege_list").append(StyleList);
+							}
+							for(var a = 0; a < e.data.AttrList.length; a++) {
+								var AttrList = '<li>' +
+									'<span>' + e.data.AttrList[a].name + '</span>' +
+									'<p>' + e.data.AttrList[a].description + '</p>' +
+									'</li>';
+								$(".advantage ul").append(AttrList);
+							}
+						}
+					}
+				});
+				$(".handle").click(function() {
+					var ids = $(this).attr("title");
+					var bank = $(this).attr("data-name");
+					mui.openWindow({
+						url: "../apply/binding.html",
+						id: "binding",
+						styles: {},
+						extras: {
+							urls: ids,
+							name:bank
+						},
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

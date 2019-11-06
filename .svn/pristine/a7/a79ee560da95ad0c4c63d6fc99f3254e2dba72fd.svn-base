@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style1.css" rel="stylesheet" />
+		<style type="text/css">
+			header {
+				width: 100%;
+				background-color: #FF8F48 !important;
+				box-shadow: none !important;
+			}
+			
+			header a {
+				color: #fff;
+			}
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			input {
+				margin: 20px auto;
+			}
+			
+			.btn-div {
+				width: 90%;
+				margin-left: 5%;
+			}
+			
+			#foods {
+				position: fixed;
+				width: 80%;
+				max-height: 80%;
+				min-height: 100px;
+				left: 10%;
+				top: 80px;
+				z-index: 6;
+			}
+			
+			.mui-backdrop {
+				z-index: 5;
+			}
+			
+			.aui-head-bg {
+				text-align: center;
+				background: url('../../img/headbg.png') no-repeat left;
+				background-size: 200%;
+				height: 180px;
+				padding-top: 45px;
+			}
+			
+			button {
+				background: #FF8F48 !important;
+				border: 0 !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的分享链接</h1>
+		</header>
+		<!-- 主页面内容容器 -->
+		<div class="mui-content mui-scroll-wrapper">
+			<div class="aui-head-bg">
+				<div class="aui-head-logo">
+					<img src="../../img/logo.png" alt="" id="user_img">
+					<!--<span>
+                        <img src="../../img/icon-vip.png" alt="">
+                    </span>-->
+				</div>
+				<div class="aui-head-text">
+					<h2 id="name">名字</h2>
+					<p id="grade">等级</p>
+				</div>
+			</div>
+			<div class="mui-scroll">
+				<br><br><br>
+				<!-- 主界面具体展示内容 -->
+				<input type="text" id="val" name="val" value="" placeholder="链接内容" style="width: 90%;margin-left: 5%;height: 80px;" readonly/>
+				<br><br><br>
+				<div class="btn-div">
+					<button type="button" id="finish" onclick="copyUrl()" class="mui-btn mui-btn-success mui-btn-block">复制链接</button>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+	</body>
+
+</html>
+<script>
+	mui.plusReady(function() {
+		mui.init({
+			hardwareAccelerated: true,
+		});
+
+		window.addEventListener('user', function(e) { //执行刷新
+			location.reload();
+		});
+		window.addEventListener('activation', function(e) { //执行刷新
+			location.reload();
+		});
+		var token = getToken();
+		getToken();
+
+		plus.nativeUI.showWaiting("安全检测中，请等待");
+		$.ajax({
+			type: 'post',
+			url: site_app + '/api/my/info',
+			data: {
+				'token': token
+			},
+			cache: false,
+			dataType: 'json',
+			success: function(data) {
+				if(data.error == 0) {
+					if(data.data.user_isactivation == 0) {
+						$("#name").html(data.data.user_name);
+						$("#grade").html(data.data.type_name);
+						if(data.data.user_img == "") {
+							$("#user_img").attr("src", "../../img/avater_image.png");
+						} else {
+							$("#user_img").attr("src", data.data.user_img);
+						}
+						$.ajax({
+							type: 'post',
+							url: site_app + '/api/my/share',
+							data: {
+								'token': token
+							},
+							cache: false,
+							dataType: 'json',
+							success: function(data) {
+								if(data.error == 0) {
+									$("#val").val(data.url);
+								} else {
+									var btnArray = ['取消', '确定'];
+									mui.confirm("请先进行实名认证", '提示', btnArray, function(e) {
+										if(e.index == 0) {
+											setTimeout(function() {
+												plus.webview.currentWebview("../user/link.html").close();
+											}, 300);
+											mui.openWindow({
+												url: "invite_friend.html",
+												id: "invite_friend",
+												show: {
+													autoShow: true, //页面loaded事件发生后自动显示，默认为true
+												},
+												waiting: {
+													autoShow: true, //自动显示等待框，默认为true
+													title: '安全检测中，请等待', //等待对话框上显示的提示内容
+												}
+											})
+										} else {
+											mui.openWindow({
+												url: "../user/data_authentication.html",
+												id: "data_authentication",
+												show: {
+													autoShow: true, //页面loaded事件发生后自动显示，默认为true
+												},
+												waiting: {
+													autoShow: true, //自动显示等待框，默认为true
+													title: '安全检测中，请等待', //等待对话框上显示的提示内容
+												}
+											})
+										}
+									}, 'div')
+								}
+							}
+						})
+					} else {
+						mui.alert('请激活账户', '提示', '', function() {
+							mui.openWindow({
+								url: "../user/activation.html",
+								id: "activation",
+								show: {
+									autoShow: true, //页面loaded事件发生后自动显示，默认为true
+								},
+								waiting: {
+									autoShow: true, //自动显示等待框，默认为true
+									title: '安全检测中，请等待', //等待对话框上显示的提示内容
+								}
+							})
+						}, 'div');
+						return false;
+					}
+
+				} else {
+					mui.alert(data.msg, '提示', '', '', 'div');
+				}
+			}
+		});
+
+		$("body").ajaxStop(function() {
+			plus.nativeUI.closeWaiting();
+		});
+
+	})
+
+	function copyUrl() {
+		var res = copyToClipboard(document.getElementById("val"));
+		if(res == true) {
+			mui.alert('复制成功', '提示', '', '', 'div');
+		} else {
+			mui.alert('复制失败', '提示', '', '', 'div');
+		}
+
+	}
+
+	function copyToClipboard(elem) {
+		// create hidden text element, if it doesn't already exist
+		var targetId = "_hiddenCopyText_";
+		var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+		var origSelectionStart, origSelectionEnd;
+		if(isInput) {
+			// can just use the original source element for the selection and copy
+			target = elem;
+			origSelectionStart = elem.selectionStart;
+			origSelectionEnd = elem.selectionEnd;
+		} else {
+			// must use a temporary form element for the selection and copy
+			target = document.getElementById(targetId);
+			if(!target) {
+				var target = document.createElement("textarea");
+				target.style.position = "absolute";
+				target.style.left = "-9999px";
+				target.style.top = "0";
+				target.id = targetId;
+				document.body.appendChild(target);
+			}
+			target.textContent = elem.textContent;
+		}
+		// select the content
+		var currentFocus = document.activeElement;
+		target.focus();
+		target.setSelectionRange(0, target.value.length);
+
+		// copy the selection
+		var succeed;
+		try {
+			succeed = document.execCommand("copy");
+		} catch(e) {
+			succeed = false;
+		}
+		// restore original focus
+		if(currentFocus && typeof currentFocus.focus === "function") {
+			currentFocus.focus();
+		}
+
+		if(isInput) {
+			// restore prior selection
+			elem.setSelectionRange(origSelectionStart, origSelectionEnd);
+		} else {
+			// clear temporary content
+			target.textContent = "";
+		}
+		return succeed;
+	}
+</script>

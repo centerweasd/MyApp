@@ -1,0 +1,425 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_trade.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">交易记录</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-slider">
+				<div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item mui-active" href="#item1"><span>余额</span></a>
+					<a class="mui-control-item" href="#item2"><span>分润</span></a>
+					<a class="mui-control-item" href="#item3"><span>会员</span></a>
+					<a class="mui-control-item" href="#item4"><span>提现</span></a>
+					<a class="mui-control-item" href="#item5"><span>商城</span></a>
+				</div>
+				<div class="mui-slider-group">
+					<div id="item1" class="mui-slider-item mui-control-content mui-active">
+						<ul class="trade_list balance_list">
+							
+						</ul>
+					</div>
+					<div id="item2" class="mui-slider-item mui-control-content">
+						<ul class="trade_list profit_list">
+
+						</ul>
+					</div>
+					<div id="item3" class="mui-slider-item mui-control-content">
+						<ul class="trade_list upgrade_list">
+							
+						</ul>
+					</div>
+					<div id="item4" class="mui-slider-item mui-control-content">
+						<ul class="trade_list put_list">
+							
+						</ul>
+					</div>
+					<div id="item5" class="mui-slider-item mui-control-content">
+						<ul class="trade_list integral_list">
+							
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<div class="no_info" style="display: none;">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var tokens = getToken();
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				//plus.nativeUI.showWaiting("加载中");
+				getToken();
+
+				/*余额*/
+				balance();
+				
+				document.querySelector('.mui-slider').addEventListener('slide', function(event) {
+					if(event.detail.slideNumber === 0) {
+						if($(".balance_list").html() !=""){
+							$(".no_info").hide();
+						}
+						if($(".balance_list").attr("title") != "yes") {
+							//plus.nativeUI.showWaiting("加载中");
+							$(".balance_list").html('');
+							balance();
+						}
+					} else if(event.detail.slideNumber === 1) {
+						if($(".profit_list").html() !=""){
+							$(".no_info").hide();
+						}
+						if($(".profit_list").attr("title") != 'yes') {
+							//plus.nativeUI.showWaiting("加载中");
+							$(".profit_list").html('');
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/trading/bonuslog",
+								data: {
+									token: tokens
+								},
+								dataType: "json",
+								success: function(e) {
+								    console.log(JSON.stringify(e));
+									plus.nativeUI.closeWaiting();
+									$(".profit_list").attr('title', 'yes');
+									if(e.error == 0) {
+										var datas = e.data.data;
+										if(datas == false) {
+											$(".no_info").show();
+											$(".profit_list").hide();
+										} else {
+											$(".no_info").hide();
+											$(".profit_list").show();
+											for(var i = 0; i < datas.length; i++) {
+												var dates = new Date((datas[i].blog_time) * 1000);
+												var getMonth = dates.getMonth()+1;
+												if(getMonth < 10) {
+													getMonth = "0" + getMonth;
+												}
+												var getDate = dates.getDate();
+												if(getDate < 10) {
+													getDate = "0" + getDate;
+												}
+												var time = dates.getFullYear() + "-" + getMonth + "-" + getDate;
+												var blog_style = datas[i].blog_style;
+												if(blog_style == 0) {
+													blog_style = "直推分润"
+												} else {
+													blog_style = "间推分润"
+												}
+												var li = '<li>' +
+													'<div class="left">' +
+													'<div class="pay_mode">' + datas[i].blog_content + ' ';
+													if(datas[i].user_name){
+                                                        li+=
+                                                            datas[i].user_name + '(' +
+                                                            datas[i].user_type_name + ')'
+													}
+													li+=
+                                                    '</div>' +
+													'<p class="time">' + time + '</p>' +
+													'<div class="name_h">' +
+													'分润来源 ：<span class="name">' + blog_style + '</span>' +
+													'</div>' +
+													'</div>' +
+													'<div class="right">' + datas[i].blog_money + '</div>' +
+													'<div class="clear"></div>' +
+													'</li>';
+												$(".profit_list").append(li);
+											}
+										}
+
+									}
+								}
+							});
+						}
+					} else if(event.detail.slideNumber === 2) {
+						if($(".upgrade_list").html() !=""){
+							$(".no_info").hide();
+						}
+						if($(".upgrade_list").attr("title") != 'yes') {
+							//plus.nativeUI.showWaiting("加载中");
+							$(".upgrade_list").html('');
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/trading/upgrade",
+								data: {
+									token: tokens
+								},
+								dataType: "json",
+								success: function(e) {
+									plus.nativeUI.closeWaiting();
+									$(".upgrade_list").attr('title', 'yes');
+									if(e.error == 0) {
+										var datas = e.data.data;
+										if(datas == false) {
+											$(".no_info").show();
+											$(".upgrade_list").hide();
+										} else {
+											$(".no_info").hide();
+											$(".upgrade_list").show();
+											for(var i = 0; i < datas.length; i++) {
+												var dates = new Date((datas[i].upgrade_time) * 1000);
+												var getMonth = dates.getMonth()+1;
+												if(getMonth < 10) {
+													getMonth = "0" + getMonth;
+												}
+												var getDate = dates.getDate();
+												if(getDate < 10) {
+													getDate = "0" + getDate;
+												}
+												var time = dates.getFullYear() + "-" + getMonth + "-" + getDate;
+												var li = '<li>' +
+													'<div class="left">' +
+													'<div class="pay_mode">' + datas[i].upgrade_state + '</div>' +
+													'<p class="time">' + time + '</p>' +
+													'<div class="name_h">' +
+													'订单号：<span class="name">' + datas[i].upgrade_form_no + '</span>' +
+													'</div>' +
+													'</div>' +
+													'<div class="right">' + datas[i].upgrade_money + '</div>' +
+													'<div class="clear"></div>' +
+													'</li>';
+												$(".upgrade_list").append(li);
+											}
+										}
+
+									}
+								}
+							});
+						}
+					} else if(event.detail.slideNumber === 3) {
+						if($(".put_list").html() !=""){
+							$(".no_info").hide();
+						}
+						if($(".put_list").attr("title") != 'yes') {
+							//plus.nativeUI.showWaiting("加载中");
+							$(".put_list").html('');
+							$.ajax({
+								type: "post",
+								url: site_app + "/api/trading/cash",
+								data: {
+									token: tokens
+								},
+								dataType: "json",
+								success: function(e) {  
+									plus.nativeUI.closeWaiting();
+									$(".put_list").attr('title', 'yes');
+									if(e.error == 0) {
+										var datas = e.data.data;
+										if(datas == false) {
+											$(".no_info").show();
+											$(".put_list").hide();
+										} else {
+											$(".no_info").hide();
+											$(".put_list").show();
+											for(var i = 0; i < datas.length; i++) {
+												var dates = new Date((datas[i].profit_time) * 1000);
+												var getMonth = dates.getMonth()+1;
+												if(getMonth < 10) {
+													getMonth = "0" + getMonth;
+												}
+												var getDate = dates.getDate();
+												if(getDate < 10) {
+													getDate = "0" + getDate;
+												}
+												var time = dates.getFullYear() + "-" + getMonth + "-" + getDate;
+												var li = '<li>' +
+													'<div class="left">' +
+													'<div class="pay_mode">' + datas[i].profit_type + '</div>' +
+													'<p class="time">' + time + '</p>' +
+													'<div class="name_h">' +
+													'提现金额： <span class="name">' + datas[i].profit_money + '</span>' +
+													'</div>' +
+													'</div>' +
+													'<div class="right"><p style="font-size:14px;">实际到账:</p>' + datas[i].profit_true_money + '</div>' +
+													'<div class="clear"></div>' +
+													'</li>';
+												$(".put_list").append(li);
+											}
+										}
+
+									}
+								}
+							});
+						}
+					} else if(event.detail.slideNumber === 4) {
+						if($(".integral_list").html() !=""){
+							$(".no_info").hide();
+						}
+						if($(".integral_list").attr("title") != 'yes') {
+							$(".integral_list").html('');
+							$.ajax({
+								type: "post",
+								// url: site_app + "/api/trading/integralog",
+                                url: site_app + "/api/trading/details",
+								data: {
+									token: tokens
+								},
+								dataType: "json",
+								success: function(e) {
+									plus.nativeUI.closeWaiting();
+									$(".integral_list").attr('title', 'yes');
+									if(e.error == 0) {
+                                        var datas = e.data.data;
+                                        if(datas == false) {
+                                            $(".no_info").show();
+                                            $(".integral_list").hide();
+                                        } else {
+                                            $(".no_info").hide();
+                                            $(".integral_list").show();
+                                            for(var i = 0; i < datas.length; i++) {
+                                                var dates = new Date((datas[i].order_time) * 1000);
+                                                var getMonth = dates.getMonth()+1;
+                                                if(getMonth < 10) {
+                                                    getMonth = "0" + getMonth;
+                                                }
+                                                var getDate = dates.getDate();
+                                                if(getDate < 10) {
+                                                    getDate = "0" + getDate;
+                                                }
+                                                var time = dates.getFullYear() + "-" + getMonth + "-" + getDate;
+                                                var li = '<li>' +
+                                                    '<div class="left">' +
+                                                    '<div class="pay_mode">' + datas[i].goods_title + 'x' + datas[i].order_goods_num + '</div>' +
+                                                    '<p class="time">' + time + '</p>' +
+                                                    '<div class="name_h">' +
+                                                    '订单号： <span class="name">' + datas[i].order_sn + '</span>' +
+                                                    '</div>' +
+                                                    '<div class="name_h">' +
+                                                    '物流单号： <span class="name">' + datas[i].order_code_name +' '+datas[i].order_code + '</span>' +
+                                                    '</div>' +
+                                                    '</div>' +
+                                                    '<div class="right">' + datas[i].order_amount + '</div>' +
+                                                    '<div class="clear"></div>' +
+                                                    '</li>';
+                                                $(".integral_list").append(li);
+                                            }
+                                        }
+										// var datas = e.data.data;
+										// if(datas == false) {
+										// 	$(".no_info").show();
+										// 	$(".integral_list").hide();
+										// } else {
+										// 	$(".no_info").hide();
+										// 	$(".integral_list").show();
+										// 	for(var i = 0; i < datas.length; i++) {
+										// 		var dates = new Date((datas[i].integral_time) * 1000);
+										// 		var getMonth = dates.getMonth()+1;
+										// 		if(getMonth < 10) {
+										// 			getMonth = "0" + getMonth;
+										// 		}
+										// 		var getDate = dates.getDate();
+										// 		if(getDate < 10) {
+										// 			getDate = "0" + getDate;
+										// 		}
+										// 		var time = dates.getFullYear() + "-" + getMonth + "-" + getDate;
+										// 		var li = '<li>' +
+										// 			'<div class="left">' +
+										// 			'<div class="pay_mode">' + datas[i].integral_content + '</div>' +
+										// 			'<p class="time">' + time + '</p>' +
+										// 			'<div class="name_h">' +
+										// 			'剩余积分： <span class="name">' + datas[i].integral_surplus + '</span>' +
+										// 			'</div>' +
+                                        //             '<div class="name_h">' +
+                                        //             '剩余积分： <span class="name">' + datas[i].integral_surplus + '</span>' +
+                                        //             '</div>' +
+										// 			'</div>' +
+										// 			'<div class="right">' + datas[i].integral_point + '</div>' +
+										// 			'<div class="clear"></div>' +
+										// 			'</li>';
+										// 		$(".integral_list").append(li);
+										// 	}
+										// }
+
+									}
+								},
+                                error: function(xhr, error, errorThrown) {
+                                    console.log(errorThrown);
+                                }
+							});
+						}
+					}
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			});
+
+			function balance() {
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/trading/presentation",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+					    console.log('余额：'+JSON.stringify(e));
+						plus.nativeUI.closeWaiting();
+						if(e.error == 0) {
+							var datas = e.data.data;
+							if(datas == false) {
+								$(".no_info").show();
+								$(".balance_list").hide();
+							} else {
+								$(".no_info").hide();
+								$(".balance_list").show();
+								$(".balance_list").attr("title", "yes");
+								for(var i = 0; i < datas.length; i++) {
+									var dates = new Date((datas[i].presentation_time) * 1000);
+									var getMonth = dates.getMonth()+1;
+									if(getMonth < 10) {
+										getMonth = "0" + getMonth;
+									}
+									var getDate = dates.getDate();
+									if(getDate < 10) {
+										getDate = "0" + getDate;
+									}
+									var time = dates.getFullYear() + "-" + getMonth + "-" + getDate;
+									var li = '<li>' +
+										'<div class="left">' +
+										'<div class="pay_mode">' + datas[i].presentation_content + '</div>' +
+										'<p class="time">' + time + '</p>' +
+										'<div class="name_h">' +
+										'账户余额：<span class="name">' + datas[i].presentation_surplus + '</span>' +
+										'</div>' +
+										'</div>' +
+										'<div class="right">' + datas[i].presentation_point + '</div>' +
+										'<div class="clear"></div>' +
+										'</li>';
+									$(".balance_list").append(li);
+								}
+							}
+
+						}
+					}
+				});
+				
+			}
+		</script>
+	</body>
+
+</html>

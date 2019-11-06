@@ -1,0 +1,367 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>认证</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <style type="text/css">
+        /*header {*/
+        /*width: 100%;*/
+        /*box-shadow: none !important;*/
+        /*}*/
+
+        /*header a {*/
+        /*color: #fff;*/
+        /*}*/
+
+        .mui-title {
+            color: #fff !important;
+        }
+
+        .process {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .process > img {
+            width: 35%;
+            margin: 40px auto 10px;
+        }
+
+        .progress_bar {
+            font-size: 13px;
+            text-align: left;
+            padding-left: 21%;
+        }
+
+        .progress_bar .bar {
+            position: relative;
+            display: inline-block;
+            width: 42%;
+            height: 10px;
+            background: #9A9A9A;
+            border-radius: 20px;
+        }
+
+        .bar_blue {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 10px;
+            background: #FF8F48;
+            border-radius: 20px;
+        }
+
+        .percentage {
+            color: #999999;
+        }
+
+        .mui-table-view {
+            font-size: 14px;
+        }
+
+        .mui-table-view:before,
+        .mui-table-view:after {
+            height: 0 !important;
+        }
+
+        .mui-table-view .mui-table-view-cell .right {
+            color: #999999;
+            font-size: 12px;
+            margin-right: 15px;
+        }
+
+        .mui-table-view-cell:after {
+            left: 0;
+        }
+
+        .tips {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .tips p {
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">认证信息</h1>
+</header>
+<div class="mui-content">
+    <div class="process">
+        <img src="../../img/approve_no.png"/>
+        <div class="progress_bar">
+            <span>认证度:</span>
+            <span class="bar">
+						<i class="bar_blue"></i>
+					</span>
+            <span class="percentage">0%</span>
+        </div>
+    </div>
+
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell" title="1" data-type="">
+            <a class="mui-navigate-right">
+                <label class="left">身份认证</label>
+                <span class="identity_state right" id="idcard">去认证</span>
+                <div class="clear"></div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell" title="2" data-type="">
+            <a class="mui-navigate-right">
+                <label class="left">照片认证</label>
+                <span class="identity_state right" id="idcard_img">去认证</span>
+                <div class="clear"></div>
+            </a>
+        </li>
+        <li class="mui-table-view-cell" title="3" data-type="">
+            <a class="mui-navigate-right">
+                <label class="left">结算卡认证</label>
+                <span class="identity_state right" id="card">去认证</span>
+                <div class="clear"></div>
+            </a>
+        </li>
+    </ul>
+    <div class="tips">
+        <p>*完成身份和照片认证后即可进行信用卡还款</p>
+        <p>*完成所有认证可进行信用卡还款和余额提现</p>
+    </div>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="../../js/test.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+
+    //ios原生调用部分
+    // document.addEventListener('authentication_pass', function (e) {
+    //     var obj = JSON.parse(e.arguments);
+    //     var tokens = getToken();
+    //     $.ajax({
+    //         type: "post",
+    //         url: site_app + "/api/my/authentication",
+    //         data: {
+    //             token: tokens,
+    //             user_name: obj.id_name,
+    //             user_idcard: obj.id_no
+    //         },
+    //         dataType: "json",
+    //         success: function (e) {
+    //             if (e.error == 0) {
+    //                 mui.alert(e.msg, '提示', '', '', 'div');
+    //             } else {
+    //                 mui.alert("身份认证成功！请继续下一步操作！", '提示', '', function(){
+    //                     location.reload();
+    //                 }, 'div');
+    //             }
+    //         }
+    //     });
+    // }, false);
+    // document.addEventListener('authentication_fail', function (e) {
+    //     mui.alert("身份验证失败，请重试！", '提示', '', '', 'div');
+    // }, false);
+    //ios原生调用部分end
+    //android原生调用部分
+    // function auth_pass(s) {
+    //     var obj = JSON.parse(s);
+    //     var tokens = getToken();
+    //     $.ajax({
+    //         type: "post",
+    //         url: site_app + "/api/my/authentication",
+    //         data: {
+    //             token: tokens,
+    //             user_name: obj.id_name,
+    //             user_idcard: obj.id_no
+    //         },
+    //         dataType: "json",
+    //         success: function (e) {
+    //             if (e.error == 0) {
+    //                 mui.alert(e.msg, '提示', '', '', 'div');
+    //             } else {
+    //                 mui.alert("身份认证成功！请继续下一步操作！", '提示', '', function(){
+    //                     location.reload();
+    //                 }, 'div');
+    //             }
+    //         }
+    //     });
+    // }
+    // function auth_fail(s) {
+    //     mui.alert("身份验证失败，请重试！", '提示', '', '', 'div');
+    // }
+    //android原生调用部分end
+
+    mui.plusReady(function () {
+        mui.init({
+            hardwareAccelerated: true,
+            beforeback: function () {
+                //获得父页面的webview
+                var list = plus.webview.currentWebview().opener();
+                //触发父页面的自定义事件(refresh),从而进行刷新
+                mui.fire(list, 'user');
+                //返回true,继续页面关闭逻辑
+                return true;
+            }
+        });
+        window.addEventListener('data_authentication', function (e) { //执行刷新
+            location.reload();
+        });
+        plus.nativeUI.showWaiting("安全检测中，请等待");
+        var tokens = getToken();
+        getToken();
+        $.ajax({
+            type: 'post',
+            url: site_app + '/api/my/real',
+            data: {
+                'token': tokens
+            },
+            cache: false,
+            dataType: 'json',
+            success: function (e) {
+                if (e.error == 0) {
+                    $("#idcard").attr("title", e.idcard);
+                    $("#idcard_img").attr("title", e.idcard_img);
+                    if (e.idcard == 1) {
+                        $('#idcard').html('审核通过');
+                        $('#idcard').parents("li").attr("data-type", e.idcard);
+                    }
+                    if (e.idcard_img == 1) {
+                        $('#idcard_img').html('审核通过');
+                        $('#idcard_img').parents("li").attr("data-type", e.idcard_img);
+                    }
+                    if (e.card == 1) {
+                        $('#card').html('审核通过');
+                        $('#card').parents("li").attr("data-type", e.card);
+                    }
+                    if (e.real_sum == 1) {
+                        $('.percentage').html('30%');
+                        $('.bar_blue').css('width', '30%');
+                    } else if (e.real_sum == 2) {
+                        $('.percentage').html('60%');
+                        $('.bar_blue').css('width', '60%');
+                    } else if (e.real_sum == 3) {
+                        $('.percentage').html('100%');
+                        $('.bar_blue').css('width', '100%');
+                        $(".process img").attr("src", "../../img/approve_yes.png");
+                    }
+                } else if (e.error == 1) {
+                    mui.alert(e.msg, '提示', '', '', 'div');
+                }
+            }
+        });
+        $(".mui-table-view li").click(function () {
+            var title = $(this).attr("title");
+            var type = $(this).attr("data-type");
+
+            if (title == 1) {
+                if (type == 0) {
+                    // plus.plugintest.authAction(["Html5", "Plus", "AsyncFunction", "ArrayArgument!"],
+                    //     function (result) {
+                    //         alert(result);
+                    //     }, function (result) {
+                    //         alert(result);
+                    //     });
+                    mui.openWindow({
+                        url: "identity_rz.html",
+                        id: "identity_rz",
+                        show: {
+                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                        },
+                        waiting: {
+                            autoShow: true, //自动显示等待框，默认为true
+                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                        }
+                    })
+                } else {
+                    mui.openWindow({
+                        url: "identity_yes.html",
+                        id: "identity_yes",
+                        show: {
+                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                        },
+                        waiting: {
+                            autoShow: true, //自动显示等待框，默认为true
+                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                        }
+                    })
+                }
+
+            } else if (title == 2) {
+                var titles = $("#idcard").attr("title");
+                if (titles == 1) {
+                    if (type == 0) {
+                        mui.openWindow({
+                            url: "photo_rz.html",
+                            id: "photo_rz",
+                            show: {
+                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                            },
+                            waiting: {
+                                autoShow: true, //自动显示等待框，默认为true
+                                title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                            }
+                        })
+                    } else {
+                        mui.openWindow({
+                            url: "photo_tg.html",
+                            id: "photo_tg",
+                            show: {
+                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                            },
+                            waiting: {
+                                autoShow: true, //自动显示等待框，默认为true
+                                title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                            }
+                        })
+                    }
+                } else {
+                    mui.alert('请先进行身份认证', '提示', '', '', 'div');
+                }
+
+            } else if (title == 3) {
+                var titles = $("#idcard").attr("title");
+                var titles_a = $("#idcard_img").attr("title");
+
+                if (titles == 1 && titles_a == 1) {
+                    mui.openWindow({
+                        url: "bankCard_rz.html",
+                        id: "bankCard_rz",
+                        show: {
+                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                        },
+                        extras: {
+                            datatype: type
+                        },
+                        waiting: {
+                            autoShow: true, //自动显示等待框，默认为true
+                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                        }
+                    })
+                } else if (titles == 0) {
+                    mui.alert('请先进行身份认证', '提示', '', '', 'div');
+                } else if (titles_a == 0) {
+                    mui.alert('请先进行照片认证', '提示', '', '', 'div');
+                }
+
+            }
+        });
+
+        $("body").ajaxStop(function () {
+            plus.nativeUI.closeWaiting();
+        });
+
+    });
+</script>
+</body>
+
+</html>

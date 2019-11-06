@@ -1,0 +1,86 @@
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.no_info{
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	width: 50%;
+	margin-left: -25%;
+	text-align: center;
+}
+.no_info img{
+	width: 100%;
+}
+.add_card{
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	font-size: 14px;
+	color: #fff;
+}
+.mui-table-view{
+	margin: 0 !important;
+	background-color: #EFEFF4;
+}
+.mui-table-view:before,.mui-table-view:after{
+	height: 0 !important;
+}
+.mui-table-view li{
+	position: relative;
+	height: 70px;
+	background: #fff;
+	padding: 10px 0;
+	margin-bottom: 5px;
+}
+.mui-table-view li .bank_logo{
+	width: 15%;	
+	line-height: 50px;
+	text-align: center;
+	vertical-align: middle;
+}
+.mui-table-view li .bank_logo img{
+	width: 60%;
+	vertical-align: middle;
+}
+.mui-table-view li .bank_type{
+	height: 30px;
+	line-height: 30px;
+	font-size: 15px;
+}
+.mui-table-view li .bank_type .type{
+	font-size: 12px;
+	color: #999999;
+}
+.bank_num{
+	font-size: 16px;
+	font-weight: bold;
+}
+.rz_state{
+	position: absolute;
+	top: 5px;
+	right: 10px;
+	color: #FF8F48;
+	font-size: 12px;
+}
+.delete{
+	position: absolute;
+	right: 10px;
+	bottom:0;
+	width: 6%;
+}
+.delete img{
+	width: 100%;
+}
+.bank_info{
+	width: 60%;
+}

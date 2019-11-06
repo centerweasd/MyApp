@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/reg.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">修改密码</h1>
+		</header>
+		<div class="mui-content">
+			<div class="logo">
+				<img src="../../img/logo.png" />
+			</div>
+			<form class="mui-input-group reg_form">
+				<div class="mui-input-row">
+					<img src="../../img/password_icon.png" />
+					<input type="password" id="keywords" class="mui-input-password" maxlength="16" placeholder="请输入旧密码">
+				</div>
+				<div class="mui-input-row">
+					<img src="../../img/password_icon.png" />
+					<input type="password" id="new_keywords" class="mui-input-password" oninput="input_(this.value)" maxlength="16" placeholder="请输入新密码(6~16位数字或字母)">
+				</div>
+				<button type="button" class="mui-btn mui-btn-blue edit_pw">提交</button>
+				<div class="forget_pw">忘记密码</div>
+			</form>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			
+			function input_(value) {
+				if(value.length >= 6) {
+					$(".edit_pw").removeAttr("disabled");
+					$(".edit_pw").css('background-color', '#2DAAFC');
+				} else if(value.length < 6) {
+					$(".edit_pw").css('background-color', '#DDDDDD');
+					$(".edit_pw").attr("disabled", true);
+				}
+			}
+
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				window.addEventListener('login', function(e) { //执行刷新
+					var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+					mui.fire(list, 'login');
+					mui.back();
+				});
+				//plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				$(".edit_pw").click(function() {
+					var keywords = $('#keywords').val();
+					var new_keywords = $('#new_keywords').val();
+					if(keywords == '') {
+						mui.alert('请输入旧密码', '提示', '', '', 'div');
+						return false;
+					}
+					if(new_keywords == '') {
+						mui.alert('请输入新密码', '提示', '', '', 'div');
+						return false;
+					}
+
+					if(new_keywords.length < 6) {
+						mui.alert('密码长度大于6位', '提示', '', '', 'div');
+						return false;
+					}
+					$.ajax({
+						type: 'post',
+						url: site_app + '/api/My/password',
+						data: {
+							'token': tokens,
+							'keywords': keywords,
+							'new_keywords': new_keywords
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(e) {
+
+							if(e.error == 0) {
+								mui.alert(e.msg, '提示', '', function() {
+									mui.openWindow({
+										url: "../login/login.html",
+										id: "login",
+										styles: {},
+										extras: {},
+										show: {
+											autoShow: true, //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											//autoShow: true, //自动显示等待框，默认为true
+											//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				})
+
+				$(".forget_pw").click(function() {
+					mui.openWindow({
+						url: "../login/forget_pw.html",
+						id: "forget_pw",
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							//autoShow: true, //自动显示等待框，默认为true
+							//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				plus.nativeUI.closeWaiting();
+				 
+			})
+		</script>
+	</body>
+
+</html>

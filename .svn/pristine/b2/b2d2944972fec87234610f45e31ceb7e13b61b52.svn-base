@@ -1,0 +1,60 @@
+document.addEventListener( 'plusready', function ()
+{
+    var _BARCODE = 'plugintest',
+        B = window.plus.bridge;
+    var plugintest =
+    {
+        pluginLogin: function (uid, udnotify, Argus3, Argus4, successCallBack, errorCallBack)
+        {
+            var success = typeof successCallBack !== 'function' ? null : function(args)
+            {
+                successCallBack(args);
+            },
+            fail = typeof errorCallBack !== 'function' ? null : function(code)
+            {
+                errorCallBack(code);
+            };
+            callbackID = B.callbackId(success, fail);
+
+            return B.exec(_BARCODE, 'pluginLogin', [callbackID,uid,udnotify,Argus3,Argus4]);
+        },
+        authAction: function (Argus, successCallBack, errorCallBack)
+        {
+            var success = typeof successCallBack !== 'function' ? null : function(args)
+            {
+                successCallBack(args);
+            },
+            fail = typeof errorCallBack !== 'function' ? null : function(code)
+            {
+                errorCallBack(code);
+            };
+            callbackID = B.callbackId(success, fail);
+
+            return B.exec(_BARCODE, 'authAction',[callbackID, Argus]);
+        },
+        appshut: function (Argus, successCallBack, errorCallBack)
+        {
+            var success = typeof successCallBack !== 'function' ? null : function(args)
+            {
+                successCallBack(args);
+            },
+                fail = typeof errorCallBack !== 'function' ? null : function(code)
+            {
+                errorCallBack(code);
+            };
+            callbackID = B.callbackId(success, fail);
+              
+            return B.exec(_BARCODE, 'appshut',[callbackID, Argus]);
+        },
+        PluginTestFunctionSync: function (Argus1, Argus2, Argus3, Argus4)
+        {
+            return B.execSync(_BARCODE, 'PluginTestFunctionSync',[Argus1, Argus2, Argus3, Argus4]);
+        },
+        PluginTestFunctionSyncArrayArgu: function (Argus)
+        {
+            return B.execSync(_BARCODE, 'PluginTestFunctionSyncArrayArgu',[Argus]);
+        }
+    };
+    window.plus.plugintest = plugintest;
+
+}, true);

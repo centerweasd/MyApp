@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_trade.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">收款记录</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="trade_list">
+				
+			</ul>
+			<p class="more" style="display: none;">点击加载更多</p>
+			<div class="no_info" style="display: none;">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				//plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				var self = plus.webview.currentWebview();
+				var page = 1;
+				$.ajax({
+						type: "post",  
+						url: site_app + "/api/payrecords/index",
+						data: {
+							token: tokens,
+							cid: self.title,
+							page: page
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								var datas = e.data.data;
+								if(datas == 0) {
+									$(".trade_list,.more").hide();
+									$(".no_info").show();
+								} else {
+									$(".no_info").hide();
+									$(".trade_list,.more").show();
+								}
+
+								for(var i = 0; i < datas.length; i++) {
+									var dates = new Date((datas[i].records_time) * 1000);
+									var month = dates.getMonth()+1;
+									var trading_time = dates.getFullYear() + "年" + month + "月" + dates.getDate() + "日     " + dates.getHours() + "时" + dates.getMinutes() + "分";
+									var state = datas[i].records_state;
+									var title;
+									if(state == 1) {
+										title = "已支付"
+									} else if(state == 2) {
+										title = "支付失败"
+									} else if(state == 3) {
+										title = "支付中"
+									} else if(state == 4) {
+										title = "代付中"
+									} else if(state == 5) {
+										title = "已到账"
+									} else {
+										title = "未支付"
+									} 
+									var li = "<li>" +
+										"<div class='left logo' style='width:25%;'>" +
+										"<img src='../../img/profit_cash_icon.png' />" +
+										"</div>" +
+										"<div class='left info'>" +
+										"<p class='trade_name'>" + title + "</p>" +
+										"<p class='trade_time'>" + trading_time + "</p>" +
+										"</div>" +
+										"<div class='right money'>+" + datas[i].records_money + "</div>" +
+										"<div class='clear'></div>" +
+										"</li>";
+									$(".trade_list").append(li);
+								}
+							}
+						}
+					});
+				$(".more").click(function(){
+					plus.nativeUI.showWaiting();
+					page++;
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/payrecords/index",
+						data: {
+							token: tokens,
+							cid: self.title,
+							page: page
+						},
+						dataType: "json",
+						success: function(e) {
+							plus.nativeUI.closeWaiting();
+							if(e.error == 0) {
+								var datas = e.data.data;
+								if(datas == 0) {
+									$(".more").html("没有更多数据了");
+								}
+
+								for(var i = 0; i < datas.length; i++) {
+									var dates = new Date((datas[i].records_time) * 1000);
+									var month = dates.getMonth()+1;
+									var trading_time = dates.getFullYear() + "年" + month + "月" + dates.getDate() + "日     " + dates.getHours() + "时" + dates.getMinutes() + "分";
+									var state = datas[i].records_state;
+									var title;
+									if(state == 1) {
+										title = "已支付"
+									} else if(state == 2) {
+										title = "支付失败"
+									} else if(state == 3) {
+										title = "支付中"
+									} else if(state == 4) {
+										title = "代付中"
+									} else if(state == 5) {
+										title = "已到账"
+									} else {
+										title = "未支付"
+									} 
+									var li = "<li>" +
+										"<div class='left logo' style='width:25%;'>" +
+										"<img src='../../img/profit_cash_icon.png' />" +
+										"</div>" +
+										"<div class='left info'>" +
+										"<p class='trade_name'>" + title + "</p>" +
+										"<p class='trade_time'>" + trading_time + "</p>" +
+										"</div>" +
+										"<div class='right money'>+" + datas[i].records_money + "</div>" +
+										"<div class='clear'></div>" +
+										"</li>";
+									$(".trade_list").append(li);
+								}
+							}
+						}
+					});
+				});
+				
+				$("#screen").click(function() {
+					$(".screen_popup").animate({
+						bottom: "0"
+					});
+					$(".mengban").show();
+				});
+				$(".close_screen,.mengban").click(function() {
+					$(".screen_popup").animate({
+						bottom: "-380px"
+					});
+					$(".mengban").hide();
+				});
+
+				$(".screen_popup li").click(function() {
+					$(this).addClass("active").siblings().removeClass("active");
+					$(".screen_popup").animate({
+						bottom: "-380px"
+					});
+					$(".mengban").hide();
+				});
+
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+				 
+			})
+		</script>
+	</body>
+
+</html>

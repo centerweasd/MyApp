@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/shop_mall.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">商城</h1>
+		</header>
+		<div class="mui-content" >
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+				</div>
+			</div>
+			<div class="search">
+				<input type="text" id="keywords" placeholder="请输入您想要的商品" />
+				<input type="button" class="search_btn" />
+				<div class="clear"></div>
+			</div>
+
+			<ul class="grid">
+				
+			</ul>
+
+			<div class="hot_title">
+				<span>热销产品</span>/<i>HOT-SALE PRODUCT</i>
+			</div>
+			<ul class="product_list">
+				 
+				
+			</ul>
+			<p class="more">点击加载更多</p>
+			 
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				window.addEventListener('login', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				mui(".mui-slider").slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+
+				var tokens = localStorage.getItem("token");
+				var tokensss = tokens;
+				/*用户信息展示*/
+				if(!tokens) {
+					window.addEventListener('mall_load', function(e) { //执行刷新
+						location.reload();
+					});
+				}
+				setInterval(function() {
+					tokens = localStorage.getItem("token");
+					if(tokensss != tokens) {
+						window.addEventListener('mall_load', function(e) { //执行刷新
+							location.reload();
+						});
+					}
+				}, 100);
+				
+				/*banner*/
+				// $.ajax({
+				// 	type: "get",
+				// 	url: site_app + "/api/Img/index",
+				// 	data: {
+				// 		type: "4"
+				// 	},
+				// 	dataType: "json",
+				// 	success: function(e) {
+				// 	    console.log(JSON.stringify(e));
+				// 		if(e.error == 0) {
+				// 			var img = '';
+				// 			var ImgList = e.data;
+				// 			img += '<div class="mui-slider-item mui-slider-item-duplicate" title="' + ImgList[0].img_url + '">' +
+				// 				'<img src="' + ImgList[0].img_img + '" style="display:block">' +
+				// 				'</div>';
+				// 			for(var i = 0; i < ImgList.length; i++) {
+				// 				img += '<div class="mui-slider-item" title="' + ImgList[i].img_url + '">' +
+				// 					'<img src="' + ImgList[i].img_img + '" style="display:block">' +
+				// 					'</div>';
+				// 			}
+				// 			img += '<div class="mui-slider-item mui-slider-item-duplicate" title="' + ImgList[0].img_url + '">' +
+				// 				'<img src="' + ImgList[0].img_img + '" style="display:block">' +
+				// 				'</div>';
+				// 			$(".mui-slider-group").html(img);
+				// 			var gallery = mui('.mui-slider');
+				// 			gallery.slider();
+				// 			mui(".mui-slider").slider({
+				// 				interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				// 			});
+				// 		}
+				// 	}
+				// });
+				
+				//获取分类信息
+				
+				$.ajax({
+					type: "get",
+					url: site_app + "/api/Goods/goodstype",	
+					dataType: "json",
+					success: function(e) {
+					    console.log(JSON.stringify(e));
+						if(e.error == 0) {
+							var classd = '';
+							var classd = e.data;
+							var img = '';
+							for(var i = 0; i < classd.length; i++) {
+								img += '<li data-id="' + classd[i].type_id + '"  data-name="' + classd[i].type_name + '"  >';
+								img += '	<div class="grid_img">';
+								img += '		<img src="' + classd[i].type_icon + '" style="width:50%" />';
+								img += '	</div>';
+								img += '	<div class="mui-media-body">' + classd[i].type_name + '</div>';
+								img += '</li>';
+							}
+							img += '<div class="clear"></div>';  
+							$(".grid").html(img);
+						}
+					}
+				});
+				
+				var pages =1;
+				getGoodsData(pages,0);
+				$(".more").click(function() {
+					pages++;
+					getGoodsData(pages,0);
+				});
+				//获取底部首页信息
+				function getGoodsData(page,type){
+					
+					$.ajax({
+						url: site_app + "/api/Goods/goodshome",
+						type: "get",
+						data: {
+							page: page
+						},
+						dataType: "json",
+						success: function(e) {
+						    console.log(JSON.stringify(e));
+							if(e.error == 0) {
+								var datas = e.data.data;
+								if(datas.length != false) {
+									$(".mui-content,.more").show();
+									$(".no_info").hide();
+									var tpl ='';
+									for(var i = 0; i < datas.length; i++) {
+										tpl += '<li data-id="' + datas[i].goods_id + '"  >';
+										tpl += '	<div class="product_img">';
+										tpl += '		<img src="' + datas[i].goods_img + '" />';
+										tpl += '	</div>';
+										tpl += '	<p class="product_name">' + datas[i].goods_title + '</p>';
+										tpl += '	<p class="product_js">' + datas[i].goods_jingle + '</p>';
+										if(datas[i].goods_type==1){
+											tpl += '	<p class="money">' + datas[i].goods_price + '/元</p>';
+										}else{
+											tpl += '	<p class="money">' + datas[i].goods_integral + '/积分</p>';	
+										}
+										tpl += '</li>';
+										
+									}
+									$(".product_list").append(tpl);
+									
+								} else {
+									$(".product_list .more").hide();
+									
+									mui.toast('没有更多数据了',  '');
+								}
+	
+							}
+						}
+					})
+					
+				}
+				
+				//点击搜索
+				
+				$(document).on('click','.search_btn',function(){
+					var keywords =$('#keywords').val();
+					if(keywords ==''){
+						mui.toast('请输入搜索关键词',  '');
+						return false;
+					}
+					
+					mui.openWindow({
+						url: "../find/mall_search.html",
+						id: "mall_search",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							keywords: keywords
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+					
+					
+					
+				});
+				//plus.nativeUI.showWaiting("加载中");
+				$(document).on('click','.grid li',function(){
+					var goods_id = $(this).attr("data-id");
+					var goods_name = $(this).attr("data-name");
+					mui.openWindow({
+						url: "../find/mall_list.html",
+						id: "mall_list",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							goods_id: goods_id,
+							title   :goods_name
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+			
+				$('.product_list').on('click','li',function(){
+					var goods_id = $(this).attr("data-id");
+					mui.openWindow({
+						url: "../find/product_details.html",
+						id: "product_details",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							goods_id: goods_id
+						},
+						createNew:true,
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待'//等待对话框上显示的提示内容
+						}
+					})
+				});
+				plus.nativeUI.closeWaiting();
+			})
+		</script>
+	</body>
+
+</html>

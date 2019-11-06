@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/my_member.css"/>
+    <style>
+        .aui-scrollView{
+            background: url("../../img/member-bigback.png");
+            background-size: 100% 100%;
+        }
+        .member-tit{
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+        }
+        .member-tit-img{
+            width: 80%;
+        }
+        .member-t-b{
+            width: 340px;
+            background: url("../../img/member-back.png");
+            background-size: 100% 100%;
+            margin: 40px auto 0 auto;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <h1 class="mui-title">会员福利</h1>
+</header>
+<section class="aui-scrollView">
+    <!--<div class="member-content">-->
+        <!--<div class="member-gift">-->
+            <!--<p class="gift-img-p">-->
+                <!--<img class="gift-img" src="../../img/gift-guo.jpg" alt="会员福利">-->
+            <!--</p>-->
+            <!--<p class="gift-text">￥698锅具套装</p>-->
+            <!--<p class="gift-text">限每天前100名</p>-->
+            <!--<p class="gift-text-big pt20">免费赠送</p>-->
+            <!--<p class="gift-text-big">只限VIP会员</p>-->
+            <!--<button class="gift-btn ">领 取</button>-->
+            <!--<p class="gift-al ">已领取-->
+            <!--</p>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="member-tit">
+        <img class="member-tit-img" src="../../img/member-tit.png" alt="">
+    </div>
+    <div class="member-tit">
+        <div class="member-t-b">
+            <img  src="../../img/member-txt.png" alt="">
+        </div>
+    </div>
+
+    <button class="gift-btn hidden">立即领取</button>
+</section>
+
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/jquery-1.8.0.min.js"></script>
+<script src="../../js/common.js"></script>
+<script type="text/javascript">
+    mui.plusReady(function () {
+        mui.init({
+            hardwareAccelerated: true
+        });
+        plus.nativeUI.showWaiting("安全检测中，请等待");
+        var token = getToken();
+        var user_type_id = null;
+        var vip_welfare = null;
+
+
+        $.ajax({
+            type: 'post',
+            url: site_app + '/api/my/info',
+            data: {
+                'token': token
+            },
+            cache: false,
+            dataType: 'json',
+            success: function (data) {
+                plus.nativeUI.closeWaiting();
+                if (data.error == 0) {
+                    if (data.data.user_isactivation == 0) {
+                        user_type_id = data.data.user_type_id;
+                        vip_welfare = data.data.vip_welfare;
+                        switch (Number(data.data.vip_welfare)) {
+                            case 0:
+                                $(".gift-btn").addClass('hidden');
+                                $(".gift-al").removeClass('hidden');
+                                break;
+                            default:
+                                $(".gift-btn").removeClass('hidden');
+                                $(".gift-al").addClass('hidden');
+                        }
+                    } else {
+                        mui.alert('请激活账户', '提示', '', function () {
+                            mui.openWindow({
+                                url: "../user/activation.html",
+                                id: "activation",
+                                show: {
+                                    autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                },
+                                waiting: {
+                                    autoShow: true, //自动显示等待框，默认为true
+                                    title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                }
+                            })
+                        }, 'div');
+                    }
+
+                } else {
+                    mui.alert(data.msg, '提示', '', '', 'div');
+                }
+            }
+        });
+
+        //领取
+        $(".gift-btn").click(function () {
+            switch(Number(user_type_id)){
+                case 4:
+                    mui.openWindow({
+                        url: "my_member.html",
+                        id: "my_member",
+                        show: {
+                            autoShow: true //页面loaded事件发生后自动显示，默认为true
+                        },
+                        waiting: {
+                            autoShow: true, //自动显示等待框，默认为true
+                            title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                        }
+                    });
+                    break;
+                default :
+                    if(vip_welfare==0){
+                        mui.alert('您已经领取过福利了哦！', '提示', '', '', 'div');
+                    } else {
+                        mui.openWindow({
+                            url: "../find/shop_order.html",
+                            id: "shop_order",
+                            show: {
+                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                            },
+                            extras: {
+                                goods_id: 1, // 1是礼品的id
+                                is_free: 1
+                            },
+                            createNew:true,
+                            waiting: {
+                                autoShow: false //自动显示等待框，默认为true
+                                //title: '', //等待对话框上显示的提示内容
+                            }
+                        })
+                    }
+
+            }
+        });
+
+        // 去商城
+        // $(".to-sc").click(function(){
+        //     mui.openWindow({
+        //         url: "html/find/shop_mall.html",
+        //         id: "shop_mall",
+        //         show: {
+        //             autoShow: true //页面loaded事件发生后自动显示，默认为true
+        //         },
+        //         waiting: {
+        //             autoShow: false //自动显示等待框，默认为true
+        //             //title: '', //等待对话框上显示的提示内容
+        //         }
+        //     })
+        // })
+
+
+
+    });
+</script>
+</body>
+
+</html>

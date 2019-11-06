@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <style>
+        .title{
+            line-height: 50px;
+            font-size: 18px;
+            width: 100%;
+            text-align: center;
+            padding-top: 20px;
+        }
+        .code_info{
+            width: 100%;
+            box-sizing: border-box;
+            padding: 20px 40px;
+        }
+        .code_info img{
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left back"></a>
+    <h1 class="mui-title">群二维码</h1>
+</header>
+<div class="mui-content">
+    <div class="title">
+        保存图片，微信扫二维码加入我们
+    </div>
+
+    <div class="code_info">
+        <img src="../../img/wechat_group.jpg" alt="">
+    </div>
+
+</div>
+
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    mui.plusReady(function() {
+            mui.init({
+                hardwareAccelerated: true
+            });
+            
+
+
+        }
+
+    )
+</script>
+</body>
+
+</html>

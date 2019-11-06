@@ -1,0 +1,84 @@
+
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.mui-slider {
+	background: #fff;
+	padding: 30px;
+}
+.mui-slider .mui-slider-group .mui-slider-item{
+	text-align: center;
+}
+.mui-slider-group img{
+	width: 80% !important;
+}
+.privilege{
+	background: #fff;
+	padding: 0 15px;
+	margin-top: 15px;
+}
+.privilege .title{
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	padding-top: 15px;
+	margin-bottom: 20px;
+}
+.privilege .title img{
+	width:35%;
+}
+.privilege_list li{
+	width: 50%;
+	float: left;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+	color: #8F8F94;
+	margin-bottom: 10px;
+}
+.privilege_list li img{
+	width: 10%;
+	vertical-align: middle;
+	margin-bottom: 4px;
+}
+.advantage{
+	padding: 15px 15px 60px;
+	background: #fff;
+	margin-top: 15px;
+}
+.advantage li{
+	font-size: 14px;
+	padding-top: 5px;
+	margin-bottom: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	border-bottom: 1px solid #eee;
+}
+.advantage li p{
+	font-size: 12px;
+}
+.handle{
+	position: fixed;
+	left: 50%;
+	bottom: 20px;
+	width: 80%;
+	margin-left: -40%;
+	background: #6497F0;
+	border: 1px solid #6497F0;
+	padding: 8px 15px;
+	font-size: 15px;
+}

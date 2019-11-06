@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title></title>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css"/>
+    <style type="text/css">
+        .mui-bar-tab .mui-tab-item .iconfont {
+            top: 3px;
+            width: 24px;
+            height: 24px;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .mui-bar-tab {
+            background: #4C4F51;
+        }
+
+        .mui-bar-tab .mui-tab-item.mui-active {
+            color: #FF5964;
+        }
+
+        .mui-bar .iconfont {
+            font-size: 22px;
+            position: relative;
+            z-index: 20;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
+        .mui-bar {
+            box-shadow: none !important;
+        }
+
+        .mui-bar-tab .mui-tab-item .mui-tab-label {
+            font-size: 11px;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .iconfont {
+            font-size: 24px;
+            font-style: normal;
+            line-height: 1;
+            display: inline-block;
+            text-decoration: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            display: block;
+            margin: 5px auto 0;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<nav class="mui-bar mui-bar-tab">
+
+    <a id="defaultTab" class="mui-tab-item mui-active a1" href="html/index/home.html">
+        <img src="img/nav_1-1.png" width="22%"/>
+        <span class="mui-tab-label">首页</span>
+    </a>
+    <a class="mui-tab-item a3" href="html/find/shop_mall.html">
+        <img src="img/nav_3-2.png" width="22%"/>
+        <span class="mui-tab-label">商城</span>
+    </a>
+    <!--<a class="mui-tab-item a5" href="html/movies/movies.html">-->
+    <!--<img src="img/nav_5-2.png" width="22%" />-->
+    <!--<span class="mui-tab-label">影视</span>-->
+    <!--</a>-->
+
+    <a class="mui-tab-item a2" href="html/user/share_code.html">
+        <img src="img/nav_2-2.png" width="22%"/>
+        <span class="mui-tab-label">分享</span>
+    </a>
+    <!--<a class="mui-tab-item a2" href="html/plugintest/plugintest.html">-->
+    <!--<img src="img/nav_2-2.png" width="22%" />-->
+    <!--<span class="mui-tab-label">保险</span>-->
+    <!--</a>-->
+    <a class="mui-tab-item a4" href="html/user/user.html">
+        <img src="img/nav_4-2.png" width="22%"/>
+        <span class="mui-tab-label">我的</span>
+    </a>
+</nav>
+<script src="js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/mui.min.js"></script>
+<script src="js/update.js" type="text/javascript" charset="utf-8"></script>
+<script src="js/common.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+    /**
+     * 判断应用升级模块，从url地址下载升级描述文件到本地local路径
+     *
+     * 升级文件为JSON格式数据，如下：
+     {
+        "appid":"HelloH5",
+        "wgtURL": "差量包文件下载地址",
+    　　"apkURL"： "apk文件下载地址",
+    　　"ipaURL": "appStore中下载的地址",
+     　 "version": "新版本号，如：1.0.0",
+        "iOS": "ios升级标识 1 不需要升级 2 需要升级从appstore中下载 3 进行差量升级",
+        "Android": "android升级标识  1 不需要升级 2 需要升级从服务器下载新的apk 2 进行差量升级"
+    }
+     *
+     */
+    (function (w) {
+        var checkUrl = site_app+"/api/my/app_upgrade"; // 检测更新 地址是自己服务器检测的地址根据自己项目填写
+        var downloadWgtUrl = null; // 升级包目录
+        var downloadApkUrl = null; // 升级包目录
+        var iosURL = null; // 苹果地址
+        var oldVer = null; // 当前应用版本号
+        var newVer = null; // 新版本号
+        var isios = null; // ios是否需要升级 1 不升级 2 appStore升级 3 差量升级
+        var isandroid = null; // android是否需要升级 1 不升级 2 apk升级 3 差量升级
+        // plusReady 加载完毕执行
+        function plusReady() {
+            // 获取本地应用资源版本号
+            plus.runtime.getProperty(plus.runtime.appid, function (inf) {
+                oldVer = inf.version;
+                checkUpdate();
+            });
+        }
+
+        // 检测更新
+        function checkUpdate() {
+            $.ajax({
+                type: "post",
+                url: site_app + "/api/my/app_upgrade",
+                data: {
+                    oldVer: oldVer
+                },
+                dataType: "json",
+                success: function(e) {
+                    console.log(JSON.stringify(e));
+                    if(e.error == 0) {
+                        var d = e.data;
+                        newVer = d.app_verber; // 版本号
+                        isios = d.iostype; // ios是否需要升级 1 不升级 2 appStore升级 3 差量升级
+                        iosURL = d.app_down_applelink;
+                        downloadWgtUrl = d.wgtURL;
+                        downloadApkUrl = d.app_down_androlink;
+                        isandroid = d.andrtype; // android是否需要升级 1 不升级 2 apk升级 3 差量升级
+
+                        // 监听应用启动界面关闭事件
+                        if (plus.navigator.hasSplashscreen()) { // 启动页未关闭
+                            document.addEventListener("splashclosed", checkOs, false);
+                        } else { //启动界面已关闭
+                            checkOs();
+                        }
+                    } else {
+                        mui.alert(e.msg,'','','','div');
+                    }
+                },
+                error: function(xhr,err,errThrown){
+                    mui.alert(err,'','','','div');
+                    console.log(errThrown);
+                }
+            });
+            // var xhr = new XMLHttpRequest();
+            // xhr.onreadystatechange = function () {
+            //     switch (xhr.readyState) {
+            //         case 4:
+            //             if (xhr.status == 200) {
+            //                 var res = JSON.parse(xhr.responseText);
+            //                 // 判断是否需要升级
+            //                 newVer = res.version; // 版本号
+            //                 isios = res.ios; // ios是否需要升级 1 不升级 2 appStore升级 3 差量升级
+            //                 iosURL = res.ipaURL;
+            //                 downloadWgtUrl = res.wgtURL;
+            //                 downloadApkUrl = res.apkURL;
+            //                 isandroid = res.android; // android是否需要升级 1 不升级 2 apk升级 3 差量升级
+            //
+            //                 // 监听应用启动界面关闭事件
+            //                 if (plus.navigator.hasSplashscreen()) { // 启动页未关闭
+            //                     document.addEventListener("splashclosed", checkOs, false);
+            //                 } else { //启动界面已关闭
+            //                     checkOs();
+            //                 }
+            //             } else {
+            //                 console.log("检测更新失败！");
+            //             }
+            //             break;
+            //         default:
+            //             break;
+            //     }
+            // };
+            // xhr.open('GET', checkUrl);
+            // xhr.send();
+        }
+
+        /**
+         　　* 判断手机系统检测升级
+         　　*/
+        function checkOs() {
+            var isupdate = compareVersion(oldVer, newVer); // 是否差量升级
+
+            if (!isupdate) {
+                return false;
+            }
+
+            if (plus.os.name == 'Android') {    // Android 用户
+                if (isandroid == 1) {
+                    return false;
+                } else if (isandroid == 2) {
+                    plus.nativeUI.alert("已有最新版本！", function () {
+                        createDownload();
+                    }, "请升级", "确定");
+                } else {
+                    downWgt();
+                }
+            } else { // 苹果用户
+                if (isios == 1) {
+                    return false;
+                } else if (isios == 2) {
+                    plus.nativeUI.alert("已有最新版本！", function () {
+                        plus.runtime.openURL(iosURL);
+                    }, "请升级", "确定");
+                } else {
+                    downWgt();
+                }
+            }
+        }
+
+        /**
+         * 比较版本大小，如果新版本nv大于旧版本ov则返回true，否则返回false
+         * @param {String} ov
+         * @param {String} nv
+         * @return {Boolean}
+         */
+        function compareVersion(ov, nv) {
+            if (!ov || !nv || ov == "" || nv == "") {
+                return false;
+            }
+            var b = false,
+                ova = ov.split(".", 4),
+                nva = nv.split(".", 4);
+            console.log(ova);
+            console.log(nva);
+            for (var i = 0; i < ova.length && i < nva.length; i++) {
+                var so = ova[i], no = parseInt(so), sn = nva[i], nn = parseInt(sn);
+                if (nn > no || sn.length > so.length) {
+                    return true;
+                } else if (nn < no) {
+                    return false;
+                }
+            }
+            if (nva.length > ova.length && 0 == nv.indexOf(ov)) {
+                return true;
+            }
+        }
+
+        // 下载wgt文件
+        function downWgt() {
+            plus.nativeUI.showWaiting("更新文件...");
+            plus.downloader.createDownload(downloadWgtUrl, {filename: "_doc/update/"}, function (d, status) {
+                if (status == 200) {
+                    console.log("下载wgt成功：" + d.filename);
+                    installWgt(d.filename); // 安装wgt包
+                } else {
+                    console.log("下载wgt失败！");
+                }
+                plus.nativeUI.closeWaiting();
+            }).start();
+        }
+
+        // 更新应用资源升级包
+        function installWgt(path) {
+            plus.nativeUI.showWaiting("安装文件...");
+            plus.runtime.install(path, {}, function () {
+                plus.nativeUI.closeWaiting();
+                plus.nativeUI.alert("应用资源更新完成！", function () {
+                    plus.runtime.restart();
+                });
+            }, function (e) {
+                plus.nativeUI.closeWaiting();
+                plus.nativeUI.alert(JSON.stringify(e));
+            });
+        }
+
+        /**
+         * 创建下载任务 安卓
+         */
+        function createDownload() {
+            var dtask = plus.downloader.createDownload(downloadApkUrl, {filename: '_doc/download/'}, function (d, status) {
+                // 下载完成
+                if (status == 200) {
+                    plus.runtime.install(d.filename, {}, function () {
+                    }, function (DOMException) {
+                        console.log(JSON.stringify(DOMException));
+                    });
+                } else {
+                    mui.alert("下载安装包失败: " + status,'','','','div');
+                }
+            });
+            dtask.start();
+        }
+
+        if (window.plus) {
+            plusReady();
+        } else {
+            document.addEventListener('plusready', plusReady, false);
+        }
+    })(window);
+
+</script>
+</body>
+
+</html>

@@ -1,0 +1,63 @@
+html,body,.mui-content{
+	height: 100%;
+}
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.invite_num{
+	padding: 15px;
+	background: #fff;
+	display: flex;
+	justify-content: center;
+	align-items: stretch;
+}
+.invite_num .title{
+	flex: 1;
+	font-size: 20px;
+	color: #333;
+	margin-bottom: 10px;
+}
+.invite_num .num{
+	flex: 1;
+	font-size: 18px;
+	color: #FD4F4E;
+	margin: 0;
+	text-align: right;
+}
+.img{
+	width: 60%;
+	margin: 0 auto;
+}
+.invite-person{
+	width: 100%;
+	background-color: #FFFFFF;
+}
+.invite-person-ul{
+	width: 100%;
+}
+.invite-person-li{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.in-name{
+	flex: 1;
+	font-size: 16px;
+}
+.in-phone{
+	flex: 1;
+	font-size: 16px;
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/loan.css" />
+		<style type="text/css">
+			.mui-popup-buttons {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left back" style="display: none;"></a>
+			<h1 class="mui-title">贷款</h1>
+		</header>
+		<div class="mui-content">
+			<div class="head_t">
+				<img src="../../img/dai_t.png" /> 贷款推荐
+			</div>
+			<ul class="mui-table-view list">
+
+			</ul>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var self = plus.webview.currentWebview();
+				if(self.title == 1) {
+					$(".back").show();
+					$.ajax({
+						type: "get",
+						url: site_app + "/api/Dai_Apply/getBank",
+						data: "",
+						success: function(e) {
+							console.log(e);
+							if(e.error == 0) {
+								for(var i = 0; i < e.data.length; i++) {
+									var html = '<li class="mui-table-view-cell" title="' + e.data[i].id + '" data-id="' + e.data[i].quotaMax + '">' +
+										'<div class="left img">' +
+										'<img src="' + e.data[i].imagePath + '" />' +
+										'</div>' +
+										'<div class="left info">' +
+										'<p class="name">' + e.data[i].name + '</p>' +
+										'<p class="remark">' + e.data[i].remark + '</p>' +
+										'</div>' +
+										'<div class="right">' +
+										'<p>' + e.data[i].quotaMax + '</p>' +
+										'<p style="font-size:12px">最高可借(元)</p>' +
+										'</div>' +
+										'<div class="clear"></div>' +
+										'</li>';
+									$(".list").append(html);
+								}
+							}
+						}
+					});
+					$("body").ajaxStop(function() {
+						plus.nativeUI.closeWaiting();
+					});
+				} else {
+					$(".back").hide();
+					mui.alert("系统升级中，敬请期待!", '提示', '', '', 'div');
+				}
+
+				$(".list").on("click", "li", function() {
+					var title = $(this).attr("title");
+					var name = $(this).find(".name").html();
+					var money = $(this).attr("data-id");
+					mui.openWindow({
+						url: "../loan/loan_details.html",
+						id: "loan_details",
+						styles: {},
+						extras: {
+							title: title,
+							name: name,
+							money: money
+						},
+						show: {
+							autoShow: true, //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				plus.nativeUI.closeWaiting();
+			})
+		</script>
+	</body>
+
+</html>

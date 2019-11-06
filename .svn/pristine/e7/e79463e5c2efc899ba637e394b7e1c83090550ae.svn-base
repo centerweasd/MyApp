@@ -1,0 +1,231 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/withdraw.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">分润提现</h1>
+		    <span class="tx_detailed">提现记录</span>
+		</header>
+		<div class="mui-content">
+		    <div class="input_money">
+		    	<div class="title">
+					提现金额		    		
+		    	</div>
+		    	<div class="fill_in">
+		    		<span class="tp">￥</span>
+		    		<input type="number" id="money" placeholder="请输入还款金额" value=""/>
+		    	</div>
+		    	<div class="can_Tx">
+		    		<div class="can_money left">
+		    			当前可提现金额：￥<span class="money_num">0</span>
+		    		</div>
+		    		<div class="all_tx right">全部提现</div>
+		    		<div class="clear"></div>
+		    	</div>
+		    </div>
+		    <div class="reach_mode">
+		    	<div class="mode_list">
+		    		<p class="mode_m">
+		    			单笔结算费用：￥<span class="fasmoney">2.00</span>
+		    		</p>
+		    		<p class="mode_m">
+		    			实际到账金额：￥<span class="truemoney">0.00</span>
+		    		</p>
+		    	</div>
+		    	<div class="T_mode">
+
+		    	</div> 
+		    </div>
+		    <button type="button" class="mui-btn mui-btn-blue tx_sub">确认提现</button>
+		    <div class="service">
+		    	在线客服
+		    </div>
+		    <div class="reminder">
+		    	<span class="title">温馨提示</span>
+		    	<p>1.提现金额单笔下限￥100.00，提现金额单笔上限100000.00</p>
+		    	<p>2.提现可操作时间<span style="color: #D85672;">09:00:00~18:00:00</span></p>
+		    </div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				var token = getToken();
+				getToken();
+				var uid = '';
+
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/payrecords/presentation',
+					data: {
+						'token': token,
+						'type':1
+					},
+					cache: false,
+					dataType: 'json',
+					success: function(data) {
+						if(data.error == 0) {
+							var content = '';
+							for(i=0;i<data.data.length;i++){
+								content += '<div class="mui-radio">';
+								content += '<input name="radio" type="radio" value="'+data.data[i].card_id+'" checked>';
+								content += '<span>'+data.data[i].list_name+'</span>';
+								content += '</div>';
+							}
+							$(".T_mode").html(content);
+							$(".money_num").html(data.money);
+                            $.ajax({
+                                type: 'post',
+                                url: site_app + '/api/my/info',
+                                data: {
+                                    'token': token
+                                },
+                                cache: true,
+                                dataType: 'json',
+								success: function(e){
+                                    if(e.error == 0){
+                                        uid = e.data.user_id;
+									}
+								}
+                            });
+						} else {
+							mui.alert(data.msg, '提示', '', function(){
+									mui.openWindow({
+										url: "../index/binding_card.html",
+										id: "binding_card",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+						}
+					}
+				});
+				$("#money").keyup(function(){
+
+					var money_num = $(".money_num").html();
+					var money = $("#money").val();
+
+					if(parseFloat(money) > parseFloat(money_num)){
+						$("#money").val(money_num);
+					}
+					var amoney = Math.round(($("#money").val()-$(".fasmoney").html())*100)/100;
+					if(parseFloat(amoney)<=0){
+						amoney = '0.00';
+					}
+					$(".truemoney").html(amoney);
+				});
+				
+				$(".all_tx").click(function(){
+					var money = $(".money_num").text();
+					$("#money").val(money);
+					$("#money").focus();
+					var money_num = $(".money_num").html();
+					var money = $("#money").val();
+					if(money>money_num){
+						$("#money").val(money_num);
+					}
+					var amoney = Math.round(($("#money").val()-$(".fasmoney").html())*100)/100;
+					if(amoney>0){
+						$(".truemoney").html(amoney);
+					}else{
+						$(".truemoney").html(0);
+					}
+					
+				});
+				$(".tx_detailed").click(function(){
+					mui.openWindow({
+						url: "tx_detailed.html",
+						id: "tx_detailed",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: { 
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".tx_sub").click(function(){
+					var money = $("#money").val();
+					var bank_id = $("input[name='radio']:checked").val();
+					if(money<0||money=='' || money=='0'){
+						mui.alert('金额错误', '提示', '', '', 'div');
+						return false;
+					}
+					console.log('提现：'+money)
+					$.ajax({
+						type: 'post',
+						// url: site_app + '/api/payrecords/presentation',
+                        url: site_app + '/api/Baofu/wththdraw',
+						data: {
+							'token': token,
+							'type':2,
+							'fee':money,
+							'bank_id':bank_id,
+							'uid':uid
+						},
+						cache: false,
+						dataType: 'json',
+						success: function(data) {
+						    console.log(JSON.stringify(data));
+							if(data.error == 0) {
+								mui.alert(data.msg, '提示', '', function(){
+									mui.openWindow({
+										url: "../user/tx_detailed.html",
+										id: "tx_detailed",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							} else {
+								mui.alert(data.msg, '提示', '', '', 'div');
+							}
+						},
+						error: function(xhr,error,errorThrown){
+                            console.log(errorThrown);
+						}
+					})
+				});
+				$(".service").click(function(){
+					mui.openWindow({
+						url: "../index/kefu.html",
+						id: "kefu",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				})
+			})
+		</script>
+	</body>
+
+</html>

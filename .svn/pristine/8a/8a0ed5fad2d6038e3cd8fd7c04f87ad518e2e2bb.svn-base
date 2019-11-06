@@ -1,0 +1,623 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/binding_card.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+		<style type="text/css">
+			[data-type="date"] .mui-dtpicker-title h5,
+			[data-type="date"] .mui-picker {
+				width: 100% !important;
+			}
+			
+			[data-type="date"] [data-id="picker-i"],
+			[data-type="date"] [data-id="title-i"],
+			[data-type="date"] [data-id="picker-y"],
+			[data-type="date"] [data-id="title-y"],
+			[data-type="date"] [data-id="picker-m"],
+			[data-type="date"] [data-id="title-m"] {
+				display: none;
+			}
+			
+			ul li label {
+				width: 25% !important;
+			}
+			
+			.right {
+				width: 75% !important;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">添加信用卡</h1>
+		</header>
+		<div class="mui-content">
+			<form>
+
+			</form>
+			<ul class="mui-table-view">
+				<li>
+					<label>持卡人:</label>
+					<div class="right" style="text-align: right;">
+						<span id="user_name">姓名</span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>身份证:</label>
+					<div class="right" style="text-align: right;">
+						<span id="user_card">身份证号</span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label style="display: inline-block;">银行卡:</label>
+					<div class="right">
+						<input type="text" id="bank_card" placeholder="信用卡卡号"
+							   onkeyup="testNum()" onkeydown="testNum()" onkeypress="testNum()"
+							   oninput="value=value.replace(/[^\d]/g,'')" style="width: 100%;" />
+					</div>
+					<div class="clear"></div>
+				</li>  
+				<li>
+					<label>银行类型:</label>
+					<div class="right">
+						<input type="text" id="bank_type" title="" placeholder="银行类型（只支持列表内银行）" onclick="bank_type()" style="width: 100%;" readonly="readonly" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>信用额度:</label>
+					<div class="right">
+						<input type="text" id="quota" placeholder="信用额度" oninput="value=value.replace(/[^\d]/g,'')" style="width: 100%;" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>地址：</label>
+					<div class="right">
+						<input type="text" class="mui-input-clear" id="site" readonly="readonly" placeholder="请选择开户行所在城市">
+					</div>
+					<div class="clear"></div>
+				</li>
+				<!--<li>-->
+					<!--<label>支行:</label>-->
+					<!--<div class="right">-->
+						<!--<input type="text" id="address" placeholder="请输入支行名称" />-->
+					<!--</div>-->
+					<!--<div class="clear"></div>-->
+				<!--</li>-->
+				<li>
+					<label>有效期:</label>
+					<div class="right">
+						<input type="text" id="validity_time" placeholder="请选择有效期 如:0324"
+							   readonly="readonly" style="width: 93%;" />
+						<span class="iconfont icon-wenhao" id="validity_wenhao" style="float: right;width: 5%;"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>CVN2:</label>
+					<div class="right">
+						<input type="text" id="CVN2" placeholder="卡背后三位"
+							   oninput="value=value.replace(/[^\d]/g,'')" style="width: 93%;" />
+						<span class="iconfont icon-wenhao" id="CVN2_wenhao" style="float: right;width: 5%;"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>账单日:</label>
+					<div class="right">
+						<input type="text" id="statement_date" title="" placeholder="请选择账单日" readonly="readonly" style="width: 100%;" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>还款日:</label>
+					<div class="right">
+						<input type="text" id="repayment_date" title="" placeholder="请选择还款日" readonly="readonly" style="width: 100%;" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>预留手机:</label>
+					<div class="right">
+						<input type="text" id="phone" maxlength="11" placeholder="银行预留手机号"
+							   oninput="value=value.replace(/[^\d]/g,'')" style="width: 100%;" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>验证码:</label>
+					<div class="right" style="position:relative;">
+						<input type="text" id="smscode" placeholder="请输入手机验证码" oninput="value=value.replace(/[^\d]/g,'')" style="width: 50%;text-align:left;" />
+						<span class="ask-smscode" id="getSms">获取验证码</span>
+					</div>
+					<div class="clear"></div>
+				</li>
+			</ul>
+			<button type="button" class="mui-btn upload_btn" id="upload_btn">上传银行卡</button>
+		</div>
+
+		<!--提示弹窗-->
+		<div class="tips_popup">
+			<p class="popup_title"></p>
+			<div class="tips">
+				<img src="" />
+				<button type="button" class="mui-btn close">好的</button>
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			// 是否点击获取验证码
+			var codeFlag = true;
+			// 获取验证码时等待60秒的函数
+			var wait = 60;
+			function get_code_time() {
+				//mui.alert('手机号格式错误','提示','','','div');
+				if(wait == 0) {
+					$("#getSms").removeAttr("disabled"); //移除按钮的disabled属性
+					$("#getSms").css('background-color', '#2DAAFC');
+					$("#getSms").html("获取验证码");
+					wait = 60;
+				} else {
+					$("#getSms").css('background-color', '#DDDDDD');
+					$("#getSms").attr("disabled", true); //设置按钮为不可触发
+					$("#getSms").html(wait + "s");
+					wait--;
+					setTimeout("get_code_time()", 1000);
+				}
+			}
+
+			var tokens = getToken();
+			// 一些变量
+            var uid = ''; // 用户ID
+			// 通联支付（发送验证码返回）
+			var userId = ''; // 发送验证码返回的id
+			var applyTradeNo = ''; // 流水订单号
+			// 即富支付（发送验证码返回）
+            // var card_jfCardId = ''; // 绑卡序列号
+            // var merchantCode = ''; // 商户号
+			var openOrderId = '';
+			var platMerchantCode = '';
+
+
+
+			/*获取卡类型*/
+			function bank_type() {
+				$("#bank_type").val("");
+				$("#bank_type").attr("title", "");
+				var bank_card = $("#bank_card").val().replace(/\s*/g,'');
+				if(bank_card == "") {
+					mui.alert("请输入银行卡号", '提示', '', '', 'div');
+				}
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/get_bank_id",
+					data: {
+						token: tokens,
+						card_no: bank_card
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							$("#bank_type").val(e.data.list_name);
+							$("#bank_type").attr("title", e.data.list_id);
+						} else if(e.msg == "banknull") {
+							var bank_picker = new mui.PopPicker();
+							var bank_json = [];
+							var data;
+							$.ajax({
+								type: "get",
+								url: site_app + "/api/Common/getbank",
+								data: {
+									token: tokens
+								},
+								async: false,
+								dataType: "json",
+								success: function(e) {
+									if(e.error == 0) {
+										data = e.data;
+									}
+								}
+							});
+							/*选择银行列表*/
+							for(var i = 0; i < data.length; i++) {
+								var json_ = {
+									value: data[i].list_id,
+									text: data[i].list_name
+								};
+								bank_json.push(json_);
+							}
+							mui.alert("无法识别您的银行卡，请选择银行", '提示', '', function() {
+								bank_picker.setData(bank_json);
+								setTimeout(function() {
+									bank_picker.show(function(items) {
+										if((items[0] || {}).text == undefined) {
+											(items[0] || {}).text = "";
+										}
+										$("#bank_type").val((items[0] || {}).text);
+										$("#bank_type").attr("title", (items[0] || {}).value);
+									});
+								}, 200)
+							}, 'div');
+
+						} else {
+							mui.alert(e.msg, '提示', '', '', 'div');
+						}
+					}
+				});
+			}
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'index');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('user', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+
+				//plus.nativeUI.showWaiting("安全检测中，请等待");
+				getToken();
+
+				/*选择开户行地址*/
+				var city_picker = new mui.PopPicker({
+					layer: 3
+				});
+				city_picker.setData(cityData3);
+				$("#site").on("tap", function() {
+					setTimeout(function() {
+						city_picker.show(function(items) {
+							if((items[0] || {}).text == undefined) {
+								(items[0] || {}).text = "";
+							} else if((items[1] || {}).text == undefined) {
+								(items[1] || {}).text = "";
+							} else if((items[2] || {}).text == undefined) {
+								(items[2] || {}).text = "";
+							}
+							//该ID为接收城市ID字段
+							$("#site").val((items[0] || {}).text + "-" + (items[1] || {}).text + "-" + (items[2] || {}).text);
+							console.log($("#site").val());
+						});
+					}, 200);
+				});
+				/*选择有效期*/
+				var datas = new Date();
+				var year = datas.getFullYear();
+				var endDates = Number(year) + 20;
+				document.getElementById('validity_time').addEventListener('tap', function() {
+					var dtPicker = new mui.DtPicker({
+						type: "month",
+						labels: ['年', '月'],
+						endDate: new Date(endDates, 12, 30)
+					});
+					dtPicker.show(function(selectItems) {
+						var dimed = selectItems.y.value;
+						var vals = dimed.toString();
+						var year = vals.substring(2);
+						$("#validity_time").val(selectItems.m.value + year);
+					})
+				});
+				/*选择账单日*/
+				document.getElementById('statement_date').addEventListener('tap', function() {
+					var dtPicker = new mui.DtPicker({
+						type: "date"
+					});
+					dtPicker.show(function(selectItems) {
+						$("#statement_date").val("每月" + selectItems.d.value + "日");
+						$("#statement_date").attr("title", selectItems.d.value);
+					})
+				});
+				/*选择还款日*/
+				document.getElementById('repayment_date').addEventListener('tap', function() {
+					var dtPicker = new mui.DtPicker({
+						type: "date"
+					});
+					dtPicker.show(function(selectItems) {
+						$("#repayment_date").val("每月" + selectItems.d.value + "日");
+						$("#repayment_date").attr("title", selectItems.d.value);
+					})
+				});
+
+				$("#validity_wenhao").click(function() {
+					$(".popup_title").text("有效期示例");
+					$(".tips img").attr("src", "../../img/card_validate_sample.png");
+					$(".tips_popup").animate({
+						top: "30%"
+					});
+					$(".mengban").show();
+				});
+				$("#CVN2_wenhao").click(function() {
+					$(".popup_title").text("CVV示例");
+					$(".tips img").attr("src", "../../img/card_cvv_sample.png");
+					$(".tips_popup").animate({
+						top: "30%"
+					});
+					$(".mengban").show();
+				});
+				$(".close,.mengban").click(function() {
+					$(".tips_popup").animate({
+						top: "100%"
+					});
+					$(".mengban").hide();
+				});
+
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								if(e.data.user_real == 0) {
+									var btnArray = ['取消', '确定'];
+									mui.confirm("请先进行实名认证", '提示', btnArray, function(e) {
+										if(e.index == 0) {
+											setTimeout(function() {
+												plus.webview.currentWebview("../index/binding_card.html").close();
+											}, 300);
+										} else {
+											mui.openWindow({
+												url: "../user/data_authentication.html",
+												id: "data_authentication",
+												show: {
+													autoShow: true //页面loaded事件发生后自动显示，默认为true
+												},
+												waiting: {
+													//autoShow: true, //自动显示等待框，默认为true
+													//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+												}
+											})
+										}
+									}, 'div');
+								} else {
+                                    $("#user_name").text(e.data.user_name);
+                                    $("#user_card").text(e.data.user_idcard);
+                                    uid = e.data.user_id;
+								}
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											//autoShow: true, //自动显示等待框，默认为true
+											//title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				/*获取验证码请求*/
+				$(".ask-smscode").click(function() {
+					if(codeFlag){
+                        $("#getSms").addClass('btn-pushed');
+                        codeFlag = false;
+						var card_no = $("#bank_card").val().replace(/\s*/g,'');
+						var bank_name = $("#bank_name").val();
+						var CVN2 = $("#CVN2").val();
+						var validity_time = $("#validity_time").val();
+                        // var address = $("#address").val();
+						if(card_no != '' && $("#phone").val()!='') {
+							$.ajax({
+								type: "post",
+                                // 通联支付
+								// url: site_app + "/api/KbPay/register",
+								// data: {
+								// 	token: tokens,
+								// 	customerName: $("#user_name").text(),
+								// 	idNo: $("#user_card").text(),
+								// 	//bankCardNo: card_no,
+								// 	//mobile: $("#phone").val(),
+								// 	bankCardNo: "6225767501540835",
+								// 	mobile: 17673458886,
+								// 	cvv2: CVN2,
+								// 	expiredDate: validity_time,
+								// 	type: "1"
+								// },
+                                // 即富支付
+                                url: site_app + "/api/JiFu/register",
+                                data: {
+                                    token: tokens,
+                                    type: "1",
+									uid: uid,
+                                    uname: $("#user_name").text(),
+                                    idCard: $("#user_card").text(),
+                                    bankno: card_no,
+                                    phone: $("#phone").val(),
+									expired: validity_time,
+									bankName: $("#bank_type").attr("title"),
+                                    // branch: address,
+                                    cvn2: CVN2
+
+                                    // bankno: "6225767501540835",
+                                    // phone: '17673458886',
+                                    // expired: '0821',
+
+                                    // uid: uid,
+                                    // uname: "胡传勇",
+                                    // idCard: "330105199409143117",
+                                    // bankno: "6258081671865802",
+                                    // phone: "13588474394",
+                                    // expired: "1221",
+                                    // bankName: "广发银行",
+                                    // // branch: "",
+                                    // cvn2: "586"
+
+                                },
+								dataType: "json",
+								success: function(e) {
+                                    $("#getSms").removeClass('btn-pushed');
+                                    codeFlag = true;
+									console.log(JSON.stringify(e));
+									if(e.error == 0) {
+										console.log('请求成功');
+										mui.toast("发送成功");
+                                        // card_jfCardId = e.data.card_jfCardId;
+                                        // merchantCode = e.merchantCode;
+                                        openOrderId = e.data.openOrderId;
+                                        platMerchantCode = e.data.platMerchantCode;
+										get_code_time();
+									} else {
+										mui.alert(e.msg, '提示', '', '', 'div');
+									}
+								}
+							});
+						} else {
+							mui.alert('请填写完整信息', '提示', '', '', 'div');
+						}
+					}
+				});
+
+				/*提交信用卡信息*/
+				$("#upload_btn").click(function() {
+					var smscode = $("#smscode").val();
+					var card_no = $("#bank_card").val().replace(/\s*/g,'');
+					var validity_time = $("#validity_time").val();
+					var CVN2 = $("#CVN2").val();
+					var statement_date = $("#statement_date").attr("title");
+					var repayment_date = $("#repayment_date").attr("title");
+					var phone = $("#phone").val();
+					var limit = $("#quota").val();
+					var site = $("#site").val();
+					// var address = $("#address").val();
+
+					if(smscode && card_no && validity_time && CVN2 && statement_date && repayment_date && phone && limit ) {
+						$.ajax({
+							type: "post",
+                            // 通联支付
+							// url: site_app + "/api/my/card",
+							// data: {
+							// 	token: tokens,
+							// 	customerName: $("#user_name").text(),
+							// 	idNo: $("#user_card").text(),
+							// 	//bankCardNo: card_no,
+							// 	//mobile: phone,
+							// 	bankCardNo: "6225767501540835",
+							// 	mobile: 17673458886,
+							// 	bank_id: $("#bank_type").attr("title"),
+							// 	type: "1",
+							// 	limit: limit,
+							// 	cvn: CVN2,
+							// 	expiredDate: validity_time,
+							// 	account_day: statement_date,
+							// 	repayment_day: repayment_date,
+							// 	userId: userId,
+							// 	verCode: smscode,
+							// 	applyTradeNo: applyTradeNo
+							// 	//								region: site,
+							// 	//								branch: address
+							// },
+                            // 即富支付
+                            url: site_app + "/api/my/card",
+                            data: {
+                                token: tokens,
+                                type: "1",
+                                bank_id: $("#bank_type").attr("title"), // 银行名
+								uid: uid,
+                                customerName: $("#user_name").text(), // 用户姓名
+                                idNo: $("#user_card").text(), // 身份证号
+                                bankCardNo: card_no, // 银行卡号
+                                mobile: phone, // 手机号
+                                limit: limit, // 信用额度
+                                cvn: CVN2,
+                                exp_date: validity_time, // 卡的有效期
+                                account_day: statement_date, // 账单日
+                                repayment_day: repayment_date, // 还款日
+                                verCode: smscode, // 手机验证码
+                                // card_jfCardId: card_jfCardId, // 绑卡序列号，发送验证码时获得
+                                // merchantCode: merchantCode, // 商户号，发送验证码时获得
+                                openOrderId: openOrderId,
+                                platMerchantCode: platMerchantCode,
+                                region: site // 开户行地址
+								// branch: address // 支行名称
+
+                                // bankCardNo: "6225767501540835",
+                                // mobile: 17673458886,
+
+                                // uid: uid,
+                                // customerName: "胡传勇", // 用户姓名
+                                // idNo: "330105199409143117", // 身份证号
+                                // bankCardNo: "6258081671865802", // 银行卡号
+                                // mobile: "13588474394", // 手机号
+                                // limit: "10000", // 信用额度
+                                // cvn: "586",
+                                // exp_date: "1221", // 卡的有效期
+                                // account_day: "03", // 账单日
+                                // repayment_day: "15", // 还款日
+                                // verCode: smscode, // 手机验证码
+                                // // openOrderId: "20190709182301779582",
+                                // // platMerchantCode: "vs3d89ot3000",
+                                // region: "浙江省-杭州市-拱墅区" // 开户行地址
+                                // // branch: "" // 支行名称
+                            },
+							dataType: "json",
+							success: function(e) {
+								console.log(JSON.stringify(e));
+								if(e.error == 0) {
+									mui.alert("添加成功", '提示', '', function() {
+										setTimeout(function() {
+											plus.webview.currentWebview("../index/binding_card.html").close();
+										}, 300);
+										var list = plus.webview.currentWebview().opener();
+										//触发父页面的自定义事件(refresh),从而进行刷新
+										mui.fire(list, 'index');
+									}, 'div');
+								} else {
+									mui.alert(e.msg, '提示', '', '', 'div');
+								}
+							}
+						});
+					} else {
+						mui.alert("请填写完整信息", '提示', '', '', 'div');
+					}
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+			});
+
+			function testNum() {
+				var testValue = $('#bank_card').val().replace(/\D/g,  '').replace(/....(?!$)/g,  '$& ');  //替换空格前4位数字为4位数字加空格
+				$('#bank_card').val(testValue); 
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/share_code.css" />
+    <style type="text/css">
+        #imgOne {
+            width: 150px;
+        }
+    </style>
+</head>
+
+<body>
+<header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left back"></a>
+    <h1 class="mui-title">提现二维码</h1>
+</header>
+<div class="mui-content">
+    <div class="title">
+
+        <!--<img class="share_title_img" src="../../img/share_title.png" alt="分享">-->
+    </div>
+
+    <div class="code_info">
+        <p class="tips">支付成功后，<br>15分钟内打款到注册时提交的储蓄卡</p>
+        <div id="saveImg">
+        </div>
+        <img src="" id="imgOne" />
+
+        <p class="tips">截图或长按二维码保存图片，<br>再用支付宝扫描该二维码</p>
+        <p class="tips">二维码有效期：30分钟</p>
+        <div class="matching_a"></div>
+        <div class="matching_b"></div>
+    </div>
+    <div class="footer">
+        <img class="share_foot" src="../../img/share_foot.png" alt="乐活分享">
+    </div>
+</div>
+
+<input type="hidden" id="sharehref" value="" />
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/jquery.qrcode.min.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    mui.plusReady(function() {
+            mui.init({
+                hardwareAccelerated: true,
+                gestureConfig: {
+                    longtap: true
+                }
+            });
+
+            window.addEventListener('activation', function(e) {
+                //执行刷新
+                location.reload();
+            });
+            var tokens = getToken();
+            var self = plus.webview.currentWebview();
+
+            $("#saveImg").attr("title", self.urls);
+            $("#sharehref").val(self.urls);
+            console.log(self.urls);
+            var qrcode = $('#saveImg').qrcode(self.urls).hide();
+            var canvas = qrcode.find('canvas').get(0);
+            $('#imgOne').attr('src', canvas.toDataURL("image/jpg"));
+
+            /*获取二维码链接*/
+            document.getElementById("imgOne").addEventListener('longtap', function() {
+                var actionList = {
+                    cancel: "取消",
+                    buttons: [{
+                        title: "保存图片"
+                    }]
+                };
+                var imgurl = $("#saveImg").attr("title");
+                //弹出actionSheet选项
+                plus.nativeUI.actionSheet(actionList, function(e) {
+                    if(e.index == 1) {
+                        bitmapSavePic($("#imgOne").attr("src"))
+                    }
+                });
+            });
+
+            function bitmapSavePic(src) {
+                var bm = new plus.nativeObj.Bitmap("imgOne"); //path: ( String ) 可选 Bitmap对象自动加载图片的地址
+                bm.loadBase64Data($('#imgOne').attr('src'), function(i) {
+                    bm.save('_doc/project_barcode.jpg', {
+                        overwrite: true,
+                        format: "jpg",
+                        quality: 100
+                    }, function(i) {
+                        saveToGallery(i.target);
+                        bm.clear(); // 销毁bitmap
+                    }, function(e) {
+                        mui.toast('保存图片失败', {
+                            duration: 'long',
+                            type: 'div'
+                        });
+                        bm.clear(); // 销毁bitmap
+                    });
+                }, function(e) {}); //加载base64为数据到bm实例对象
+            }
+            var bmloadSuccessCB = function(e) {console.log(e);};
+            var bmloadErrorCB = function(err) {console.log(err);};
+            var bmSaveSuccessCB = function(e) {
+                console.log(e);
+                console.log("保存地址：" + e.target);
+                saveToGallery(e.target)
+            };
+            var bmSaveErrorCB = function(error) {
+                plus.nativeUI.toast("保存失败");
+                console.log("code：" + error.code + ";msg:" + error.message);
+            };
+
+            function saveToGallery(path) {
+                plus.gallery.save(path, function(e) {
+                    mui.toast('保存图片成功', {
+                        duration: 'long',
+                        type: 'div'
+                    })
+                }, function(err) {
+                    mui.toast('保存图片失败', {
+                        duration: 'long',
+                        type: 'div'
+                    })
+                });
+            }
+
+            $("body").ajaxStop(function() {
+                plus.nativeUI.closeWaiting();
+            });
+        }
+
+    )
+</script>
+</body>
+
+</html>

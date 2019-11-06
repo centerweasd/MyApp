@@ -1,0 +1,405 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/wallet.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class=""></a>
+			<h1 class="mui-title">赚呗</h1>
+			<img src="../../img/help_white_icon.png" class="doubt" />
+		</header>
+		<div class="mui-content">
+			<div class="balance">
+				<ul>
+					<li>
+						<p class="money tj_num">0</p>
+						<p class="tips">推荐人数</p>
+					</li>
+					<li>
+						<p class="money jf_num">0</p>
+						<p class="tips">我的积分</p>
+					</li>
+					<li>
+						<p class="money money_y">0.00</p>
+						<p class="tips">我的余额</p>
+					</li>
+					<div class="clear"></div>
+				</ul>
+			</div>
+
+			<div class="notice">
+				<span class="iconfont icon-gonggao"></span>
+				<span class="notice_info">
+					<ul class="notice-txt">
+						<!--<li>恭喜用户:132****9801的好友刷了一笔钱，获得78.35现金1</li>
+						<li>恭喜用户:132****9801的好友刷了一笔钱，获得78.35现金2</li>
+						<li>恭喜用户:132****9801的好友刷了一笔钱，获得78.35现金3</li>
+						<li>恭喜用户:132****9801的好友刷了一笔钱，获得78.35现金4</li>
+						<li>恭喜用户:132****9801的好友刷了一笔钱，获得78.35现金5</li>-->
+					</ul>
+					
+				</span>
+			</div>
+			<!--<img src="../../img/makemoney_banner.png" width="100%" style="display: block;" />-->
+			<!--<div class="mui-table-view go_xy">
+				<div class="mui-table-view-cell">
+					<a class="mui-navigate-right">
+						<img src="../../img/makemoney_school.png" width="9%" style="vertical-align: middle;margin-right: 5px;" /> 付啦学院
+					</a>
+				</div>
+			</div>-->
+			<div class="mui-table-view wallet_md">
+				<div class="list_head">
+					<p class="title">
+						<img src="../../img/makemoney_redpacket_icon.png" />
+						<span style="vertical-align: middle;">新手福利</span>
+					</p>
+					<p>完成以下任务即可获得奖励</p>
+				</div>
+				<div class="wallet_list">
+					<div class="mui-table-view">
+						<div class="left">
+							<p class="view_title">
+								添加信用卡
+								<span class="bk_money"></span>
+							</p>
+							<p class="condition">添加信用卡成功即可获得奖励</p>
+						</div>
+						<div class="right">
+							<span class="to_finish go_bk">去完成</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="clear"></div>
+					<div class="mui-table-view">
+						<div class="left">
+							<p class="view_title">
+								信用卡收款
+								<span class="sk_money"></span>
+							</p>
+							<p class="condition">完成绑卡即可获得奖励</p>
+						</div>
+						<div class="right">
+							<span class="to_finish go_sk">去完成</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="mui-table-view">
+						<div class="left">
+							<p class="view_title">
+								信用卡还款
+								<span class="hk_money"></span>
+							</p>
+							<p class="condition">成功完成还款即可获得奖励</p>
+						</div>
+						<div class="right">
+							<span class="to_finish go_hk">去完成</span>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+			</div>
+			<div class="mui-table-view wallet_md" style="margin-top: 10px;">
+				<div class="list_head">
+					<p class="title">
+						<img src="../../img/makemoney_generalize_icon.png" />
+						<span style="vertical-align: middle;">推广升级</span>
+					</p>
+					<p>邀请好友使用，邀请越多奖励越多</p>
+				</div>
+				<div class="wallet_list" id="tg_list">
+					<!--<div class="mui-table-view">
+						<div class="left">
+							<p class="view_title">
+								邀请好友
+								<span>+20元</span>
+							</p>
+							<p class="condition">好友完成还款即可获得，邀请越多奖励越多</p>
+						</div>
+						<div class="right">
+							<span class="to_finish">去邀请</span>
+						</div>
+						<div class="clear"></div>
+					</div>-->
+				</div>
+			</div>
+
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+
+				window.addEventListener('index', function(e) { //执行刷新
+					location.reload();
+				});
+				window.addEventListener('user', function(e) { //执行刷新
+					location.reload();
+				});
+
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = localStorage.getItem("token");
+				var self = plus.webview.currentWebview();
+				if(self.type == 1) {
+					$("header a").attr("class", "mui-action-back mui-icon mui-icon-left-nav mui-pull-left");
+				}
+				//				/*公告文字上下轮播*/
+				//				notice($('.notice-txt'));
+				//
+				//				function notice(ul) {
+				//					var li = ul.find('li').eq(0).html();
+				//					ul.append('<li>' + li + '</li>');
+				//					var num = 0;
+				//					setInterval(function() {
+				//						num++;
+				//						if(num == ul.find('li').length) {
+				//							num = 1;
+				//							ul.css({
+				//								marginTop: 0  
+				//							});
+				//						}
+				//						$('.notice-txt').animate({
+				//							marginTop: -40 * num
+				//						}, 400);
+				//					}, 3000);
+				//				}
+
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								$.ajax({
+									type: "post",
+									url: site_app + "/api/Make/index",
+									data: {
+										token: tokens
+									},
+									dataType: "json",
+									success: function(e) {
+										if(e.error == 0) {
+											$(".tj_num").text(e.data.user.count);
+											$(".jf_num").text(e.data.user.integral);
+											$(".money_y").text(e.data.user.moeny);
+											$(".bk_money").html("+" + e.data.card.binCard + "元");
+											$(".hk_money").html("+" + e.data.mission.mission + "元");
+											$(".sk_money").html("+" + e.data.records.records + "元");
+											$(".go_bk").attr("title", e.data.card.isbinCard);
+											if(e.data.card.isbinCard == 0) {
+												$(".go_bk").addClass("to_finish").removeClass("to_finish_h");
+											} else {
+												$(".go_bk").addClass("to_finish_h").removeClass("to_finish").html("已完成").attr("disabled", "disabled");
+											}
+											if(e.data.mission.ismission == 0) {
+												$(".go_hk").addClass("to_finish").removeClass("to_finish_h");
+											} else {
+												$(".go_hk").addClass("to_finish_h").removeClass("to_finish").html("已完成").attr("disabled", "disabled");
+											}
+											if(e.data.records.isrecords == 0) {
+												$(".go_sk").addClass("to_finish").removeClass("to_finish_h");
+											} else {
+												$(".go_sk").addClass("to_finish_h").removeClass("to_finish").html("已完成").attr("disabled", "disabled");
+											}
+
+											for(var i = 0; i < e.list.length; i++) {
+												var to_;
+												var texts;
+												if(e.list[i].isok == 0) {
+													to_ = "to_finish";
+													texts = "去邀请";
+												} else {
+													to_ = "to_finish_s";
+													texts = "立即升级";
+												}
+												var html = "<div class='mui-table-view'>" +
+													"<div class='left'>" +
+													"<p class='view_title'>" +
+													e.list[i].name +
+													"<span style='font-size:13px;margin-left:5px'>需邀请" + e.list[i].count + "人</span>" +
+													"</p>" +
+													"<p class='condition'>" + e.list[i].msg + "</p>" +
+													"</div>" +
+													"<div class='right'>" +
+													"<span class='" + to_ + "' title='" + e.list[i].id + "'>" + texts + "</span>" +
+													"</div>" +
+													"<div class='clear'></div>" +
+													"</div>";
+												$("#tg_list").append(html);
+											}
+
+											/*顶部滚动信息*/
+											for(var a = 0; a < e.news.length; a++) {
+												var li = "<li>" + e.news[a] + "</li>";
+												$(".notice-txt").append(li);
+											}
+										}
+									}
+								});
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待' //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+
+				$(".go_bk").click(function() {
+					mui.openWindow({
+						url: "../index/binding_card.html",
+						id: "binding_card",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$(".go_sk").click(function() {
+					var types = $(".go_bk").attr("title");
+					if(types == 0) {
+						mui.openWindow({
+							url: "../index/binding_card.html",
+							id: "binding_card",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						mui.openWindow({
+							url: "../index/card_list.html",
+							id: "card_list",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					}
+				});
+				$(".go_hk").click(function() {
+					var types = $(".go_bk").attr("title");
+					if(types == 0) {
+						mui.openWindow({
+							url: "../index/binding_card.html",
+							id: "binding_card",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					} else {
+						mui.openWindow({
+							url: "../index/card_list.html",
+							id: "card_list",
+							show: {
+								autoShow: true //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待' //等待对话框上显示的提示内容
+							}
+						})
+					}
+				});
+				$("#tg_list").on("click", ".to_finish", function() {
+					mui.openWindow({
+						url: "../user/invite_friend.html",
+						id: "invite_friend",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("#tg_list").on("click", ".to_finish_s", function() {
+					var title = $(this).attr("title");
+					$.ajax({
+						type: "post",
+						url: site_app + "/api/Make/maketo",
+						data: {
+							token: tokens,
+							id: title
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								mui.alert(e.msg, '提示', '', function() {
+									location.reload();
+								}, 'div');
+							} else {
+								mui.alert(e.msg, '提示', '', '', 'div');
+							}
+						}
+					});
+				});
+
+				$(".doubt").click(function() {
+					mui.openWindow({
+						url: "../user/help_center.html",
+						id: "help_center",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

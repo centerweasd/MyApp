@@ -1,0 +1,142 @@
+html,body,.mui-content{
+	height: 100%;
+}
+.mui-content{
+	background: #fff;
+}
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.title{
+	color: #848388;
+	background: #f0eff4;
+	text-indent: 1rem;
+	line-height: 2rem;
+	font-size: 14px;
+}
+.add-feed{
+	width: 53%;
+}
+.reg_form{
+	margin: 0 25px;
+}
+.mui-input{
+	color: #777;
+	font-size: 15px;
+}
+#body{
+	color: #C7C7CC;
+}
+.mui-input-group:before,.mui-input-group:after{
+	height: 0 !important;
+}
+.reg_form .mui-input-row img{
+	width: 7%;
+	vertical-align: middle;
+}
+.reg_form input{
+	padding: 0;
+	width: 70%;
+	font-size: 15px;
+}
+.reg_form .phone .mui-icon-clear{
+	right: 30px !important;
+}
+.mui-input-group .mui-input-row:after{
+	left: 0;
+}
+.hq_code{
+	width: 30% !important;
+	padding: 10px !important;
+	background: #DDDDDD;
+	border: none;
+	font-size: 12px;
+	top: 3px;
+}
+.hq_code:disabled{
+	opacity: 1;
+}
+.mui-icon-eye:before{
+	border-left: 1px solid #eee;
+	padding-left: 10px;
+}
+.mui-input-group .mui-input-row{
+	position: relative;
+	margin-bottom: 10px;
+}
+.mui-input-group .mui-input-row:last-child{
+	margin-bottom: 0;
+}
+::-webkit-input-placeholder {
+	color: #A2A2A2;
+	font-size: 13px;
+}
+
+:-moz-placeholder {
+	color: #A2A2A2;
+	font-size: 13px;
+}
+
+::-moz-placeholder {
+	color: #A2A2A2;
+	font-size: 13px;
+}
+
+:-ms-input-placeholder {
+	color: #A2A2A2;
+	font-size: 13px;
+}
+.mui-checkbox input[type=checkbox]:checked:before {
+	content: '\e442' !important;
+	color: #1EBD80 !important;
+}
+
+.mui-checkbox input[type=checkbox]:before {
+	font-size: 20px !important;
+	vertical-align: middle;
+}
+
+.mui-checkbox input[type=checkbox] {
+	position: static !important;
+	width: 20px !important;
+	height: 20px !important;
+}
+.not_collet{
+	text-align: right;
+	font-size: 13px;
+	color: #999999;
+}
+.reg,.edit_pw{
+	left: 50%;
+	width: 100%;
+	margin-left: -50%;
+	margin-top: 20px;
+	background: #FA625F;
+	border: 1px solid #FA625F;
+	padding: 10px 15px;
+	font-size: 15px;
+}
+.mui-checkbox label{
+	display: inline;
+	padding-right:0;
+}
+.protocol{
+	margin-top: 10px;
+	text-align: center;
+	font-size: 13px;
+	color: #999999;
+}
+.reg_xy{
+	color: #2EABFD;
+}

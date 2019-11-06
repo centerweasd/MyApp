@@ -1,0 +1,106 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style type="text/css">
+			header {
+				width: 100%;
+				background-color: #FF8F48 !important;
+				box-shadow: none !important;
+			}
+			
+			.mui-content {
+				background: #fff;
+				padding: 20px 15px 15px 15px !important;
+			}
+			
+			header a {
+				color: #fff;
+			}
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			h1 {
+				font-size: 20px;
+			}
+			
+			.time {
+				font-size: 12px;
+			}
+			
+			.content {
+				margin: 20px 0;
+				font-size: 15px;
+			}
+			
+			.suffix p {
+				margin: 0;
+				text-align: right;
+			}
+			
+			.suffix p:first-child {
+				font-size: 15px;
+				color: #333;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">系统消息</h1>
+		</header>
+		<div class="mui-content">
+			<h1 class="title">--</h1>
+			<p class="time">--</p>
+			<div class="content">
+				--
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				var self = plus.webview.currentWebview();
+				console.log(self.title);
+				var tokens = getToken();
+				getToken();
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/message/info",
+					data: {
+						token: tokens,
+						id: self.title
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							$(".title").html(e.data.message_title);
+							var message_time = e.data.message_time;
+									var dates = new Date(message_time*1000);
+							var y = dates.getFullYear();
+							var m = dates.getMonth() + 1;
+							var d = dates.getDate();
+							var times = y + "-" + m + "-" + d;
+							$(".time").html(times);
+							$(".content").html(e.data.message_body);
+						}
+					}
+				});
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css"/>
+		<link rel="stylesheet" type="text/css" href="../../css/recharge.css"/>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		    <h1 class="mui-title">充值</h1>
+		</header>
+		<div class="mui-content">
+			<div class="mui-input-row inputs">
+			    <label>金额(￥)</label>
+			    <input type="text" id="money" placeholder="请输入充值金额" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();">
+			</div>
+			<div class="cz_type">
+				<div class="title">
+					充值方式
+				</div>
+				<ul class="type_list">
+					<li>
+						<div class="mui-input-row mui-radio mui-left">
+						    <label>
+						    	<img src="../../img/weixin.png" width="10%"/>
+						    	微信支付
+						    </label>
+						    <input name="radio" type="radio" checked>
+						</div>
+					</li>
+					<li>
+						<div class="mui-input-row mui-radio mui-left">
+						    <label>
+						    	<img src="../../img/icon-zfb.png" width="10%"/>
+						    	支付宝
+						    </label>
+						    <input name="radio" type="radio">
+						</div>
+					</li>
+					<li>
+						<div class="mui-input-row mui-radio mui-left">
+						    <label>
+						    	<img src="../../img/yinlina.png" width="10%"/>
+						    	银联支付
+						    </label>
+						    <input name="radio" type="radio">
+						</div>
+					</li>
+				</ul>
+				<button type="button" class="mui-btn mui-btn-blue">确认充值</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script type="text/javascript">
+			mui.init()
+		</script>
+	</body>
+
+</html>

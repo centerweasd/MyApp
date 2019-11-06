@@ -1,0 +1,73 @@
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+ul li {
+	position: relative;
+	padding: 10px 10px 10px 15px;
+	font-size: 14px;
+	background: #fff;
+	align-items: center;
+	display: -webkit-flex;
+}
+
+ul li .address_ct {
+	width: 85%;
+	float: left;
+	padding-bottom: 10px;
+}
+
+ul li .address_ct p {
+	margin: 0;
+}
+
+ul li .set_mr {
+	width: 12%;
+	height: 35px;
+	line-height: 35px;
+	font-size: 12px;
+	color: #A3A3A3;
+	margin-left: 2%;
+	text-align: center;
+	border-left: 1px solid #eee;
+	padding-left: 10px;
+}
+
+
+ul li .user_info .user_name {
+	font-size: 15px;
+	margin-right: 10px;
+}
+
+ul li .user_info .phone {
+	font-size: 12px;
+	color: #A3A3A3;
+}
+
+.add {
+	position: absolute;
+	top: 12px;
+	right: 15px;
+	color: #fff;
+	font-size: 14px;
+}
+.moren{
+	display: inline-block;
+	height: 20px;
+	line-height: 20px;
+	padding: 0 5px;
+	background: #FB5D5D;
+	color: #fff;
+	margin-right: 10px;
+	font-size: 12px;
+}

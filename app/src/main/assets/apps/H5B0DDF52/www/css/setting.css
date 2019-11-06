@@ -1,0 +1,108 @@
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+.version_info{
+	text-align: center;
+	margin-top: 10px;
+}
+.version_info img{
+	width: 40%;
+}
+.version_info .app_name{
+	font-size: 14px;
+	color: #333;
+	margin-top: 10px;
+	margin-bottom: 0;
+}
+
+.mui-table-view li .img{ 
+	width: 10%;
+	text-align: left;
+}
+.mui-table-view li .img img{
+	width: 70%;
+	vertical-align: middle;
+}
+.mui-table-view:before,.mui-table-view:after{
+	height: 0;
+}
+.mui-table-view-cell:after{
+	left: 0;
+}
+.mui-table-view-cell{
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+}
+.mui-navigate-right{
+	font-size: 14px;
+	    margin: 0px -15px !important;
+}
+.sign_out{
+	height: 40px;
+	line-height: 40px;
+	color: #FD4F4E;
+	font-size: 15px;
+	font-size: 15px;
+	text-align: center;
+	background: #fff;
+	margin-top: 20px;
+}
+
+.mengban {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .5);
+}
+
+.update-view {
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	z-index: 999;
+	width: 90%;
+	margin-left: -45%;
+	padding: 15px;
+	background: #fff;
+	font-size: 14px;
+	display: none;
+	border-radius: 8px;
+}
+
+.update-view li {
+	padding: 16px 11px;
+}
+
+.update-view p {
+	font-size: 18px;
+	margin-top: 5px;
+}
+
+progress {
+	width: 100%;
+	height: 10px;
+	border-radius: 5px;
+}
+
+progress::-webkit-progress-bar {
+	background-color: #d7d7d7;
+}
+
+progress::-webkit-progress-value {
+	background-color: #aadd6a;
+}

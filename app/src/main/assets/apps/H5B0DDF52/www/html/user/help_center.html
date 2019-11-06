@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/help_center.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">帮助中心</h1>
+		</header>
+		<div class="mui-content">
+			<div class="help_type">
+				<ul class="mui-table-view mui-grid-view mui-grid-9" id="ypeList">
+
+				</ul>
+			</div>
+			<p class="sign">热门问题</p>
+			<div class="hot_issues">
+				<ul class="mui-table-view" id="hoeList">
+
+				</ul>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				//获取分类
+				var tokens = getToken();
+				getToken();
+				//获取头部
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/My/article_type',
+					cache: false,
+					data: {
+						'token': tokens
+					},
+					dataType: 'json',
+					success: function(e) {
+						if(e.error == 0) {
+							var result = e.data; //JSON.parse(e.data);
+							var tpl = '';
+							for(var i = 0; i < result.length; i++) {
+								tpl += '<li class="mui-table-view-cell mui-media mui-col-xs-3 mui-col-sm-3" data-type="' + result[i].type_id + '">';
+								tpl += '	<img src="' + site_app + result[i].typeico + '" width="45%" />';
+								tpl += '	<div class="mui-media-body">' + result[i].type_name + '</div>';
+								tpl += '</li>';
+							}
+							$('#ypeList').html(tpl);
+						}
+					}
+				});
+				//获取热门
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/My/hotproblems',
+					cache: false,
+					data: {
+						'token': tokens
+					},
+					dataType: 'json',
+					success: function(e) {
+						if(e.error == 0) {
+							var result = e.data; //JSON.parse(e.data);
+							var tpl = '';
+							for(var i = 0; i < result.length; i++) {
+
+								tpl += '<li class="mui-table-view-cell" data-id="' + result[i].article_id + '">';
+								tpl += '	<span class="mui-navigate-right">';
+								tpl += result[i].article_title;
+								tpl += '	</span>';
+								tpl += '</li>';
+							}
+							$('#hoeList').html(tpl);
+						}
+					}
+				});
+				$('#ypeList').on('click', 'li', function() {
+					var typid = $(this).attr("data-type");
+					mui.openWindow({
+						url: "help_list.html",
+						id: "help_list",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							typeid: typid
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$('#hoeList').on('click', 'li', function() {
+					var id = $(this).attr("data-id");
+					mui.openWindow({
+						url: "help_detailed.html",
+						id: "help_detailed",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							ids: id
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

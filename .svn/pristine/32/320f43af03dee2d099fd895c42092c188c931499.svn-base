@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/shop_mall.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">商品搜索</h1>
+		</header>
+		<div class="mui-content" style="padding-top: 55px;">
+			<ul class="product_list">
+				
+			</ul>
+			<p class="more">点击加载更多</p>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				
+				var keywords = plus.webview.currentWebview().keywords;
+				
+				
+				$(document).on('click','.product_list li',function(){
+					var goods_id = $(this).attr("data-id");
+					mui.openWindow({
+						url: "../find/product_details.html",
+						id: "product_details",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							goods_id: goods_id
+						},
+						createNew:true,
+						waiting: {
+							autoShow: false //自动显示等待框，默认为true
+							//title: '', //等待对话框上显示的提示内容
+						}
+					})
+				})
+				
+				var pages =1;
+				getGoodsData(pages,keywords);
+				
+				$(".more").click(function() {
+					pages++;
+					getGoodsData(pages,keywords);
+				})
+				//获取底部首页信息
+				function getGoodsData(page,keywords){
+					
+					$.ajax({
+						url: site_app + "/api/Goods/searcgoods",
+						type: "get",
+						data: {
+							page: page,
+							title:keywords
+						},
+						dataType: "json",
+						success: function(e) {
+							console.log(e);
+							if(e.error == 0) {
+								var datas = e.data.data;
+								if(datas.length != false) {
+									$(".mui-content,.more").show();
+									$(".no_info").hide();
+									var tpl ='';
+									for(var i = 0; i < datas.length; i++) {
+										 
+										tpl += '<li data-id="' + datas[i].goods_id + '"  >';
+										tpl += '	<div class="product_img">';
+										tpl += '		<img src="' + datas[i].goods_img + '" />';
+										tpl += '	</div>';
+										tpl += '	<p class="product_name">' + datas[i].goods_title + '</p>';
+										tpl += '	<p class="product_js">' + datas[i].goods_jingle + '</p>';
+										if(datas[i].goods_type==1){
+											tpl += '	<p class="money">' + datas[i].goods_price + '/元</p>';
+										}else{
+											tpl += '	<p class="money">' + datas[i].goods_integral + '/积分</p>';	
+										}
+										tpl += '</li>';
+										
+									}
+									$(".product_list").append(tpl);
+									
+								} else {
+									$(".product_list .more").hide();
+									mui.toast('没有更多数据了',  '');
+								}
+	
+							}
+						}
+					})
+					
+				}
+				
+				plus.nativeUI.closeWaiting();
+				 
+			})
+		</script>
+	</body>
+
+</html>

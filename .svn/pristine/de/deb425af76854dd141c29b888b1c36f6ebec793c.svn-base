@@ -1,0 +1,423 @@
+html,
+body,
+.mui-content,
+.mui-slider,
+.mui-slider-group {
+	height: 100%;
+}
+
+header {
+	width: 100%;
+	background-color: #FA625F !important;
+	box-shadow: none !important;
+}
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.icon-sangedian {
+	position: absolute;
+	top: 10px;
+	right: 15px;
+	color: #fff;
+	font-size: 30px !important;
+}
+
+.mui-content {
+	padding-top: 160px !important;
+}
+
+.card_info {
+	position: fixed;
+	top: 44px;
+	left: 0;
+	width: 100%;
+	background: #FA625F;
+	padding: 0 15px;
+}
+
+.card_info .card_num {
+	height: 40px;
+	line-height: 40px;
+	color: #fff;
+	font-size: 15px;
+}
+
+.card_info .card_num .num {
+	font-weight: bold;
+}
+
+.card_info .card_num .icon-shuaxin {
+	font-size: 25px !important;
+}
+
+.bill_info {
+	height: 60px;
+	color: #FFF4F2;
+	font-size: 12px;
+	margin: 6px 0;
+}
+
+.bill_info .left {
+	margin-top: 5px;
+}
+
+.bill_info .left .surplus {
+	font-size: 22px;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.bill_info .left p {
+	color: #fff;
+	font-size: 12px;
+	margin: 0;
+}
+
+.bill_info .right li {
+	height: 20px;
+	line-height: 20px;
+}
+
+.mui-slider-indicator.mui-segmented-control {
+	background: #fff;
+}
+
+.mui-slider-progress-bar {
+	height: 1px;
+	background-color: #FA625F !important;
+}
+
+.mui-slider .mui-slider-group {
+	margin-top: 4px;
+	background: #fff;
+}
+
+.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active {
+	color: #FA625F !important;
+}
+  
+.mui-control-item {
+	font-size: 15px;
+	color: #999999 !important;
+	line-height: 45px !important;
+}
+
+.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
+	border-top: 0;
+	border-bottom: 0;
+	background: #fff;
+	overflow: auto;
+    padding-bottom: 50px;
+}
+
+.mui-table-view-cell:after {
+	left: 0;
+}
+
+.mui-table-view-cell:last-child:after,
+.mui-table-view-cell:last-child:before {
+	height: 1px;
+}
+
+.mui-table-view-cell.mui-active {
+	background-color: #fff;
+	margin-top: 0 !important;
+}
+
+.mui-table-view-cell.mui-collapse .mui-collapse-content {
+	background: #F8F8F8;
+	border-top: 1px solid #eee;
+}
+
+#item1 .mui-navigate-right:after, #item2 .mui-navigate-right:after {
+	left: 10px;
+}
+
+#item1 .mui-table-view-cell>a:not(.mui-btn),#item2 .mui-table-view-cell>a:not(.mui-btn) {
+	padding: 11px 15px 11px 25px;
+	z-index: 9;
+}
+
+.mui-table-view-cell {
+	position: relative;
+	padding: 5px 15px !important;
+}
+
+.detailed .not_out {
+	color: #E05867;
+	font-size: 15px;
+}
+
+.detailed_money {
+	font-size: 15px;
+}
+
+.detailed .detailed_time {
+	font-size: 12px;
+}
+
+.detailed_modify {
+	position: absolute;
+	top: 28px;
+	right: 15px;
+	color: #2FAAFA;
+	z-index: 90;
+}
+
+.hidden_menu {
+	height: 52px;
+	padding: 5px 15px !important;
+	margin: 11px -15px -5px !important;
+}
+
+.hidden_menu .menu_img {
+	width: 8%;
+	line-height: 42px;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+.hidden_menu .menu_img img {
+	width: 50%;
+	vertical-align: middle;
+}
+
+.menu_class {
+	padding-top: 2px;
+}
+
+.menu_class .bill_type {
+	font-size: 14px;
+	color: #000;
+}
+
+.menu_class .type_time {
+	font-size: 12px;
+}
+
+.bill_money {
+	line-height: 42px;
+	color: #999999;
+}
+
+.import_bill {
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
+	border: 1px solid #2FAAFA;
+	color: #2FAAFA;
+	font-size: 14px;
+	border-radius: 20px;
+	margin-top: 10px;
+}
+
+.month {
+	font-size: 15px;
+	color: #000;
+}
+
+.bottom_btn {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+}
+
+.bottom_btn ul li {
+	width: 50%;
+	height: 45px;
+	line-height: 45px;
+	float: left;
+	text-align: center;
+	font-size: 15px;
+}
+
+.already_repaid {
+	border-top: 1px solid #eee;
+	color: #FF8F48;
+	background: #fff;
+}
+
+.repayment_btn {
+	background: #FA625F;
+	color: #fff;
+}
+
+
+/*修改弹窗*/
+
+.popup {
+	position: fixed;
+	left: 0;
+	bottom: -100px;
+	width: 100%;
+	z-index: 99;
+}
+
+.popup .title {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	text-align: center;
+}
+
+.popup .title p {
+	color: #333;
+}
+
+.popup .title .sure {
+	position: absolute;
+	top: 0;
+	right: 15px;
+	font-size: 14px;
+	color: #333;
+}
+
+.popup .input {
+	background: #f2f2f2;
+	text-align: center;
+}
+
+.popup .input input {
+	width: 94%;
+	margin: 10px auto;
+	border: 0;
+	font-size: 14px;
+}
+
+.mui-input-row .mui-input-clear~.mui-icon-clear {
+	top: 20px;
+	right: 10px;
+}
+
+.mengban {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .5);
+	z-index: 98;
+}
+
+#item1 ul li {
+	padding: 0 15px !important;
+}
+#item1 ul li .type_img{
+	width: 10%;
+	line-height: 50px;
+}
+#item1 ul li .type_img img{
+	width: 80%;
+	vertical-align: middle;
+}
+#item1 .mui-table-view-cell>a:not(.mui-btn){
+	margin: 0px -15px !important;
+}
+#item1 .type{
+	margin-top: 5px;
+}
+#item1 .type_name{
+	color: #333;
+	font-size: 15px;
+}
+#item1 .type_tips{
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+
+.info_list{
+	padding: 0 10px;
+}
+.info_list .mui-table-view{
+	background: #fff;
+	margin-top: 15px;
+	border-radius: 5px;
+	box-shadow: 0 0 5px #eee;	
+	padding: 10px 15px;
+}
+.info_list .view_ul{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+.info_list .view_ul li{
+	width: calc(100% / 3);
+	text-align: center;
+	float: left;
+	font-size: 14px;
+}
+.info_list .view_ul li .cut{
+	font-size: 15px;
+}
+.info_list .view_ul li p{
+	margin-bottom: 0;
+	font-size: 13px;
+}
+.hk_time{
+	margin-top: 10px;
+}
+.hk_time .left{
+	width: 80%;
+	font-size: 14px;
+}
+.hk_time .left .b_m p{
+	display: inline-block;
+	margin-bottom: 0;
+	font-size: 13px;
+}
+.hk_time .left .b_m span{
+	font-size: 15px;
+	margin-left: 5px;
+}
+.hk_time .left .b_m .modify{
+	font-size: 10px;
+	color: #30ABFB;
+}
+.hk_time .right{
+	position: relative;
+	width: 12%;
+	text-align: right;
+}
+.hk_time .right img{
+	width: 60%;
+	vertical-align: middle;
+}
+
+
+.generate_plan{
+	left: 50%;
+	width: 90%;
+	margin: 15px 0 15px -45%;
+	background: #FA625F;
+	border: 1px solid #FA625F;
+	padding: 10px 12px;
+}
+
+.no_info{
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	width: 50%;
+	margin-left: -25%;
+	text-align: center;
+}
+.no_info img{
+	width: 100%;
+}
+.more{
+	height: 40px;
+	line-height: 40px;
+	text-align: center;  
+	margin-bottom: 50px;
+}

@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style>
+			body {
+				background: #303030;
+			}
+			
+			header {
+				width: 100%;
+				background-color: #FF8F48 !important;
+				box-shadow: none !important;
+			}
+			
+			header a {
+				color: #fff;
+			}
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.portrait {
+				position: absolute;
+				top: 30%;
+				left: 50%;
+				width: 14rem;
+				height: 14rem;
+				margin-left: -7rem;
+				border-radius: 50%;
+			}
+			
+			.portrait img {
+				width: 100%;
+				height: 100%;
+				border-radius: 50%;
+			}
+			
+			.upload {
+				position: fixed;
+				left: 50%;
+				bottom: 5%;
+				width: 80%;
+				height: 40px;
+				line-height: 40px;
+				margin-left: -40%;
+				color: #fff;
+				padding: 0 !important;
+				font-size: 15px;
+				background: #FF8F48;
+				border: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">修改头像</h1>
+		</header>
+		<div class="mui-content">
+			<div class="portrait">
+				<img src="../../img/avater_image.png" id="userImg" />
+			</div>
+			<button type="button" class="mui-btn mui-btn-blue upload" id="upload">上传</button>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'user');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				window.addEventListener('activation', function(e) { //执行刷新
+					location.reload();
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+
+				var tokens = getToken();
+				getToken();
+
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e)
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								if(e.data.user_img == "") {
+									$(".portrait img").attr("src", "../../img/avater_image.png");
+								} else {
+									$(".portrait img").attr("src", e.data.user_img);
+								}
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true, //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				document.getElementById('upload').addEventListener('tap', function() {
+					if(mui.os.plus) {
+						var a = [{
+							title: "拍照"
+						}, {
+							title: "从手机相册选择"
+						}];
+						plus.nativeUI.actionSheet({
+							title: "修改用户头像",
+							cancel: "取消",
+							buttons: a
+						}, function(b) { /*actionSheet 按钮点击事件*/
+							switch(b.index) {
+								case 0:
+									break;
+								case 1:
+									getImage(); /*拍照*/
+									break;
+								case 2:
+									galleryImg(); /*打开相册*/
+									break;
+								default:
+									break;
+							}
+						})
+					}
+				}, false);
+				//拍照
+				function getImage() {
+					var c = plus.camera.getCamera();
+					c.captureImage(function(e) {
+						plus.io.resolveLocalFileSystemURL(e, function(entry) {
+							var s = entry.toLocalURL() + "?version=" + new Date().getTime();
+							uploadHead(s); /*上传图片*/
+						}, function(e) {
+							console.log("读取拍照文件错误：" + e.message);
+						});
+					}, function(s) {
+						console.log("error" + s);
+					}, {
+						filename: "_doc/head.png"
+					})
+				}
+
+				//从本地相册选择
+				function galleryImg() {
+					plus.gallery.pick(function(a) {
+						plus.io.resolveLocalFileSystemURL(a, function(entry) {
+							plus.io.resolveLocalFileSystemURL("_doc/", function(root) {
+								root.getFile("head.png", {}, function(file) {
+									//文件已存在 
+									file.remove(function() {
+										entry.copyTo(root, 'head.png', function(e) {
+												var e = e.fullPath + "?version=" + new Date().getTime();
+												uploadHead(e); /*上传图片*/
+												//变更大图预览的src 
+												//目前仅有一张图片，暂时如此处理，后续需要通过标准组件实现 
+											},
+											function(e) {
+												console.log('copy image fail:' + e.message);
+											});
+									}, function() {
+										console.log("delete image fail:" + e.message);
+									});
+								}, function() {
+									//文件不存在 
+									entry.copyTo(root, 'head.png', function(e) {
+											var path = e.fullPath + "?version=" + new Date().getTime();
+											uploadHead(path); /*上传图片*/
+										},
+										function(e) {
+											console.log('copy image fail:' + e.message);
+										});
+								});
+							}, function(e) {
+								console.log("get _www folder fail");
+							})
+						}, function(e) {
+							console.log("读取拍照文件错误：" + e.message);
+						});
+					}, function(a) {}, {
+						filter: "image"
+					})
+				};
+
+				//上传图片
+				function uploadHead(imgPath) {
+					plus.nativeUI.showWaiting("上传中..");
+					var image = new Image();
+					image.src = imgPath;
+					image.onload = function() {
+						var imgData = getBase64Image(image);
+						/*在这里调用上传接口*/
+						$.ajax(site_app + "/api/upload/ajax_upload_base", {
+							data: {
+								token: tokens,
+								img: imgData,
+								type: ""
+							},
+							type: 'post',
+							dataType: "json",
+							//							contentType: false, //不可缺
+							//							processData: false,
+							success: function(data) {
+								console.log(data);
+								if(data.error == 0) {
+									$.ajax({
+										type: "post",
+										url: site_app + "/api/my/user_img",
+										data: {
+											token: tokens,
+											img: data.path,
+											type: ""
+										},
+										dataType: "json",
+										success: function(e) {
+											if(e.error == 0) {
+												plus.nativeUI.closeWaiting();
+												mui.toast('上传成功', {
+													duration: 'long',
+													type: 'div'
+												});
+												var mainImg = document.getElementById("userImg");
+												mainImg.src = imgPath;
+											}
+										}
+									});
+
+									//									window.location.reload();
+								} else {
+									mui.alert(data.msg, '提示', '', '', 'div');
+								}
+								plus.nativeUI.closeWaiting();
+							},
+							error: function(xhr, textStatus, errorThrown) {
+								console.log(xhr.readyState)
+							}
+						});
+					}
+				}
+
+				//压缩图片转成base64
+				function getBase64Image(img) {
+					var canvas = document.createElement("canvas");
+					var width = img.width;
+					var height = img.height;
+					if(width > height) {
+						if(width > 800) {
+							height = Math.round(height *= 800 / width);
+							width = 800;
+						}
+					} else {
+						if(height > 800) {
+							width = Math.round(width *= 800 / height);
+						}
+						height = 800;
+					}
+
+					canvas.width = width;
+					canvas.height = height;
+					var ctx = canvas.getContext('2d');
+					ctx.drawImage(img, 0, 0, width, height);
+
+					var dataUrl = canvas.toDataURL('image/png', 1);
+					return dataUrl.replace('data:image/png:base64,', '');
+				}
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

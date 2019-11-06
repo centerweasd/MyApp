@@ -1,0 +1,261 @@
+html,body{
+	height: 100%;
+}
+/*header {*/
+	/*width: 100%;*/
+	/*background-color: #FA625F !important;*/
+	/*box-shadow: none !important;*/
+/*}*/
+
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+	overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+}
+
+.mui-slider-indicator {
+	width: auto;
+	right: 10px;
+}
+
+.slider_num {
+	padding: 0 5px;
+	background: rgba(0, 0, 0, .5);
+	color: #fff;
+	border-radius: 20px;
+	font-size: 14px;
+}
+
+.mui-slider-item img {
+	display: block;
+}
+
+.product_info {
+	background: #fff;
+	border-top: 1px solid #ccc;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+}
+
+.discount {
+	padding: 15px 10px;
+}
+
+.product_money {
+	color: #FF7268;
+	font-size: 14px;
+	float: left;
+}
+
+.product_money .big {
+	font-size: 18px;
+}
+
+.discount .tips {
+	padding: 2px 5px;
+	color: #fff;
+	background: #FF7268;
+	border-radius: 20px;
+	font-size: 12px;
+	margin-left: 20px;
+}
+
+.product_name {
+	width: 100%;
+	line-height: 18px;
+	padding: 0 10px;
+	font-size: 16px;
+	font-weight: bold;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+.info_btn{
+	margin-top: 10px;
+	font-size: 12px;
+	color: #A3A3A3;
+}
+.info_btn .left{
+	margin-left: 10px;
+}
+.info_btn .right{
+	height: 20px;
+	line-height: 20px;
+	background: #EFEFF4;
+	border-radius: 20px 0 0 20px;
+	padding: 0 5px;
+}
+.choose_list{
+	background: #fff;
+}
+.choose {
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #eee;
+	font-size: 13px;
+	padding: 0 10px;
+}
+
+.choose label {
+	float: left;
+	color: #A3A3A3;
+	margin-right: 10px;
+}
+
+.choose span {
+	float: left;
+	width: 75%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 12px;
+}
+
+.choose .youjiantou {
+	position: absolute;
+	top: 15px;
+	right: 10px;
+	width: 2%;
+}
+
+.introduce {
+	padding: 0 10px;
+	background: #fff;
+	margin-top: 10px;
+}
+
+.introduce .title {
+	height: 30px;
+	line-height: 30px;
+	color: #000;
+	border-bottom: 1px solid #eee;
+}
+
+.choose_btn {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	z-index: 999;
+	width: 100%;
+}
+.choose_btn li {
+	width: 50%;
+	height: 45px;
+	line-height: 45px;
+	text-align: center;
+	color: #fff;
+	float: left;
+	font-size: 14px;
+}
+
+.choose_btn .buy {
+	background: #2FA9FC;
+}
+
+.choose_btn .exchange{
+	background: #FB5D5D;
+}
+
+.popup {
+	position: fixed;
+	left: 0;
+	bottom: -100%;
+	z-index: 99;
+	width: 100%;
+	max-height: 450px;
+	overflow: auto;
+	background: #fff;
+	border-radius: 10px 10px 0 0 ;
+	padding: 10px 10px 60px 10px;
+}
+.popup .norms_title .title_img{
+	width: 100px;
+	height: 100px;
+}
+.popup .norms_title .title_info{
+	margin-top: 30px;
+	margin-left: 10px;
+}
+.popup .norms_title .title_info .money{
+	font-size: 14px;
+	color: #FF7268;
+}
+.popup .norms_title .title_info p{
+	font-size: 12px;
+}
+.popup .norms_title .title_info .money span{
+	font-size: 18px;
+	font-weight: bold;
+}
+.icon-cuo{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 22px !important;
+	color: #A3A3A3;
+}
+.norms_xh{
+	margin-top: 15px;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 15px;
+}
+.norms_xh .title{
+	font-size: 14px;
+}
+.norms_xh ul li{
+	min-width: calc(100% / 4);
+	padding-top: 10px;
+	padding-right: 10px;
+	float: left;
+}
+.norms_xh ul li.active span{
+	border: 1px solid #FF7268;
+	color: #FF7268;
+	background: rgba(255,114,104,.1);
+}
+.norms_xh ul li span{
+	display: inline-block;
+	width: 100%;
+	height: 25px;
+	line-height: 25px;
+	background: #EFEFF4;
+	border-radius: 6px;
+	font-size: 13px;
+	text-align: center;
+}
+.buy_num{
+	margin-top: 15px;
+	font-size: 14px;
+}
+.buy_num .right span{
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	background: #EFEFF4;
+	padding: 0 10px;
+	text-align: center;
+	margin-right: 1px;
+	vertical-align: middle;
+}
+.buy_num .right .jia,.buy_num .right .jian{
+	font-size: 12px;
+}
+.mengban {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 98;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .5);
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/my_goldCoin.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">我的积分</h1>
+			<span class="iconfont icon-wenhao"></span>
+		</header>
+		<div class="mui-content">
+			<div class="balance">
+				<ul>
+					<li>
+						<p class="total_money user_integral">0</p>
+						<p>当前积分</p>
+					</li>
+					<li>
+						<p class="total_money user_total_integral">0</p>
+						<p>累计积分</p>
+					</li>
+					<li>
+						<span class="gold_mx">查看明细</span>
+					</li>
+					<div class="clear"></div>
+				</ul>
+			</div>
+			<!--<div class="be_careful">
+		    	<h6 class="title">注意:</h6>
+		    	<p>1.金币可兑换现金、商品、及参与抽奖活动</p>
+		    	<p>2.1000金币=1元</p>
+		    	<p>3.金币转换汇率受每天运营收益影响(上下会有浮动)</p>
+		    </div>-->
+			<!--<div class="exchange">
+		    	<div class="title">
+		    		<img src="../../img/gold_coin_conversion.png"/>
+		    		金币兑换
+		    	</div>
+		    	<!--<ul>
+		    		<li>
+		    			<img src="../../img/gold_coin_item_bg.png"/>
+		    			<p>1元</p>
+		    		</li>
+		    		<li>
+		    			<img src="../../img/gold_coin_item_bg.png"/>
+		    			<p>5元</p>
+		    		</li>
+		    		<li>
+		    			<img src="../../img/gold_coin_item_bg.png"/>
+		    			<p>10元</p>
+		    		</li>
+		    		<div class="clear"></div>
+		    	</ul>
+		    </div>-->
+		</div>
+
+		<!--兑换弹窗-->
+		<!--<div class="exchange_popup">
+			<div class="title">现金兑换</div>
+			<div class="exchange_content">
+				<div class="exchange_money dh_t">
+					兑换现金：<span class="money">1</span>
+				</div>
+				<div class="consume_gold dh_t">
+					消耗金币：<span class="money">1000</span>
+				</div>
+				<p class="tips">
+					兑换的现金存在【我的】-【可提现金额】
+				</p>
+			</div>-->
+		<!--<div class="choose"> 
+				<button type='button' class='mui-btn mui-btn-grey mui-btn-outlined cancel'>取消</button>
+				<button type='button' class='mui-btn mui-btn-blue confirm'>确认</button>
+			</div>
+		</div>-->
+		<!--<div class="mengban"></div>-->
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				//				$(".exchange li").click(function(){
+				//					$(".exchange_popup").animate({top:"30%"});
+				//					$(".mengban").show();
+				//				});
+				//				$(".cancel,.mengban").click(function(){
+				//					$(".exchange_popup").animate({top:"100%"});
+				//					$(".mengban").hide();
+				//				});
+				var tokens = getToken();
+				getToken();
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/integral",
+					data:{
+						token:tokens
+					},
+					dataType:"json",
+					success:function(e){
+						if(e.error == 0){ 
+							$(".user_integral").html(e.data.user_integral);
+							$(".user_total_integral").html(e.data.user_total_integral);
+						}
+					}
+				});
+				$(".gold_mx").click(function() {
+					mui.openWindow({
+						url: "gold_detailed.html",
+						id: "gold_detailed",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$(".icon-wenhao").click(function(){
+					mui.openWindow({
+						url: "../user/help_center.html",
+						id: "help_center",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/apply.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">在线办卡</h1>
+		</header>
+		<div class="mui-content">
+			<div id="slider" class="mui-slider">
+				<div class="mui-slider-group mui-slider-loop">
+					<!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="../../img/apply_b.png">
+						</a>
+					</div>
+					<!-- 第一张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../img/apply_b.png">
+						</a>
+					</div>
+					<!-- 第二张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../img/apply_b.png">
+						</a>
+					</div>
+					<!-- 第三张 -->
+					<div class="mui-slider-item">
+						<a href="#">
+							<img src="../../img/apply_b.png">
+						</a>
+					</div>
+					<!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+					<div class="mui-slider-item mui-slider-item-duplicate">
+						<a href="#">
+							<img src="../../img/apply_b.png">
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="tab">
+				<ul class="tab_list">
+					<li title="1">
+						<img src="../../img/a_tips_2.png" class="tips_img" />
+						<img src="../../img/apply_1.png" />
+						<p>快速办卡</p>
+					</li>
+					<li title="2">
+						<img src="../../img/apply_2.png" />
+						<p>刷卡优惠</p>
+					</li>
+					<li title="3">
+						<img src="../../img/apply_3.png" />
+						<p>免息期</p>
+					</li>
+					<li title="4">
+						<img src="../../img/a_tips_1.png" class="tips_img" />
+						<img src="../../img/apply_4.png" />
+						<p>光大有礼</p>
+					</li>
+					<div class="clear"></div>
+				</ul>
+				<button type="button" class="mui-btn mui-btn-blue receive_sub">
+					<img src="../../img/a_tips_5.png"/>
+					速领8800元					
+				</button>
+			</div>
+			<div class="hot_card">
+				<div class="title">
+					热门银行
+				</div>
+				<ul class="hot_list">
+
+				</ul>
+				<div class="clear"></div>
+			</div>
+
+			<div class="safe">
+				<span class="iconfont icon-anquan"></span> CFCA中国金融认证中心加密技术保障
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				mui(".mui-slider").slider({
+					interval: 3000 //自动轮播周期，若为0则不自动播放，默认为0；
+				});
+				var tokens = localStorage.getItem("token");
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+
+				//热门卡片
+				$.ajax({
+					type: 'post',
+					url: site_app + '/api/Lender/getHote',
+					cache: true,
+					data: {
+						'token': tokens
+					},
+					dataType: 'json',
+					success: function(e) {
+
+						if(e.error == 0) {
+
+							var result = e.data; //JSON.parse(e.data);
+							for(var i = 0; i < result.length; i++) {
+								var html = '<li>' +
+									'<div class="left">' +
+									'<img src="' + site_app + result[i].lender_img + '" />' +
+									'</div>' +
+									'<div class="hot_info right">' +
+									'<p class="bank_name">' + result[i].lender_title + '</p>' +
+									'<p class="bank_tips">' + result[i].lender_describe + '</p>' +
+									'</div>' +
+									'</li>';
+								$('.hot_list').append(html);
+							}
+
+						}
+
+					}
+				});
+				$(".tab_list li").click(function() {
+					var title = $(this).attr("title");
+					if(title == 1) {
+						mui.openWindow({
+							url: "apply_card.html",
+							id: "apply_card",
+							show: {
+								autoShow: true, //页面loaded事件发生后自动显示，默认为true
+							},
+							waiting: {
+								autoShow: true, //自动显示等待框，默认为true
+								title: '安全检测中，请等待', //等待对话框上显示的提示内容
+							}
+						})
+					} else if(title == 2) {}
+				})
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			})
+		</script>
+	</body>
+
+</html>

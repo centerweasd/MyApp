@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/message.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">系统消息</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="message_list">
+
+			</ul>
+			<p class="more">点击加载更多</p>
+			<div class="no_info" style="display: none;">
+				<img src="../../img/no_creditbill_icon.png" />
+				<p>没有相关数据</p>
+			</div>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'message');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken();
+				getToken();
+				var pages = 1;
+				$.ajax({
+					url: site_app + "/api/message/index",
+					type: "post",
+					data: {
+						token: tokens,
+						page: pages
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							var datas = e.data.data;
+							if(datas.length != false) {
+								$(".message_list,.more").show();
+								$(".no_info").hide();
+								for(var i = 0; i < datas.length; i++) {
+									var message_time = datas[i].message_time;
+									var dates = new Date(message_time*1000);
+									var y = dates.getFullYear();
+									var m = dates.getMonth() + 1;
+									var d = dates.getDate();
+									var times = y + "-" + m + "-" + d;
+									var html = '<li>' +
+										'<div class="content">' +
+										'<div class="message_title">' + datas[i].message_title + '</div>' +
+										'<div class="message_time">' + times + '</div>' +
+										'<div class="message_body">' + datas[i].message_body + '</div>' +
+										'</div>' +
+										'<div class="details mui-table-view-cell">' +
+										'<a class="mui-navigate-right look" title="' + datas[i].message_id + '">' +
+										'查看详情' +
+										'</a>' +
+										'</div>' +
+										'</li>';
+									$(".message_list").append(html);
+								}
+							} else {
+								$(".message_list,.more").hide();
+								$(".no_info").show();
+							}
+
+						}
+					}
+				});
+				$(".more").click(function() {
+					pages++;
+					$.ajax({
+						url: site_app + "/api/message/index",
+						type: "post",
+						data: {
+							token: tokens,
+							page: pages
+						},
+						dataType: "json",
+						success: function(e) {
+							if(e.error == 0) {
+								var datas = e.data.data;
+								if(datas.length != false) {
+									$(".more").html("加载更多");
+									for(var i = 0; i < datas.length; i++) {
+										var message_time = datas[i].message_time;
+									var dates = new Date(message_time*1000);
+										var y = dates.getFullYear();
+										var m = dates.getMonth() + 1;
+										var d = dates.getDate();
+										var times = y + "-" + m + "-" + d;
+										var html = '<li>' +
+											'<div class="content">' +
+											'<div class="message_title">' + datas[i].message_title + '</div>' +
+											'<div class="message_time">' + times + '</div>' +
+											'<div class="message_body">' + datas[i].message_body + '</div>' +
+											'</div>' +
+											'<div class="details mui-table-view-cell">' +
+											'<a class="mui-navigate-right look" title="' + datas[i].message_id + '">' +
+											'查看详情' +
+											'</a>' +
+											'</div>' +
+											'</li>';
+										$(".message_list").append(html);
+									}
+								} else {
+									$(".more").html("没有更多数据了");
+								}
+
+							}
+						}
+					})
+				});
+				$(".message_list").on("click",".look",function() {
+					var title = $(this).attr("title");
+					mui.openWindow({
+						url: "message_details.html",
+						id: "message_details",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							title: title
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+
+			})
+		</script>
+	</body>
+
+</html>

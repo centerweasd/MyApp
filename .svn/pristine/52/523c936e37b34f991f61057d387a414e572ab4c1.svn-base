@@ -1,0 +1,346 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/mui.picker.min.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<link rel="stylesheet" type="text/css" href="../../css/binding_card.css" />
+		<link rel="stylesheet" type="text/css" href="http://at.alicdn.com/t/font_812297_gn0v2ir2aqs.css" />
+		<style type="text/css">
+			[data-type="date"] .mui-dtpicker-title h5,
+			[data-type="date"] .mui-picker {
+				width: 100% !important;
+			}
+			
+			[data-type="date"] [data-id="picker-i"],
+			[data-type="date"] [data-id="title-i"],
+			[data-type="date"] [data-id="picker-y"],
+			[data-type="date"] [data-id="title-y"],
+			[data-type="date"] [data-id="picker-m"],
+			[data-type="date"] [data-id="title-m"] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">编辑信用卡</h1>
+		</header>
+		<div class="mui-content">
+			<form>
+
+			</form>
+			<ul class="mui-table-view">
+				<li>
+					<label>持卡人:</label>
+					<div class="right">
+						<span id="user_name">姓名</span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>身份证:</label>
+					<div class="right">
+						<span id="user_card">身份证号</span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>银行卡:</label>
+					<div class="right">
+						<input type="text" id="bank_card" readonly="readonly" placeholder="银行卡号" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>卡类型:</label>
+					<div class="right">
+						<input type="text" id="bank_type" title="" placeholder="银行卡类型" readonly="readonly" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>信用额度:</label>
+					<div class="right">
+						<input type="text" id="quota" placeholder="信用额度" oninput="value=value.replace(/[^\d]/g,'')" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>有效期:</label>
+					<div class="right">
+						<input type="text" id="validity_time" placeholder="请选择有效期 如:0324" readonly="readonly" />
+						<span class="iconfont icon-wenhao" id="validity_wenhao"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>CVV2:</label>
+					<div class="right">
+						<input type="text" id="CVV2" placeholder="卡背后三位" oninput="value=value.replace(/[^\d]/g,'')" />
+						<span class="iconfont icon-wenhao" id="CVV2_wenhao"></span>
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>账单日:</label>
+					<div class="right">
+						<input type="text" id="statement_date" title="" placeholder="请选择账单日" readonly="readonly" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>还款日:</label>
+					<div class="right">
+						<input type="text" id="repayment_date" title="" placeholder="请选择还款日" readonly="readonly" />
+					</div>
+					<div class="clear"></div>
+				</li>
+				<li>
+					<label>预留手机:</label>
+					<div class="right">
+						<input type="text" id="phone" maxlength="11" placeholder="银行预留手机号" oninput="value=value.replace(/[^\d]/g,'')" />
+					</div>
+					<div class="clear"></div>
+				</li>
+			</ul>
+			<button type="button" class="mui-btn" id="upload_btn">上传银行卡</button>
+		</div>
+
+		<!--提示弹窗-->
+		<div class="tips_popup">
+			<p class="popup_title"></p>
+			<div class="tips">
+				<img src="" />
+				<button type="button" class="mui-btn close">好的</button>
+			</div>
+		</div>
+		<div class="mengban"></div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/mui.picker.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/city.data-3.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			var tokens = getToken();
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+					beforeback: function() {
+						//获得父页面的webview
+						var list = plus.webview.currentWebview().opener();
+						//触发父页面的自定义事件(refresh),从而进行刷新
+						mui.fire(list, 'index');
+						//返回true,继续页面关闭逻辑
+						return true;
+					}
+				});
+
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+
+				var self = plus.webview.currentWebview();
+
+				/*选择有效期*/
+				var datas = new Date();
+				var year = datas.getFullYear();
+				var endDates = Number(year)+20;
+				document.getElementById('validity_time').addEventListener('tap', function() {
+					var dtPicker = new mui.DtPicker({
+						type: "month",
+						labels: ['年', '月'],
+						endDate: new Date(endDates,12,30)
+					});
+					dtPicker.show(function(selectItems) {
+						var dimed = selectItems.y.value;
+						var vals = dimed.toString();
+						var year = vals.substring(2);
+						$("#validity_time").val(selectItems.m.value + year);
+					})
+				});
+				/*选择账单日*/
+				document.getElementById('statement_date').addEventListener('tap', function() {
+					var dtPicker = new mui.DtPicker({
+						type: "date"
+					});
+					dtPicker.show(function(selectItems) {
+						$("#statement_date").val("每月" + selectItems.d.value + "日");
+						$("#statement_date").attr("title", selectItems.d.value);
+					})
+				});
+				/*选择还款日*/
+				document.getElementById('repayment_date').addEventListener('tap', function() {
+					var dtPicker = new mui.DtPicker({
+						type: "date"
+					});
+					dtPicker.show(function(selectItems) {
+						$("#repayment_date").val("每月" + selectItems.d.value + "日");
+						$("#repayment_date").attr("title", selectItems.d.value);
+					})
+				});
+
+				$("#validity_wenhao").click(function() {
+					$(".popup_title").text("有效期示例");
+					$(".tips img").attr("src", "../../img/card_validate_sample.png");
+					$(".tips_popup").animate({
+						top: "30%"
+					});
+					$(".mengban").show();
+				});
+				$("#CVV2_wenhao").click(function() {
+					$(".popup_title").text("CVV示例");
+					$(".tips img").attr("src", "../../img/card_cvv_sample.png");
+					$(".tips_popup").animate({
+						top: "30%"
+					});
+					$(".mengban").show();
+				});
+				$(".close,.mengban").click(function() {
+					$(".tips_popup").animate({
+						top: "100%"
+					});
+					$(".mengban").hide();
+				});
+
+				getToken();
+				/*获取用户信息*/
+				$.ajax({
+					url: site_app + "/api/my/info",
+					type: "post",
+					data: {
+						token: tokens
+					},
+					dataType: "json",
+					success: function(e) {
+						if(e.error == 0) {
+							if(e.data.user_isactivation == 0) {
+								if(e.data.user_real == 0) {
+									var btnArray = ['取消', '确定'];
+									mui.confirm("请先进行实名认证", '提示', btnArray, function(e) {
+										if(e.index == 0) {
+											setTimeout(function() {
+												plus.webview.currentWebview("../index/edit_card.html").close();
+											}, 300);
+										} else {
+											mui.openWindow({
+												url: "../user/data_authentication.html",
+												id: "data_authentication",
+												show: {
+													autoShow: true, //页面loaded事件发生后自动显示，默认为true
+												},
+												waiting: {
+													autoShow: true, //自动显示等待框，默认为true
+													title: '安全检测中，请等待', //等待对话框上显示的提示内容
+												}
+											})
+										}
+									}, 'div');
+								}
+								$("#user_name").text(e.data.user_name);
+								$("#user_card").text(e.data.user_idcard);
+
+							} else {
+								mui.alert('请激活账户', '提示', '', function() {
+									mui.openWindow({
+										url: "../user/activation.html",
+										id: "activation",
+										show: {
+											autoShow: true, //页面loaded事件发生后自动显示，默认为true
+										},
+										waiting: {
+											autoShow: true, //自动显示等待框，默认为true
+											title: '安全检测中，请等待', //等待对话框上显示的提示内容
+										}
+									})
+								}, 'div');
+							}
+
+						}
+					}
+				});
+				/*获取信用卡详情*/
+				$.ajax({
+					type: "post",
+					url: site_app + "/api/my/card_info",
+					data: {
+						token: tokens,
+						cid: self.dataid,
+						type: 1
+					},
+					dataType: "json",
+					success: function(e) {
+						console.log(e);
+						if(e.error == 0) {
+							$("#phone").val(e.data.card_phone);
+							$("#bank_card").val(e.data.card_no);
+							$("#bank_type").val(self.name);
+							$("#quota").val(e.data.card_credit_limit)
+							$("#CVV2").val(e.data.card_cvn);
+							$("#validity_time").val(e.data.card_exp_date);
+							$("#statement_date").val("每月"+e.data.card_account_day+"日");
+							$("#statement_date").attr("title",e.data.card_account_day);
+							$("#repayment_date").val("每月"+e.data.card_repayment_day+"日");
+							$("#repayment_date").attr("title",e.data.card_repayment_day);
+						}
+					}
+				});
+				$("#upload_btn").click(function() {
+					var bank_card = $("#bank_card").val();
+					var validity_time = $("#validity_time").val();
+					var CVV2 = $("#CVV2").val();
+					var statement_date = $("#statement_date").attr("title");
+					var repayment_date = $("#repayment_date").attr("title");
+					var phone = $("#phone").val();
+					var limit = $("#quota").val();
+
+					if(bank_card != "" && validity_time != "" && CVV2 != "" && statement_date != "" && repayment_date != "" && phone != "" && $("#bank_card").val() != "" && limit != "") {
+						$.ajax({
+							type: "post",
+							url: site_app + "/api/my/card_edit",
+							data: {
+								token: tokens,
+								cid: self.dataid,
+								bank_id: $("#bank_type").attr("title"),
+								type: "1",
+								phone: phone,
+								limit: limit,
+								cvn: CVV2,
+								exp_date: validity_time,
+								account_day: statement_date,
+								repayment_day: repayment_date
+							},
+							dataType: "json",
+							success: function(e) {
+								console.log(e);
+								if(e.error == 0) {
+									mui.alert("修改成功", '提示', '', function() {
+										setTimeout(function() {
+											plus.webview.currentWebview("../index/binding_card.html").close();
+										}, 300);
+										var list = plus.webview.currentWebview().opener();
+										//触发父页面的自定义事件(refresh),从而进行刷新
+										mui.fire(list, 'index');
+									}, 'div');
+								} else {
+									mui.alert(e.msg, '提示', '', '', 'div');
+								}
+							}
+						});
+					} else {
+						mui.alert("请填写完整信息", '提示', '', '', 'div');
+					}
+				});
+
+				$("body").ajaxStop(function() {
+					plus.nativeUI.closeWaiting();
+				});
+			});
+		</script>
+	</body>
+
+</html>

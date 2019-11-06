@@ -1,0 +1,249 @@
+html,body,.mui-content{
+	height: 100%;
+	background: #fff;
+}
+header {
+	width: 100%;
+	background-color: #FF8F48 !important;
+	box-shadow: none !important;
+}
+
+.mui-content {
+	background: #fff;
+}
+
+header a {
+	color: #fff;
+}
+
+.mui-title {
+	color: #fff!important;
+}
+
+.head_t{
+	height: 45px;
+	line-height: 45px;
+	font-size: 14px;
+	padding-left: 15px;
+	border-bottom: 5px solid #f2f2f2;
+}
+
+.head_t img{
+	width: 5%;
+	vertical-align: middle;
+	margin-bottom: 2px;
+}
+.mui-table-view:before,
+.mui-table-view:after,
+.mui-table-view-cell:after {
+	height: 0;
+}
+
+.mui-table-view li {
+	height: 85px;
+	border-bottom: 1px solid #eee;
+}
+
+.mui-table-view li .img {
+	width: 15%;
+	margin-top: 5px;
+}
+
+.mui-table-view li .img img {
+	width: 100%;
+}
+
+.mui-table-view li .info {
+	width: 50%;
+	padding-left: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-top: 5px;
+}
+
+.mui-table-view li .info p {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.mui-table-view li .info .name {
+	font-size: 14px;
+	color: #000;
+	margin-bottom: 10px;
+}
+
+.mui-table-view li .info .remark {
+	font-size: 12px;
+}
+
+.mui-table-view li .right {
+	width: 32%;
+	font-size: 14px;
+	color: #8F8F94;
+	padding-right: 15px;
+	text-align: right;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	margin-top: 5px;
+}
+.mui-table-view li .right p{
+	margin-bottom: 10px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+.mui-table-view li .right p:first-child {
+	font-size: 16px;
+	color: #F99F3E;
+}
+
+.mui-table-view-cell>a:not(.mui-btn) {
+	height: 85px;
+}
+
+
+/*详情页*/
+
+.head {
+	height: 120px;
+	text-align: center;
+	padding-top: 20px;
+	background: -webkit-linear-gradient(#FFAF5C, #FF9149);
+	background: -o-linear-gradient(#FFAF5C, #FF9149);
+	background: -moz-linear-gradient(#FFAF5C, #FF9149);
+	background: linear-gradient(#FFAF5C, #FF9149);
+}
+.head p{
+	color: #BCF8FF;
+}
+.head .money{
+	color: #fff;
+	font-size: 26px;
+	padding-top: 10px;
+}
+/*.rate_info{
+	position: absolute;
+	top: 168px;
+	left: 50%;
+	width: 90%;
+	margin-left: -45%;
+	box-shadow: 0 0 10px #ccc;
+	background: #fff;
+	border-radius: 8px;
+	padding: 15px 0;
+}
+.rate_info ul li{
+	width: calc(100% / 3);
+	text-align: center;
+	float: left;
+	font-size: 14px;
+}*/
+.condition{
+	margin-top: 60px;
+	padding: 0 15px;
+}
+.condition h1{
+	font-size: 15px;
+	margin-bottom: 10px;
+}
+.condition p{
+	margin-bottom: 5px;
+}
+.condition ul li{
+	position: relative;
+	width: calc(100% / 4);
+	text-align: center;
+	float: left;
+	margin-top: 15px;
+}
+.condition ul li p{
+	font-size: 12px;
+}
+.condition ul li img{
+	width: 26px;
+	vertical-align: bottom;
+}
+.condition ul li span{
+	position: absolute;
+	top: 8px;
+	right: -6px;
+	color: #ccc;
+	font-size: 12px !important;
+}
+.show{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 10px 15px;
+	background: #0075FF;
+	border: 1px solid #0075FF;
+	border-radius: 0;
+	font-size: 15px;
+}
+
+.popup{
+	display: none;
+	position: fixed;
+	top: 20%;
+	left: 50%;
+	z-index: 99;
+	width: 90%;
+	margin-left: -45%;
+	background: #fff;
+	border-radius: 8px;
+}
+.popup .icon-cuo{
+	position: absolute;
+	top:5px;
+	right: 10px;
+	color: #fff;
+	font-size: 20px !important;
+}
+.popup .title{
+	width: 100%;
+	height: 80px;
+	text-align: center;
+	padding-top: 15px;
+	background: url(../img/dai_p_bg.png) no-repeat;
+	background-size: 100% 100%;
+}
+.popup .title p{
+	color: #fff;
+}
+.popup .title p:last-child{
+	font-size: 12px;
+}
+.popup .content{
+	padding: 15px;
+}
+.popup .mui-input-row{
+	font-size: 14px;
+	border-bottom: 1px solid #eee;
+}
+.popup .mui-input-row input{
+	font-size: 14px;
+}
+.apply{
+	left: 50%;
+	width: 100%;
+	margin-left: -50%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	padding: 10px 15px;
+	background: #0C7DFF;
+	border: 1px solid #0C7DFF;
+}
+.mengban{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,.5);
+	z-index: 98;
+}

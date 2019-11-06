@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="UTF-8">
+		<!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<link rel="stylesheet" type="text/css" href="../../css/mui.css" />
+		<title>用户注册协议</title>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			
+			html,
+			body,
+			.mui-content {
+				width: 100%;
+				height: 100%;
+			}
+			
+			header {
+				width: 100%;
+				background-color: #FA625F !important;
+				box-shadow: none !important;
+			}
+			
+			header a {
+				color: #fff;
+			}
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			iframe {
+				width: 100%;
+				height: 100%;
+				border: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册协议</h1>
+		</header>
+		<div class="mui-content">
+			<iframe src="" border="0"></iframe>
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true,
+				});
+				$("iframe").attr("src", site_app + "/api/Main/protocol");
+			})
+		</script>
+	</body>
+
+</html>

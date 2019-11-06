@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="../../css/style.css" />
+		<style type="text/css">
+			/*header {*/
+				/*width: 100%;*/
+				/*box-shadow: none !important;*/
+			/*}*/
+			
+			/*header a {*/
+				/*color: #fff;*/
+			/*}*/
+			
+			.mui-title {
+				color: #fff!important;
+			}
+			
+			.mui-table-view {
+				margin: 0 !important;
+			}
+			
+			.mui-table-view:before {
+				height: 0;
+			}
+			
+			.mui-table-view-cell:after {
+				left: 0;
+			}
+			
+			.mui-navigate-right {
+				font-size: 15px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">帮助列表</h1>
+		</header>
+		<div class="mui-content">
+			<ul class="mui-table-view" id="pullrefresh">
+
+			</ul>
+			<input type="hidden" id="page" name='page' value="1" />
+		</div>
+		<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/common.js"></script>
+		<script type="text/javascript">
+			mui.plusReady(function() {
+				mui.init({
+					hardwareAccelerated: true
+				});
+				plus.nativeUI.showWaiting("安全检测中，请等待");
+				var tokens = getToken(); //获取token
+				getToken();
+				var id = plus.webview.currentWebview().typeid;
+
+				var page = $('#page').val();
+				$.ajax(site_app + '/api/My/article', {
+					async: false,
+					data: {
+						"token": tokens,
+						'type': id,
+						'page': page
+					},
+					dataType: 'JSON', //服务器返回json格式数据
+					type: 'post', //HTTP请求类型
+					success: function(e) {
+						var tpl = '';
+						if(e.data.current_page < page) {
+							//数据没有了
+							return false;
+						}
+						if(e.error == 0) {
+							var result = e.data.data; //JSON.parse(e.data);
+							var tpl = '';
+							for(var i = 0; i < result.length; i++) {
+								tpl += '<li class="mui-table-view-cell" data-id="' + result[i].article_id + '">';
+								tpl += '	<a class="mui-navigate-right">';
+								tpl += result[i].article_title;
+								tpl += '	</a>';
+								tpl += '</li>';
+							}
+							$('#pullrefresh').append(tpl);
+							$('#page').val(e.data.current_page + 1);
+						}
+					}
+				});
+
+				$(".mui-table-view li").click(function() {
+					var id = $(this).attr("data-id");
+					mui.openWindow({
+						url: "help_detailed.html",
+						id: "help_detailed",
+						show: {
+							autoShow: true //页面loaded事件发生后自动显示，默认为true
+						},
+						extras: {
+							ids: id
+						},
+						waiting: {
+							autoShow: true, //自动显示等待框，默认为true
+							title: '安全检测中，请等待' //等待对话框上显示的提示内容
+						}
+					})
+				});
+				plus.nativeUI.closeWaiting();
+			});
+		</script>
+	</body>
+
+</html>

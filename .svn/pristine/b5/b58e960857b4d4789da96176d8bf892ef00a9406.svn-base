@@ -1,0 +1,386 @@
+#kefu{
+	color: #fff;
+	font-size: 21px;
+}
+#news{
+	position: absolute;
+	top: 25px;
+	right: 15px;
+	font-size: 26px;
+	color: #fff;
+}
+
+.notice{
+	background: #fff;
+	padding: 0 10px;
+}
+.notice .icon_gg{
+	width: 25%;
+	height: 30px;
+	line-height: 30px;
+	vertical-align: middle;
+	font-size: 14px;
+	color: #0E77EC;
+	margin-top: 5px;
+	border-right: 2px solid #EBEBEB;
+	padding-right: 5px;
+}
+.notice .left img{
+	width: 100%;
+	vertical-align: middle;
+}
+.notice_info{
+	width: 60%;
+	height: 40px;
+	line-height: 40px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 14px;
+	padding: 0 5px;
+}
+.notice-txt li{
+	line-height: 40px;
+	overflow: hidden;   
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	font-size: 13px;
+	color: #555555;
+}
+.notice .right{
+	width: 7%;
+	line-height: 40px;
+}
+.notice .right img{
+	width: 100%;
+	vertical-align: middle;
+}
+
+.mui-grid{
+	margin-top: 5px;
+}
+.grid{
+	background: #fff;
+}
+.grid li{
+	width: calc(100% / 4);
+	text-align: center;
+	float: left;
+	margin: 10px auto 0;
+}
+.grid li p{
+	font-size: 12px;
+}
+.grid li .grid_img{
+	width: 40%;
+	margin: 0 auto;
+}
+.grid li .grid_img img{
+	width: 100%;
+}
+.sh_tab{
+	background: #fff;
+	padding: 20px 5px;
+	text-align: center;
+}
+.sh_tab ul li{
+	width: 50%;
+	height: 70px;
+	float: left;
+	padding-top: 12px;
+}
+.sh_tab ul li.hk{
+	background: url(../img/hk_home_bg.png) no-repeat;
+	background-size: 100% 100%;
+}
+.sh_tab ul li.sk{
+	background: url(../img/sk_home_bg.png) no-repeat;
+	background-size: 100% 100%;
+}
+.sh_tab ul li .left{
+	width: 34%;
+	text-align: right;
+}
+.sh_tab ul li .left img{
+	width: 65%;
+	vertical-align: middle;
+}
+.sh_tab ul li .right{
+	width: 66%;
+	text-align: center;
+	font-size: 12px;
+	color: #fff;
+	padding-right: 15px;
+}
+.sh_tab ul li .right p{
+	font-size: 16px;
+	color: #fff;
+	margin: 0;
+	font-weight: 700;
+	
+}
+.apply_tab{
+	padding-left: 10px;
+	background: #fff;
+	padding-bottom: 10px;
+}
+.apply_tab ul li{
+	width: calc((100% - 20px) / 2);
+	float: left;
+	background: #F0F0F0;
+	margin-right: 10px;
+	padding: 10px 0;
+	border-radius: 2px;
+}
+.apply_tab ul li .left{
+	width: 30%;
+	text-align: center;
+}
+.apply_tab ul li img{
+	width: 70%;
+	vertical-align: middle;
+}
+.apply_tab ul li p{
+	margin: 0;
+	font-size: 12px;
+}
+.apply_tab ul li .right{
+	width: 70%;
+}
+.apply_tab ul li .title{
+	font-size: 16px;
+	font-weight: 600;
+}
+.apply_tab ul li .blue{
+	color: #259BF5;
+}
+.apply_tab ul li .red{
+	color: #F12E2E;
+}
+.insurance{
+	text-align: center;
+	color: #9A999F;
+	font-size: 12px;
+	background: #fff;
+}
+.insurance span{
+	color: #26B78C;
+	vertical-align: middle;
+	font-size: 18px;
+}
+
+.daily{
+	background: #fff;
+	margin-top: 5px;
+}
+.daily .title{
+	height: 30px;
+	line-height: 30px;
+	padding: 0 10px;
+}
+.daily .title .left{
+	width: 24%;
+}
+.daily .title img{
+	width: 100%;
+	vertical-align: middle;
+}
+.daily .title .right{
+	color: #8F8F94;
+}
+.daily_content{
+	padding: 0 20px 20px;
+}
+.daily_content h1{
+	height: 35px;
+	line-height: 35px;
+	font-size: 15px;
+}
+
+.daily_content .content{
+	font-size: 14px;
+	color: #8F8F94;
+	line-height: 18px;
+}
+
+/*还款信息*/
+.payment_coupon{
+	position: relative;
+	width: 100%;
+	background: #fff;
+	margin-top: 5px;
+}
+.payment_coupon .tips{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 10%;
+}
+.payment_coupon>.left{
+	width: 56%;
+	padding-left: 25px;
+	padding-bottom: 4px;
+}
+.lefts{
+	width: 68% !important;
+}
+.bank_info{
+	height: 40px;
+	line-height: 40px;
+	vertical-align: middle;
+}
+.bank_info .bank_name{
+	font-size: 15px;
+}
+.bank_info .bank_num{
+	font-size: 16px;
+	color: #939393;
+}
+.bank_info img{
+	width: 16%;
+	line-height: 40px;
+	vertical-align: middle;
+}
+.binding .bank_info img{
+	width: 13%;
+	margin-right: 5px;
+}
+.hk_day p{
+	margin: 0;
+	text-align: left;
+}
+.hk_day .surplus_day{
+	line-height: 35px;
+	font-size: 30px;
+	color: #F2575D;
+	margin-right: 5px;
+}
+.big_z{
+	font-size: 14px;
+	color: #282828;
+}
+.small_z{
+	font-size: 12px;
+}
+.surplus_tips{
+	margin-right: 15px;
+	line-height: 18px;
+}
+.surplus_money{
+	line-height: 18px;
+}
+.payment_coupon .right{
+	
+	padding-right: 10px;
+}
+.rights{
+	width: 30%;
+}
+.status{
+	font-size: 14px;
+}
+.hk_btn{
+	position: absolute;
+	right: 10px;
+	bottom: 0;
+	height: 40px;
+	line-height: 40px;
+}
+.hk_btn .sk{
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	font-size: 13px;
+	color: #fff;
+	border-radius: 20px;
+	padding: 0 16px;
+	margin-right: 5px;
+	background: url(../img/home_icon_1.png) no-repeat;
+	background-size:100% 100%;
+}
+.sk_jl{
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	font-size: 13px;
+	color: #fff;
+	border-radius: 20px;
+	padding: 0 16px;
+	margin-right: 5px;
+	background: url(../img/sk_jl.png) no-repeat;
+	background-size:100% 100%;
+}
+.hk_btn .hq{
+	display: inline-block;
+	height: 25px;
+	line-height: 25px;
+	font-size: 13px;
+	color: #fff;
+	border-radius: 20px;
+	padding: 0 16px;
+	background: url(../img/home_icon_1.png) no-repeat;
+	background-size:100% 100%;	
+}
+.pay_off{
+	border: 1px solid #999999 !important;
+	color: #999999 !important;
+}
+
+.add_card{
+	width: 100%;
+	height: 40px;
+	line-height: 40px;
+	font-size: 16px;
+	text-align: center;
+	color: #656565;
+}
+.add_card span{
+	margin-right: 5px;
+}
+.mengban {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, .5);
+}
+
+.update-view {
+	position: fixed;
+	top: 40%;
+	left: 50%;
+	z-index: 999;
+	width: 90%;
+	margin-left: -45%;
+	padding: 15px;
+	background: #fff;
+	font-size: 14px;
+	display: none;
+	border-radius: 8px;
+}
+
+.update-view li {
+	padding: 16px 11px;
+}
+
+.update-view p {
+	font-size: 18px;
+	margin-top: 5px;
+}
+
+progress {
+	width: 100%;
+	height: 10px;
+	border-radius: 5px;
+}
+
+progress::-webkit-progress-bar {
+	background-color: #d7d7d7;
+}
+
+progress::-webkit-progress-value {
+	background-color: #aadd6a;
+}
