@@ -61,7 +61,7 @@
         </div>
         <div class="fill_in">
             <span class="tp">￥</span>
-            <input type="number" id="money" placeholder="请输入提现金额(1000-10000元)" value=""/>
+            <input type="number" id="money" placeholder="请输入提现金额(1000-10000元)" value="">
         </div>
         <div class="can_Tx">
         </div>
@@ -145,6 +145,7 @@
         // })
 
         $('.determine').click(function(){
+            if($("#money").val()>=1000 && $("#money").val()<=10000){
                 $.ajax({
                     type: 'post',
                     url: site_app +api,
@@ -182,11 +183,14 @@
                            }else{
                                mui.alert(data.msg, '提示', '',  function(){
                                    mui.openWindow({
-                                           url: data.html,
-                                           id: "url",
+                                           url: 'link.html',
+                                           id: "link",
                                            createNew: true,
                                            show: {
                                                autoShow: true //页面loaded事件发生后自动显示，默认为true
+                                           },
+                                           extras:{
+                                                 url:data.html
                                            },
                                            waiting: {
                                                autoShow: true, //自动显示等待框，默认为true
@@ -205,6 +209,11 @@
                         console.log(errorThrown);
                     }
                 })
+            }else{
+                mui.alert('不能低于1000！或高于10000!', '提示', '', '', 'div')
+            }
+
+
         })
     })
 

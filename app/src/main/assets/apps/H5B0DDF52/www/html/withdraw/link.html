@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+        <link href="../../css/mui.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="../../css/style.css" />
+    </head>
+    <body>
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">提现处理</h1>
+        </header>
+
+
+
+        <script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="../../js/mui.min.js"></script>
+        <script src="../../js/common.js" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+            mui.plusReady(function() {
+                var self = plus.webview.currentWebview();
+                mui.init({
+                    subpages:[{
+                        url:self.url,//子页面HTML地址，支持本地地址和网络地址
+                        id:url,//子页面标志
+                        styles:{
+                            top:'44px',//子页面顶部位置
+                            bottom:'0',//子页面底部位置
+                        },
+                        extras:{}//额外扩展参数
+                    }]
+                })
+                console.log(self.url)
+            })
+
+        </script>
+    </body>
+</html>
