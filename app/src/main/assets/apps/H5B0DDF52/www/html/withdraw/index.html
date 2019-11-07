@@ -109,7 +109,10 @@
         console.log(banks.card_no)
         console.log(self.uid)
         console.log(self.list)
-        console.log("当前页面URL："+plus.webview.currentWebview().getURL());
+        var git = plus.webview.currentWebview()
+        var wvA=git.opener();
+        console.log("当前页面URL："+JSON.stringify(git));
+        console.log("上一个页面URL："+JSON.stringify(wvA));
         var bankLists = self.bankList;
         console.log(bankLists)
 
@@ -122,10 +125,11 @@
         } else {
             api = txAdd;
         }
+        console.log(api)
+        console.log(self.list)
         var bn = banks.card_no.substring(banks.card_no.length - 4, banks.card_no.length);
         $('#banklist').html(bankLists.list_name + '(' + bn + ')');
         $('#bankurl').attr('src', bankLists.list_logo);
-
         var tokens = getToken();
         getToken();
         // plus.nativeUI.showWaiting("安全检测中，请等待");
@@ -136,21 +140,13 @@
         // });
         var cData;
         var uid = self.uid
-
-        // $(".determine").on('tap',function () {
-        //     console.log(1)
-        // })
-        // $(".determine").click( function () {
-        //     console.log(2)
-        // })
-
         $('.determine').click(function(){
             if($("#money").val()>=1000 && $("#money").val()<=10000){
                 $.ajax({
                     type: 'post',
-                    url: site_app +api,
+                    url: site_app +"/api/Jifu/txOrder",
                     data: {
-                        // "url":test,
+                        "url":test,
                         'uid': uid,
                         'tx_pcard':banks.card_no,
                         'tx_num': $("#money").val()
@@ -164,6 +160,7 @@
                         console.log(api)
                         console.log(uid)
                         console.log(banks.card_no)
+
                         if (data.code == 0 ){
                            if(self.list==1){
                                mui.alert(data.msg, '提示', '', function(){
@@ -181,9 +178,10 @@
                                    })
                                },'div');
                            }else{
+                               $("#money").val("");
                                mui.alert(data.msg, '提示', '',  function(){
                                    mui.openWindow({
-                                           url: 'link.html',
+                                           url: "link.html",
                                            id: "link",
                                            createNew: true,
                                            show: {
@@ -198,6 +196,7 @@
                                            }
                                    })
                                },'div');
+
                            }
                         } else {
                             mui.alert(data.msg, '提示', '', '', 'div');
