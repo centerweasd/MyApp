@@ -160,7 +160,6 @@
                         console.log(api)
                         console.log(uid)
                         console.log(banks.card_no)
-
                         if (data.code == 0 ){
                            if(self.list==1){
                                mui.alert(data.msg, '提示', '', function(){
@@ -188,15 +187,14 @@
                                                autoShow: true //页面loaded事件发生后自动显示，默认为true
                                            },
                                            extras:{
-                                                 url:data.html
+                                               url:data.html
                                            },
                                            waiting: {
-                                               autoShow: true, //自动显示等待框，默认为true
-                                               title: '安全检测中，请等待' //等待对话框上显示的提示内容
-                                           }
+                                           autoShow: true, //自动显示等待框，默认为true
+                                           title: '安全检测中，请等待' //等待对话框上显示的提示内容
+                                       }
                                    })
                                },'div');
-
                            }
                         } else {
                             mui.alert(data.msg, '提示', '', '', 'div');
@@ -208,10 +206,9 @@
                         console.log(errorThrown);
                     }
                 })
-            }else{
-                mui.alert('不能低于1000！或高于10000!', '提示', '', '', 'div')
-            }
-
+        }else{
+            mui.alert('不能低于1000！或高于10000!', '提示', '', '', 'div')
+        }
 
         })
     })

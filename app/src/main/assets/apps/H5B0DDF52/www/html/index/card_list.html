@@ -32,9 +32,21 @@
 			.no_info img {
 				width: 100%;
 			}
-			.tixian{z-index: 99;text-align: center;margin-top: 8px;}
+			.tixian{z-index: 99;text-align:center;margin-top: 8px;}
+			.zhangdan{z-index: 99;text-align:center;margin-top: 8px;}
 			.aisle{
-				margin-left: 12px;
+				width: 90px;
+				display: inline-block;
+				height: 25px;
+				line-height: 25px;
+				font-size: 13px;
+				color: #fff;
+				border-radius: 20px;
+				padding: 0 16px;
+				background: url(../../img/home_icon_1.png) no-repeat;
+				background-size:100% 100%;border: none;}
+			.rights{width: 90px;margin-top: 2px;margin-right: 10px;}
+			.yanqi{width: 90px;
 				display: inline-block;
 				height: 25px;
 				line-height: 25px;
@@ -166,11 +178,11 @@
 										"</div>" +
 										"<div class='right rights'>" +
 											"<div class='tixian'>"+
-											"<button class='aisle' id='aisle' title='" + e.data[i].card_id + "'>提现</button>" +
+												"<button class='aisle' id='aisle' title='" + e.data[i].card_id + "'>提&nbsp;&nbsp;&nbsp;现</button>" +
 											"</div>"+
-										"<div class='hk_btn'>" +
-										"<span class='repayment hq' title='" + e.data[i].card_id + "' id='repayment'>账单延期</span>" +
-										"</div>" +
+											"<div class='zhangdan'>" +
+												"<span class='repayment yanqi' title='" + e.data[i].card_id + "' id='repayment'>账单延期</span>" +
+											"</div>" +
 										"</div>" +
 										"<div class='clear'></div>" +
 										"</div>";
