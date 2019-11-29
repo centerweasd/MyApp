@@ -53,7 +53,7 @@
 					success: function(result) {
 						if(result.error == 0) {
 							for(var i = 0; i < result.data.length; i++) {
-								var html = "<li title='" + result.data[i].card_id + "'>" +
+								var html = "<li title='" + result.data[i].card_id + "' style='pointer-events:none' >" +
 									"<div class='left bank_logo'>" +
 									"<img src='"+result.data[i].list_logo+"' />" +
 									"</div>" +

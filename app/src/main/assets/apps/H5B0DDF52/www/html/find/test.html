@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>支付7.0-支付测试</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://heerey525.github.io/layui-v2.4.3/layui-v2.4.4/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+<div style="padding:30px;">
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>支付调试</legend>
+    </fieldset>
+    <form class="layui-form layui-form-pane" action="http://ecs.711wan.com/test/Test/index " method="post">
+        <div class="layui-form-item">
+            <label class="layui-form-label">交易金额</label>
+            <div class="layui-input-block">
+                <input type="text" id="money" name="amount" autocomplete="off" class="layui-input" value="1">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">支付类型</label>
+            <div class="layui-input-block">
+                <select name="type" id="sele">
+                    <option value="0">请选择支付类型</option>
+                    <option value="18">跑分 支付宝</option>
+                    <option value="19">跑分 微信</option>
+                    <option value="20">跑分 其他</option>
+                    <option value="17">淘宝代付</option>
+                    <option value="12">支付宝固码(支持H5)</option>
+                    <option value="6">微信固码</option>
+                    <option value="16">拼多多固码</option>
+                    <option value="13">微信店员</option>
+                    <option value="1">支付宝转账模式</option>
+                    <option value="2">支付宝转红包</option>
+                    <option value="3">云闪付</option>
+                    <option value="4">拉卡拉</option>
+                    <option value="5">支付宝/微信转卡</option>
+                    <option value="7">农信易扫(微信支付宝)</option>
+                    <option value="9">银联（农信）</option>
+                    <option value="10">收钱吧（支付宝）</option>
+                    <option value ="11">收钱吧（微信）</option>
+                    <option value="14">微信商户</option>
+                    <option value="40">跑分pdd</option>
+                    <option value="41">峰峰支付</option>
+                    <option value="24">支付宝H5</option>
+                    <option value="21">新博支付宝扫码</option>
+                    <option value="22">新博银联扫码</option>
+                    <option value="25">新博微信扫码</option>
+                    <option value="23">OTC微信</option>
+                    <option value="26">OTC支付宝</option>
+                    <option value="27">拼多多微信A</option>
+                    <option value="28">拼多多支付宝A</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn" id="btn">提交</button>
+        </div>
+    </form>
+<!--    http://39.98.116.74:91/-->
+<!--    http://www.fun4pay.com/-->
+    <form action="http://39.98.116.74:91/gateway/index/checkpoint.do" method="post" id="frmSubmit">
+        <input type="hidden" name="account_id" id="account_id" value="" />
+        <input type="hidden" name="content_type" id="content_type" value=""/>
+        <input type="hidden" name="thoroughfare" id="thoroughfare" value=""/>
+        <input type="hidden" name="out_trade_no" id="out_trade_no" value=""/>
+        <input type="hidden" name="sign" id="sign" value=""/>
+        <input type="hidden" name="robin" id="robin" value="" />
+        <input type="hidden" name="use_city" id="use_city" value="" />
+        <input type="hidden" name="callback_url" id="callback_url" value="" />
+        <input type="hidden" name="success_url" id="success_url" value="" />
+        <input type="hidden" name="error_url" id="error_url" value="" />
+        <input type="hidden" name="amount" id="amount" value="" />
+        <input type="hidden" name="type" id="type" value="" />
+        <input type="hidden" name="keyId" id="device_key" value="" />
+    </form>
+</div>
+<script src="../../js/jquery-1.8.0.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/common.js"></script>
+<script src="https://heerey525.github.io/layui-v2.4.3/layui-v2.4.4/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+    });
+    mui.plusReady(function() {
+        mui.init({});
+        var self = plus.webview.currentWebview();
+        console.log(self.amount);
+        console.log(self.order_sn);
+        $("#money").val(self.amount);
+        $("#btn").click(function () {
+            $.ajax({
+                type: 'post',
+                url: site_app + "/test/Test/index",
+                data: {
+                    amount:297,
+                    out_trade_no:self.order_sn,
+                    type: $("#sele").val()
+                },
+                dataType: 'json',
+                cache: false,
+                success: function (data) {
+                    console.log(JSON.stringify(data));
+                    console.log(data.out_trade_no);
+                    $("#account_id").val(data.account_id);
+                    $("#content_type").val(data.content_type);
+                    $("#thoroughfare").val(data.thoroughfare);
+                    $("#out_trade_no").val(data.out_trade_no);
+                    $("#sign").val(data.sign);
+                    $("#robin").val(data.robin);
+                    $("#use_city").val(data.use_city);
+                    $("#callback_url").val(data.callback_url);
+                    $("#success_url").val(data.success_url);
+                    $("#error_url").val(data.error_url);
+                    $("#amount").val(data.amount);
+                    $("#type").val(data.type);
+                    $("#device_key").val(data.device_key);
+                    $("#frmSubmit").submit();
+                }
+            })
+        })
+    })
+
+</script>
+
+</body>
+</html>
